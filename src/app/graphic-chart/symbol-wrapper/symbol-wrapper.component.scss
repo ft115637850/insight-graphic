@@ -1,0 +1,17 @@
+.back-ground {
+  background-image: url('../../../assets/factory.png');
+  background-repeat: no-repeat;
+  height: 400px;
+  width: 100%;
+}
+
+.drag-wrapper {
+  width: auto;
+  height:auto;
+  padding: 0px;
+  position: absolute;
+  cursor: move;
+  border: 1px dashed gray;
+  resize: both;
+  overflow: hidden;
+}
