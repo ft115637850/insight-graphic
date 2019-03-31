@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import {TagsValueService} from '../tags-value.service';
 
 // design value
 const tagNameHeight = 16;
@@ -13,10 +14,10 @@ const r = 75;
   templateUrl: './symbol-wrapper.component.html',
   styleUrls: ['./symbol-wrapper.component.scss']
 })
-export class SymbolWrapperComponent implements OnInit {
+export class SymbolWrapperComponent implements OnInit, OnDestroy {
   private socket: WebSocket;
   private currentValue: number;
-  tagName: string;
+  tagName: string = 'ARUNKUMARN03.SysTimeSec';
   unit: string;
   max: number;
   min: number;
@@ -24,15 +25,24 @@ export class SymbolWrapperComponent implements OnInit {
   currentY: number;
   valueLargeArcFlag: number;
   valuePath = 'M 29.96699141100894 156.03300858899107 A 75 75 0 1 1 153.88495080547727 78.49849495836901';
-  constructor() { }
+  constructor(private tagsValueSvc: TagsValueService) {
+    // TODO: mutiple same tag
+    this.tagsValueSvc.subscribe(this.tagName, e => {
+      this.currentValue = parseInt(e.data, 10);
+      this.updateValueArcData.bind(this);
+    });
+  }
 
   ngOnInit() {
     this.min = 0;
     this.max = 59;
     this.currentValue = 45;
     this.updateValueArcData();
-    this.tagName = 'ARUNKUMARN03.SysTimeSec';
     this.unit = 'Second';
+  }
+
+  ngOnDestroy() {
+    this.tagsValueSvc.unSubscribe(this.tagName);
   }
 
   connect() {
