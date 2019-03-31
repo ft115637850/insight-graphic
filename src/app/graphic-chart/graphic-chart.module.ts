@@ -4,9 +4,10 @@ import { SymbolWrapperComponent } from './symbol-wrapper/symbol-wrapper.componen
 import { GraphicChartRoutingModule } from './graphic-chart-routing.module';
 import { SymbolDragableDirective } from './symbol-dragable.directive';
 import { SymbolResizableDirective } from './symbol-resizable.directive';
+import { ScreenViewComponent } from './screen-view/screen-view.component';
 
 @NgModule({
-  declarations: [SymbolWrapperComponent, SymbolDragableDirective, SymbolResizableDirective],
+  declarations: [SymbolWrapperComponent, SymbolDragableDirective, SymbolResizableDirective, ScreenViewComponent],
   imports: [
     CommonModule,
     GraphicChartRoutingModule
