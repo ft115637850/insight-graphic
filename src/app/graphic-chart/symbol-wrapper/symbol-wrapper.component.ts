@@ -1,23 +1,22 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import {TagsValueService} from '../tags-value.service';
 
-// design value
-const tagNameHeight = 16;
-const startAngle = 0.75;    // Unit PI
-const sweepAngle = 1.5;
-const centerX = 83;
-const centerY = 83 + tagNameHeight + 4;
-const r = 75;
-
 @Component({
   selector: 'app-symbol-wrapper',
   templateUrl: './symbol-wrapper.component.html',
   styleUrls: ['./symbol-wrapper.component.scss']
 })
 export class SymbolWrapperComponent implements OnInit, OnDestroy {
-  private socket: WebSocket;
+  // design value
+  private readonly tagNameHeight = 16;
+  private readonly startAngle = 0.75;    // Unit PI
+  private readonly sweepAngle = 1.5;
+  private readonly centerX = 83;
+  private readonly centerY = 83 + this.tagNameHeight + 4;
+  private readonly r = 75;
   private currentValue: number;
-  tagName: string = 'ARUNKUMARN03.SysTimeSec';
+  private subscriptionId: string;
+  tagName = 'ARUNKUMARN03.SysTimeSec';
   unit: string;
   max: number;
   min: number;
@@ -25,15 +24,13 @@ export class SymbolWrapperComponent implements OnInit, OnDestroy {
   currentY: number;
   valueLargeArcFlag: number;
   valuePath = 'M 29.96699141100894 156.03300858899107 A 75 75 0 1 1 153.88495080547727 78.49849495836901';
-  constructor(private tagsValueSvc: TagsValueService) {
-    // TODO: mutiple same tag
-    this.tagsValueSvc.subscribe(this.tagName, e => {
-      this.currentValue = parseInt(e.data, 10);
-      this.updateValueArcData.bind(this);
-    });
-  }
+  constructor(private tagsValueSvc: TagsValueService) {}
 
   ngOnInit() {
+    this.subscriptionId = this.tagsValueSvc.subscribe(this.tagName, e => {
+      this.currentValue = parseInt(e, 10);
+      this.updateValueArcData.bind(this)();
+    });
     this.min = 0;
     this.max = 59;
     this.currentValue = 45;
@@ -42,42 +39,12 @@ export class SymbolWrapperComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.tagsValueSvc.unSubscribe(this.tagName);
-  }
-
-  connect() {
-    if (this.socket) {
-      this.socket.close();
-    }
-    this.socket = new WebSocket('ws://localhost:5000/ws');
-    this.socket.onopen = e => {
-      console.log('websocket open');
-      this.socket.send('time');
-    };
-    this.socket.onclose = e => {
-      console.log('websocket closed');
-    };
-    this.socket.onerror = e => {
-      console.error('websocket error');
-    };
-    this.socket.onmessage = e => {
-      this.currentValue = parseInt(e.data, 10);
-      this.updateValueArcData();
-    };
-  }
-
-  changeValue() {
-    this.unit = 'Minutes';
-    this.currentValue = this.currentValue + 1;
-    if (this.currentValue === 60) {
-      this.currentValue = 0;
-    }
-    this.updateValueArcData();
+    this.tagsValueSvc.unSubscribe(this.subscriptionId);
   }
 
   private updateValueArcData() {
-    const valueSweepAngle = this.getSweepAngleFromValue(this.min, this.max, sweepAngle, this.currentValue);
-    const valueEndPt = this.getXYFromAngle(centerX, centerY, r, startAngle + valueSweepAngle);
+    const valueSweepAngle = this.getSweepAngleFromValue(this.min, this.max, this.sweepAngle, this.currentValue);
+    const valueEndPt = this.getXYFromAngle(this.centerX, this.centerY, this.r, this.startAngle + valueSweepAngle);
     this.currentX = valueEndPt.x;
     this.currentY = valueEndPt.y;
     this.valueLargeArcFlag = valueSweepAngle > 1 ? 1 : 0;
