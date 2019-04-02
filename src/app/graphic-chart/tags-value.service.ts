@@ -28,6 +28,8 @@ export class TagsValueService {
   subscribe(tagName: string, onMsg: (tagValue: any, maxValue: any, minValue: any) => void): string {
     const subscriptionId = uuid.v4();
     this.subscriptionTagList.push({ subscriptionId, tagName, onMsg });
+    const reqData = [{tagName, value: null, max: null, min: null}] as Array<TagInfo>;
+    this.ws.sendRequest(JSON.stringify(reqData));
     return subscriptionId;
   }
 
@@ -47,13 +49,13 @@ export class TagsValueService {
         });
       }
 
-      const reqData = this.subscriptionTagList.reduce((p, c) => {
-        if (p.findIndex(x => x.tagName === c.tagName) === -1) {
-          p.push({tagName: c.tagName, value: null, max: null, min: null});
-        }
-        return p;
-      }, Array<TagInfo>());
-      return JSON.stringify(reqData);
+      // const reqData = this.subscriptionTagList.reduce((p, c) => {
+      //   if (p.findIndex(x => x.tagName === c.tagName) === -1) {
+      //     p.push({tagName: c.tagName, value: null, max: null, min: null});
+      //   }
+      //   return p;
+      // }, Array<TagInfo>());
+      // return JSON.stringify(reqData);
     }, e => {}, e => {});
   }
 
