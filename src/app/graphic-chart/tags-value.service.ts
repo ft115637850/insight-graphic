@@ -5,12 +5,14 @@ import {WebSocketService} from './web-socket.service';
 interface SubTag {
   subscriptionId: string;
   tagName: string;
-  onMsg: (tagValue: string) => void;
+  onMsg: (tagValue: string, maxValue: string, minValue: string) => void;
 }
 
 interface TagInfo {
   tagName: string;
   value: string;
+  max: string;
+  min: string;
 }
 
 const serverUrl = 'ws://localhost:5000/ws';
@@ -23,7 +25,7 @@ export class TagsValueService {
 
   constructor(private ws: WebSocketService) { }
 
-  subscribe(tagName: string, onMsg: (e: string) => void): string {
+  subscribe(tagName: string, onMsg: (tagValue: string, maxValue: string, minValue: string) => void): string {
     const subscriptionId = uuid.v4();
     this.subscriptionTagList.push({ subscriptionId, tagName, onMsg });
     return subscriptionId;
@@ -40,14 +42,14 @@ export class TagsValueService {
         this.subscriptionTagList.forEach(subTag => {
           const tag = tagInfoList.find(tagInfo => tagInfo.tagName === subTag.tagName);
           if (tag) {
-            subTag.onMsg(tag.value);
+            subTag.onMsg(tag.value, tag.max, tag.min);
           }
         });
       }
 
       const reqData = this.subscriptionTagList.reduce((p, c) => {
         if (p.findIndex(x => x.tagName === c.tagName) === -1) {
-          p.push({tagName: c.tagName, value: null});
+          p.push({tagName: c.tagName, value: null, max: null, min: null});
         }
         return p;
       }, Array<TagInfo>());

@@ -16,7 +16,7 @@ export class SymbolWrapperComponent implements OnInit, OnDestroy {
   private readonly r = 75;
   private currentValue: number;
   private subscriptionId: string;
-  tagName = 'ARUNKUMARN03.SysTimeSec';
+  tagName = 'NewtonInsight.SysTimeSec';
   unit: string;
   max: number;
   min: number;
@@ -27,13 +27,15 @@ export class SymbolWrapperComponent implements OnInit, OnDestroy {
   constructor(private tagsValueSvc: TagsValueService) {}
 
   ngOnInit() {
-    this.subscriptionId = this.tagsValueSvc.subscribe(this.tagName, e => {
-      this.currentValue = parseInt(e, 10);
+    this.subscriptionId = this.tagsValueSvc.subscribe(this.tagName, (tagValue, maxValue, minValue) => {
+      this.currentValue = parseInt(tagValue, 10);
+      this.max = parseInt(maxValue, 10);
+      this.min = parseInt(minValue, 10);
       this.updateValueArcData.bind(this)();
     });
     this.min = 0;
-    this.max = 59;
-    this.currentValue = 45;
+    this.max = 100;
+    this.currentValue = 0;
     this.updateValueArcData();
     this.unit = 'Second';
   }
