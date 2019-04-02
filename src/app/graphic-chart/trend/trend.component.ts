@@ -32,8 +32,7 @@ export class TrendComponent implements OnInit, OnDestroy {
       this.currentValue = tagValue;
       this.max = maxValue;
       this.min = minValue;
-      const y = this.getLastY();
-      this.ValuePts[this.ValuePts.length - 1].y = y;
+      this.ValuePts[this.ValuePts.length - 1].y = this.getLastY();
     });
     this.currentValue = 0;
     this.unit = 'Pa';
@@ -44,8 +43,7 @@ export class TrendComponent implements OnInit, OnDestroy {
       }
       this.ValuePts.forEach(pt => pt.x = pt.x - this.xAxisMax / this.timeRange);
       this.ValuePts = this.ValuePts.filter(pt => pt.x > -20);
-      const lastYValue = this.getLastY();
-      this.ValuePts.push({x: 150, y: lastYValue});
+      this.ValuePts.push({x: 150, y: this.getLastY()});
       this.updatePath();
     });
   }
