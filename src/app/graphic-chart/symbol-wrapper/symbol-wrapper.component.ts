@@ -28,9 +28,9 @@ export class SymbolWrapperComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscriptionId = this.tagsValueSvc.subscribe(this.tagName, (tagValue, maxValue, minValue) => {
-      this.currentValue = parseInt(tagValue, 10);
-      this.max = parseInt(maxValue, 10);
-      this.min = parseInt(minValue, 10);
+      this.currentValue = tagValue;
+      this.max = maxValue;
+      this.min = minValue;
       this.updateValueArcData.bind(this)();
     });
     this.min = 0;

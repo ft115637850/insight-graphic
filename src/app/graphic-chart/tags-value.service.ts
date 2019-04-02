@@ -10,9 +10,9 @@ interface SubTag {
 
 interface TagInfo {
   tagName: string;
-  value: string;
-  max: string;
-  min: string;
+  value: any;
+  max: any;
+  min: any;
 }
 
 const serverUrl = 'ws://localhost:5000/ws';
@@ -25,7 +25,7 @@ export class TagsValueService {
 
   constructor(private ws: WebSocketService) { }
 
-  subscribe(tagName: string, onMsg: (tagValue: string, maxValue: string, minValue: string) => void): string {
+  subscribe(tagName: string, onMsg: (tagValue: any, maxValue: any, minValue: any) => void): string {
     const subscriptionId = uuid.v4();
     this.subscriptionTagList.push({ subscriptionId, tagName, onMsg });
     return subscriptionId;

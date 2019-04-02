@@ -27,7 +27,7 @@ export class SymbolResizableDirective {
     const height = this.elementRef.nativeElement.offsetHeight;
     const x = event.offsetX;
     const y = event.offsetY;
-    if (x < width - 20 || y < height - 20) {
+    if (x < width - 17 || y < height - 17) {
         return;
     }
 
@@ -55,8 +55,8 @@ export class SymbolResizableDirective {
     this.pos4 = e.clientY;
 
     // set the svg's new scale:
-    this.svgEle.style.setProperty('width', `${this.elementRef.nativeElement.offsetWidth - this.pos1 - 20}px`);
-    this.svgEle.style.setProperty('height', `${this.elementRef.nativeElement.offsetHeight - this.pos2 - 10}px`);
+    this.svgEle.style.setProperty('width', `${this.elementRef.nativeElement.offsetWidth - this.pos1 - 5}px`);
+    this.svgEle.style.setProperty('height', `${this.elementRef.nativeElement.offsetHeight - this.pos2 - 5}px`);
   }
 
 }

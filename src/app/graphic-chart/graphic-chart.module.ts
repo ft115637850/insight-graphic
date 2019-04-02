@@ -5,9 +5,10 @@ import { GraphicChartRoutingModule } from './graphic-chart-routing.module';
 import { SymbolDragableDirective } from './symbol-dragable.directive';
 import { SymbolResizableDirective } from './symbol-resizable.directive';
 import { ScreenViewComponent } from './screen-view/screen-view.component';
+import { TrendComponent } from './trend/trend.component';
 
 @NgModule({
-  declarations: [SymbolWrapperComponent, SymbolDragableDirective, SymbolResizableDirective, ScreenViewComponent],
+  declarations: [SymbolWrapperComponent, SymbolDragableDirective, SymbolResizableDirective, ScreenViewComponent, TrendComponent],
   imports: [
     CommonModule,
     GraphicChartRoutingModule
