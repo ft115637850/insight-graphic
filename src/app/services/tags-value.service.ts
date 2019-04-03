@@ -27,8 +27,10 @@ export class TagsValueService {
 
   subscribe(tagName: string, onMsg: (tagValue: any, maxValue: any, minValue: any) => void): string {
     const subscriptionId = uuid.v4();
+    if (this.subscriptionTagList.findIndex(x => x.tagName === tagName) === -1) {
+      this.ws.sendRequest({ action: 'subscribe', tagName});
+    }
     this.subscriptionTagList.push({ subscriptionId, tagName, onMsg });
-    this.ws.sendRequest({ action: 'subscribe', tagName});
     return subscriptionId;
   }
 

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import {TagsValueService} from '../tags-value.service';
+import {TagsValueService} from '../../../services/tags-value.service';
 
 @Component({
   selector: 'app-symbol-wrapper',

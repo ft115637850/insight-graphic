@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {RequestInfo} from './request-info.data';
+import {RequestInfo} from '../interfaces/request-info.data';
 
 @Injectable({
   providedIn: 'root'
