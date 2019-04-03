@@ -8,11 +8,12 @@ import { ScreenViewComponent } from './screen-view/screen-view.component';
 import { TrendComponent } from './symbols/trend/trend.component';
 import { Clock360Component } from './symbols/clock360/clock360.component';
 import { Clock90Component } from './symbols/clock90/clock90.component';
+import { HorizontalBarComponent } from './symbols/horizontal-bar/horizontal-bar.component';
 
 @NgModule({
   declarations: [SymbolWrapperComponent,
     SymbolDragableDirective, SymbolResizableDirective,
-    ScreenViewComponent, TrendComponent, Clock360Component, Clock90Component],
+    ScreenViewComponent, TrendComponent, Clock360Component, Clock90Component, HorizontalBarComponent],
   imports: [
     CommonModule,
     GraphicChartRoutingModule

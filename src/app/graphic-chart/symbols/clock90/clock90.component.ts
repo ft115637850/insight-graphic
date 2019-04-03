@@ -17,7 +17,7 @@ export class Clock90Component implements OnInit, OnDestroy {
   private readonly r = 75;
   private currentValue: number;
   private subscriptionId: string;
-  tagName = 'NewtonInsight.SysTimeSec';
+  tagName = 'SysTimeSec';
   unit: string;
   max: number;
   min: number;
