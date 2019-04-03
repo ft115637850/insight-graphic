@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { v4 as uuid } from 'uuid';
+import {RequestInfo} from './request-info.data';
 import {WebSocketService} from './web-socket.service';
 
 interface SubTag {
@@ -28,12 +29,12 @@ export class TagsValueService {
   subscribe(tagName: string, onMsg: (tagValue: any, maxValue: any, minValue: any) => void): string {
     const subscriptionId = uuid.v4();
     this.subscriptionTagList.push({ subscriptionId, tagName, onMsg });
-    const reqData = [{tagName, value: null, max: null, min: null}] as Array<TagInfo>;
-    this.ws.sendRequest(JSON.stringify(reqData));
+    this.ws.sendRequest({ action: 'subscribe', tagName});
     return subscriptionId;
   }
 
-  unSubscribe(subscriptionId: string) {
+  unSubscribe(subscriptionId: string, tagName: string) {
+    this.ws.sendRequest({ action: 'unsubscribe', tagName});
     this.subscriptionTagList = this.subscriptionTagList.filter(x => x.subscriptionId !== subscriptionId);
   }
 
@@ -48,14 +49,6 @@ export class TagsValueService {
           }
         });
       }
-
-      // const reqData = this.subscriptionTagList.reduce((p, c) => {
-      //   if (p.findIndex(x => x.tagName === c.tagName) === -1) {
-      //     p.push({tagName: c.tagName, value: null, max: null, min: null});
-      //   }
-      //   return p;
-      // }, Array<TagInfo>());
-      // return JSON.stringify(reqData);
     }, e => {}, e => {});
   }
 

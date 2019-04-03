@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
+import {RequestInfo} from './request-info.data';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WebSocketService {
   private socket: WebSocket;
-  private lastReqData: Array<string> = [];
+  private lastReqData: Array<RequestInfo> = [];
   private isConnected = false;
   constructor() { }
   connect(url: string,
-          openReqData: string,
+          token: string,
           onOpen: (ev: Event) => any,
           onMsg: (ev: MessageEvent) => any,
           onClose: (ev: CloseEvent) => any,
@@ -21,8 +22,8 @@ export class WebSocketService {
       onOpen(e);
       console.log('websocket open');
       this.isConnected = true;
-      this.socket.send(openReqData);
-      this.lastReqData.forEach(d => this.socket.send(d));
+      this.socket.send(token);
+      this.socket.send(JSON.stringify(this.lastReqData));
       this.lastReqData = [];
     };
     this.socket.onclose = e => {
@@ -44,9 +45,9 @@ export class WebSocketService {
     };
   }
 
-  sendRequest(reqData: string) {
+  sendRequest(reqData: RequestInfo) {
     if (this.socket && this.isConnected) {
-      this.socket.send(reqData);
+      this.socket.send(JSON.stringify([reqData]));
     } else {
       this.lastReqData.push(reqData);
     }

@@ -10,6 +10,7 @@ import {TagsValueService} from '../tags-value.service';
 })
 export class TrendComponent implements OnInit, OnDestroy {
 
+  private intervalSubscriber;
   private currentValue: number;
   private subscriptionId: string;
   private xAxisMax = 150;
@@ -37,7 +38,7 @@ export class TrendComponent implements OnInit, OnDestroy {
     this.currentValue = 0;
     this.unit = 'Pa';
 
-    interval(1000).subscribe(() => {
+    this.intervalSubscriber = interval(1000).subscribe(() => {
       if (!this.max) {// no value arrived yet
         return;
       }
@@ -49,7 +50,8 @@ export class TrendComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.tagsValueSvc.unSubscribe(this.subscriptionId);
+    this.tagsValueSvc.unSubscribe(this.subscriptionId, this.tagName);
+    this.intervalSubscriber.unsubscribe();
   }
 
   private getLastY(): number {

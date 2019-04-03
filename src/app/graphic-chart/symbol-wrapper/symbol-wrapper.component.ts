@@ -41,7 +41,7 @@ export class SymbolWrapperComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.tagsValueSvc.unSubscribe(this.subscriptionId);
+    this.tagsValueSvc.unSubscribe(this.subscriptionId, this.tagName);
   }
 
   private updateValueArcData() {
