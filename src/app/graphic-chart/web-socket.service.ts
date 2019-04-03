@@ -23,8 +23,10 @@ export class WebSocketService {
       console.log('websocket open');
       this.isConnected = true;
       this.socket.send(token);
-      this.socket.send(JSON.stringify(this.lastReqData));
-      this.lastReqData = [];
+      if (this.lastReqData.length > 0) {
+        this.socket.send(JSON.stringify(this.lastReqData));
+        this.lastReqData = [];
+      }
     };
     this.socket.onclose = e => {
       onClose(e);
@@ -35,14 +37,7 @@ export class WebSocketService {
       onError(e);
       console.error('websocket error');
     };
-    this.socket.onmessage = e => {
-      const reqData = onMsg(e);
-      // if (reqData !== null) {
-      //   this.socket.send(reqData);
-      // } else {
-      //   this.disconnect(url);
-      // }
-    };
+    this.socket.onmessage = e => onMsg(e);
   }
 
   sendRequest(reqData: RequestInfo) {

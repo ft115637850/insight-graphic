@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { v4 as uuid } from 'uuid';
-import {RequestInfo} from './request-info.data';
 import {WebSocketService} from './web-socket.service';
 
 interface SubTag {
