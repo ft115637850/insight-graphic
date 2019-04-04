@@ -9,11 +9,15 @@ import { TrendComponent } from './symbols/trend/trend.component';
 import { Clock360Component } from './symbols/clock360/clock360.component';
 import { Clock90Component } from './symbols/clock90/clock90.component';
 import { HorizontalBarComponent } from './symbols/horizontal-bar/horizontal-bar.component';
+import { RadioCircleComponent } from './symbols/radio-circle/radio-circle.component';
+import { RadioRectComponent } from './symbols/radio-rect/radio-rect.component';
 
 @NgModule({
   declarations: [SymbolWrapperComponent,
     SymbolDragableDirective, SymbolResizableDirective,
-    ScreenViewComponent, TrendComponent, Clock360Component, Clock90Component, HorizontalBarComponent],
+    ScreenViewComponent, TrendComponent, Clock360Component,
+    Clock90Component, HorizontalBarComponent, RadioCircleComponent,
+    RadioRectComponent],
   imports: [
     CommonModule,
     GraphicChartRoutingModule

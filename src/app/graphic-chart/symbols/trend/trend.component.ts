@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { interval } from 'rxjs';
 import {TagsValueService} from '../../../services/tags-value.service';
 
@@ -19,7 +19,7 @@ export class TrendComponent implements OnInit, OnDestroy {
   private yAxisMin = 0;
   private timeRange = 60; // unit Second (* scale factor?)
   private ValuePts = [{x: 150, y: 0}];
-  tagName = 'NewtonInsight.Trend';
+  @Input() tagName: string;
   unit: string;
   max: number;
   min: number;

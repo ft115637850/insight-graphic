@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import {TagsValueService} from '../../../services/tags-value.service';
 
 @Component({
@@ -11,7 +11,7 @@ export class HorizontalBarComponent implements OnInit, OnDestroy {
   private currentValue: number;
   private xAxisMax = 150;
   private xAxisMin = 0;
-  tagName = 'Pressure';
+  @Input() tagName: string;
   unit: string;
   max: number;
   min: number;

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import {TagsValueService} from '../../../services/tags-value.service';
 
 @Component({
@@ -16,7 +16,7 @@ export class SymbolWrapperComponent implements OnInit, OnDestroy {
   private readonly r = 75;
   private currentValue: number;
   private subscriptionId: string;
-  tagName = 'NewtonInsight.SysTimeSec';
+  @Input() tagName: string;
   unit: string;
   max: number;
   min: number;
