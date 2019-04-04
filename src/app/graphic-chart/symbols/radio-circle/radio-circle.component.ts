@@ -17,7 +17,7 @@ export class RadioCircleComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscriptionId = this.tagsValueSvc.subscribe(this.tagName, (tagValue, maxValue, minValue) => {
       this.currentValue = tagValue;
-      this.lightened = parseInt(tagValue, 10) === 1 ? true : false ;
+      this.lightened = tagValue.toLowerCase() === 'true';
     });
 
     this.currentValue = 0;
