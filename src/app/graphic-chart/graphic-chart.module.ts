@@ -12,7 +12,7 @@ import { HorizontalBarComponent } from './symbols/horizontal-bar/horizontal-bar.
 import { RadioCircleComponent } from './symbols/radio-circle/radio-circle.component';
 import { RadioRectComponent } from './symbols/radio-rect/radio-rect.component';
 import { ComposerViewComponent } from './graphic-composer/composer-view/composer-view.component';
-import {MatCardModule, MatSidenavModule, MatSelectModule} from '@angular/material';
+import {MatCardModule, MatSidenavModule, MatInputModule} from '@angular/material';
 
 @NgModule({
   declarations: [SymbolWrapperComponent,
@@ -24,7 +24,7 @@ import {MatCardModule, MatSidenavModule, MatSelectModule} from '@angular/materia
   imports: [
     MatCardModule,
     MatSidenavModule,
-    MatSelectModule,
+    MatInputModule,
     CommonModule,
     GraphicChartRoutingModule
   ]
