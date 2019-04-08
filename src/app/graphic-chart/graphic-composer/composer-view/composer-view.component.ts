@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {DomSanitizer} from '@angular/platform-browser';
+import {MatIconRegistry} from '@angular/material';
 
 interface Resolution {
   value: number;
@@ -60,7 +62,11 @@ export class ComposerViewComponent implements OnInit {
 
   ];
 
-  constructor() { }
+  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+    iconRegistry.addSvgIcon(
+      'addssss',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/add.svg'));
+  }
 
   ngOnInit() {
   }
