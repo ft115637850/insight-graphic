@@ -1,0 +1,23 @@
+.composer-view {
+  height: 100vh; 
+  display: flex; 
+  flex-direction: column;
+  mat-card {
+    font-size: 20px;
+    font-weight: 500;
+    color: #000;
+  }
+  mat-sidenav-container {
+    margin-top: 2px;
+    flex: 1;
+    mat-sidenav-content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #E5E5E5;
+    }
+    mat-sidenav {
+      width: 408px;
+    }
+  }
+}
