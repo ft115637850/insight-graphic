@@ -8,10 +8,10 @@ import {TagsValueService} from '../../../services/tags-value.service';
 })
 export class HorizontalBarComponent implements OnInit, OnDestroy {
   private subscriptionId: string;
-  private currentValue: number;
   private xAxisMax = 150;
   private xAxisMin = 0;
   @Input() tagName: string;
+  currentValue: number;
   unit: string;
   max: number;
   min: number;

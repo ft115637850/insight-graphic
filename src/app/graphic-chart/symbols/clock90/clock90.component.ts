@@ -15,9 +15,9 @@ export class Clock90Component implements OnInit, OnDestroy {
   private readonly centerX = 83;
   private readonly centerY = 83 + this.tagNameHeight + 4;
   private readonly r = 75;
-  private currentValue: number;
   private subscriptionId: string;
   @Input() tagName: string;
+  currentValue: number;
   unit: string;
   max: number;
   min: number;

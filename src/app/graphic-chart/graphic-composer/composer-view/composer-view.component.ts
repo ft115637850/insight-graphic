@@ -64,11 +64,22 @@ export class ComposerViewComponent implements OnInit {
 
   constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
     iconRegistry.addSvgIcon(
-      'addssss',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/add.svg'));
+      'add',
+      sanitizer.bypassSecurityTrustResourceUrl('/assets/add.svg'))
+      .addSvgIcon(
+        'minus',
+        sanitizer.bypassSecurityTrustResourceUrl('/assets/minus.svg'));
   }
 
   ngOnInit() {
+  }
+
+  formatLabel(value: number | null) {
+    if (!value) {
+      return 0;
+    }
+
+    return value;
   }
 
 }

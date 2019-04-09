@@ -2,17 +2,29 @@
   <mat-card>Supervisor Plant Overview</mat-card>
   <mat-sidenav-container>
     <mat-sidenav-content>
-      <div >Main container</div>
+      <div>Main container</div>
     </mat-sidenav-content>
     <mat-sidenav position="end" mode="side" opened>
-      <button mat-icon-button><mat-icon svgIcon="addssss"></mat-icon>
-      </button>
-      <mat-form-field >
-        <input type="text" matInput placeholder="Width" value="6">
-      </mat-form-field>
-      <mat-form-field >
-        <input type="text" matInput placeholder="height" value="6">
-      </mat-form-field>
+      <div>
+        Width
+        <button mat-icon-button>
+          <mat-icon svgIcon="add"></mat-icon>
+        </button>
+        <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="1" min="3" max="20"></mat-slider>
+        <button mat-icon-button>
+          <mat-icon svgIcon="minus"></mat-icon>
+        </button>
+      </div>
+      <div>
+        Height
+        <button mat-icon-button>
+          <mat-icon svgIcon="add"></mat-icon>
+        </button>
+        <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="1" min="3" max="20"></mat-slider>
+        <button mat-icon-button>
+          <mat-icon svgIcon="minus"></mat-icon>
+        </button>
+      </div>
     </mat-sidenav>
   </mat-sidenav-container>
 </div>
