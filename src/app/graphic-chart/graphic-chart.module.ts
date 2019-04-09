@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SymbolWrapperComponent } from './symbols/symbol-wrapper/symbol-wrapper.component';
 import { GraphicChartRoutingModule } from './graphic-chart-routing.module';
 import { SymbolDragableDirective } from '../directives/symbol-dragable.directive';
@@ -27,6 +28,7 @@ import {MatCardModule, MatSidenavModule, MatButtonModule, MatIconModule, MatSlid
     MatButtonModule,
     MatIconModule,
     MatSliderModule,
+    ReactiveFormsModule,
     CommonModule,
     GraphicChartRoutingModule
   ]

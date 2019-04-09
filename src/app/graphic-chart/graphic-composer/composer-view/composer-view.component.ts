@@ -1,18 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material';
 
+/*
 interface Resolution {
   value: number;
   viewValue: string;
 }
-
+*/
 @Component({
   selector: 'app-composer-view',
   templateUrl: './composer-view.component.html',
   styleUrls: ['./composer-view.component.scss']
 })
 export class ComposerViewComponent implements OnInit {
+  canvasProps: FormGroup;
+  canvasWidth: number;
+  canvasHeight: number;
+  @ViewChild('contentHolder')
+  contentHolder: ElementRef;
+/*
   resolutions: Resolution[] = [
     { value: 4 / 3, viewValue: '640x480' },
     { value: 4 / 3, viewValue: '800x600' },
@@ -61,25 +69,36 @@ export class ComposerViewComponent implements OnInit {
     { value: 16 / 9, viewValue: '7680x4320' },
 
   ];
-
-  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+*/
+  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private fb: FormBuilder) {
     iconRegistry.addSvgIcon(
       'add',
       sanitizer.bypassSecurityTrustResourceUrl('/assets/add.svg'))
       .addSvgIcon(
         'minus',
         sanitizer.bypassSecurityTrustResourceUrl('/assets/minus.svg'));
+    this.canvasProps = this.fb.group({
+      width: [6],
+      height: [6]
+    });
   }
 
   ngOnInit() {
+    this.updateCanvasSize();
   }
 
-  formatLabel(value: number | null) {
-    if (!value) {
-      return 0;
+  updateCanvasSize() {
+    if (this.canvasProps.value.width / this.canvasProps.value.height >
+       this.contentHolder.nativeElement.offsetWidth / this.contentHolder.nativeElement.offsetHeight) {
+      this.canvasWidth = this.contentHolder.nativeElement.offsetWidth;
+      this.canvasHeight = this.canvasWidth * this.canvasProps.value.height / this.canvasProps.value.width;
+    } else {
+      this.canvasHeight = this.contentHolder.nativeElement.offsetHeight;
+      this.canvasWidth = this.canvasHeight * this.canvasProps.value.width / this.canvasProps.value.height;
     }
-
-    return value;
   }
 
+  test() {
+    this.updateCanvasSize();
+  }
 }
