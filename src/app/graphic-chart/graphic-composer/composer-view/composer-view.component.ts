@@ -16,6 +16,8 @@ interface Resolution {
 })
 export class ComposerViewComponent implements OnInit {
   canvasProps: FormGroup;
+  canvasMaxSize = 20;
+  canvasMinSize = 3;
   canvasWidth: number;
   canvasHeight: number;
   @ViewChild('contentHolder')
@@ -98,7 +100,23 @@ export class ComposerViewComponent implements OnInit {
     }
   }
 
-  test() {
-    this.updateCanvasSize();
+  changeSize(action: string, widthOrHeight: string) {
+    if (action === 'add') {
+      if (widthOrHeight === 'width' && this.canvasProps.value.width < this.canvasMaxSize) {
+        this.canvasProps.get('width').setValue(this.canvasProps.value.width + 1);
+        this.updateCanvasSize();
+      } else if (widthOrHeight === 'height' && this.canvasProps.value.height < this.canvasMaxSize) {
+        this.canvasProps.get('height').setValue(this.canvasProps.value.height + 1);
+        this.updateCanvasSize();
+      }
+    } else {
+      if (widthOrHeight === 'width' && this.canvasProps.value.width > this.canvasMinSize) {
+        this.canvasProps.get('width').setValue(this.canvasProps.value.width - 1);
+        this.updateCanvasSize();
+      } else if (widthOrHeight === 'height' && this.canvasProps.value.height > this.canvasMinSize) {
+        this.canvasProps.get('height').setValue(this.canvasProps.value.height - 1);
+        this.updateCanvasSize();
+      }
+    }
   }
 }

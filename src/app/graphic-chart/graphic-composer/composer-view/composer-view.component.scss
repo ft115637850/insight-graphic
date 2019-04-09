@@ -11,11 +11,14 @@
     margin-top: 2px;
     flex: 1;
     mat-sidenav-content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #E5E5E5;
       .content-holder {
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: #E5E5E5;
         .canvas {
           background: #459494;
         }
