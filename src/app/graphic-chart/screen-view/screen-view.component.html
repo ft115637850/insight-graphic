@@ -1,4 +1,4 @@
-<div class="back-ground">
+<div class="back-ground" [style.background-image]="backgroundImage?'url('+backgroundImage+')':none" [style.background-size]="backgroundSize">
   <app-symbol-wrapper tagName = "NewtonInsight.SysTimeSec"></app-symbol-wrapper>
   <app-clock360 tagName = "NewtonInsight.SysTimeSec"></app-clock360>
   <app-clock90 tagName = "SysTimeSec"></app-clock90>

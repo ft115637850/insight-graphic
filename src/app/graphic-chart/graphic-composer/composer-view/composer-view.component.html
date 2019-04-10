@@ -2,14 +2,16 @@
   <mat-card>Supervisor Plant Overview</mat-card>
   <mat-sidenav-container>
     <mat-sidenav-content >
-      <div class="content-holder" #contentHolder style="width:calc(100% - 20px); height:calc(100% - 20px);">
-        <div class="canvas" [style.width.px]="canvasWidth" [style.height.px]="canvasHeight">Main container</div>
+      <div class="content-holder" #contentHolder style="width:calc(100% - 20px); height:calc(100% - 20px);" (window:resize)="onResize($event)">
+        <div class="canvas" [style.width.px]="canvasWidth" [style.height.px]="canvasHeight">
+          <app-screen-view [backgroundImage]="backGroundImage" [backgroundSize]="backgroundSize"></app-screen-view>
+        </div>
       </div>
     </mat-sidenav-content>
     <mat-sidenav position="end" mode="side" opened>
       <form [formGroup]="canvasProps">
         <div>
-          Width
+          <span>Width</span>
           <button mat-icon-button (click)="changeSize('minus', 'width')">
             <mat-icon svgIcon="minus"></mat-icon>
           </button>
@@ -19,7 +21,7 @@
           </button>
         </div>
         <div>
-          Height
+          <span>Height</span>
           <button mat-icon-button (click)="changeSize('minus', 'height')">
             <mat-icon svgIcon="minus"></mat-icon>
           </button>
@@ -27,6 +29,18 @@
           <button mat-icon-button (click)="changeSize('add', 'height')">
             <mat-icon svgIcon="add"></mat-icon>
           </button>
+        </div>
+        <div>
+          <button mat-raised-button color="primary" (click)="imgFileInput.click()">Change Background</button>
+          <input hidden #imgFileInput type="file" accept="image/jpeg,image/gif,image/png" (change)="previewImage($event)" />
+          <button mat-raised-button color="accent" (click)="removeBackground()">Remove Background</button>
+        </div>
+        <div>
+          <mat-radio-group formControlName="bgSizeOption" (change)="resizeBackground()">
+            <mat-radio-button value="stretch">Stretch</mat-radio-button>
+            <mat-radio-button value="horizontal">Horizontal</mat-radio-button>
+            <mat-radio-button value="vertical">Vertical</mat-radio-button>
+          </mat-radio-group>
         </div>
       </form>
     </mat-sidenav>

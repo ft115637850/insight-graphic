@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import {TagsValueService} from '../../services/tags-value.service';
 
 @Component({
@@ -7,6 +7,8 @@ import {TagsValueService} from '../../services/tags-value.service';
   styleUrls: ['./screen-view.component.scss']
 })
 export class ScreenViewComponent implements OnInit, OnDestroy {
+  @Input() backgroundImage: string;
+  @Input() backgroundSize = '100% 100%';
   private socket: WebSocket;
   constructor(private tagsValueSvc: TagsValueService) {}
 
