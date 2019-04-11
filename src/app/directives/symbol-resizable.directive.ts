@@ -20,7 +20,7 @@ export class SymbolResizableDirective {
         return;
     }
     if (!this.svgEle) {
-      this.svgEle = targetElement.getElementsByTagNameNS('http://www.w3.org/2000/svg', 'svg')[0];
+      this.svgEle = this.elementRef.nativeElement.getElementsByTagNameNS('http://www.w3.org/2000/svg', 'svg')[0];
     }
 
     const width = this.elementRef.nativeElement.offsetWidth;

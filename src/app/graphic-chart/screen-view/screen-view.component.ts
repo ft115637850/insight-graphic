@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import {TagsValueService} from '../../services/tags-value.service';
+import {SymbolInfo} from '../../interfaces/symbol-info.data';
 
 @Component({
   selector: 'app-screen-view',
@@ -9,6 +10,7 @@ import {TagsValueService} from '../../services/tags-value.service';
 export class ScreenViewComponent implements OnInit, OnDestroy {
   @Input() backgroundImage: string;
   @Input() backgroundSize = '100% 100%';
+  @Input() symbolList: SymbolInfo[] = [];
   private socket: WebSocket;
   constructor(private tagsValueSvc: TagsValueService) {}
 

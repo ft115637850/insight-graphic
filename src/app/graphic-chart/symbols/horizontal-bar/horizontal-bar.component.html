@@ -1,12 +1,13 @@
-<div class="drag-wrapper" appSymbolResizable>
+<div class="drag-wrapper" [style.top.px]="positionY" [style.left.px]="positionX" appSymbolResizable>
   <div style="width: auto; height: auto; " appSymbolDragable>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 151 72" version="1.1"
-      style="top: 0px; left: 0.5px; width: 151px; height: 72px; overflow: visible; visibility: inherit;">
+      [style.width.px]="svgWidth" [style.height.px]="this.svgWidth * this.viewBoxHeight / this.viewBoxWidth"
+      style="top: 0px; left: 0.5px; overflow: visible; visibility: inherit;">
       <text x="0" y="30" font-family="Microsoft Sans Serif" font-size="16" fill="rgba(255,255,255,1)">
         {{currentValue}}
       </text>
-      <line x1="0" y1="45" x2="150" y2="45" stroke="rgba(255, 235, 59, 0.2)" stroke-width="15" />
-      <line x1="0" y1="45" [attr.x2]="valueX" y2="45" stroke="rgba(255, 235, 59, 1)" stroke-width="15"/>
+      <line x1="0" y1="45" x2="150" y2="45" [attr.stroke]="pathStroke" stroke-width="15" />
+      <line x1="0" y1="45" [attr.x2]="valueX" y2="45" [attr.stroke]="valueStroke" stroke-width="15"/>
       <text x="0" y="65" font-family="Microsoft Sans Serif" font-size="13" fill="rgba(255,255,255,0.6)">
         {{min}}
       </text>

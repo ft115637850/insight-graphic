@@ -2,6 +2,8 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material';
+import { SymbolInfo } from '../../../interfaces/symbol-info.data';
+import { v4 as uuid } from 'uuid';
 
 /*
 interface Resolution {
@@ -22,6 +24,116 @@ export class ComposerViewComponent implements OnInit {
   canvasHeight: number;
   backGroundImage: string | ArrayBuffer | null = null;
   backgroundSize = '100% 100%';
+  symbolList: SymbolInfo[] = [
+    {
+      symbolId: uuid.v4(),
+      symbolType: 'symbol-wrapper',
+      tagName: 'NewtonInsight.SysTimeSec',
+      positionXRatio: 0.3,
+      positionYRatio: 0.5,
+      positionX: 0,
+      positionY: 0,
+      svgWidth: 0,
+      widthRatio: 0.12,
+      strokeRGB: '255, 235, 59'
+    },
+    {
+      symbolId: uuid.v4(),
+      symbolType: 'clock360',
+      tagName: 'NewtonInsight.SysTimeSec',
+      positionXRatio: 0.3,
+      positionYRatio: 0.5,
+      positionX: 0,
+      positionY: 0,
+      svgWidth: 0,
+      widthRatio: 0.12,
+      strokeRGB: '255, 235, 59'
+    },
+    {
+      symbolId: uuid.v4(),
+      symbolType: 'clock90',
+      tagName: 'SysTimeSec',
+      positionXRatio: 0.3,
+      positionYRatio: 0.5,
+      positionX: 0,
+      positionY: 0,
+      svgWidth: 0,
+      widthRatio: 0.12,
+      strokeRGB: '255, 235, 59'
+    },
+    {
+      symbolId: uuid.v4(),
+      symbolType: 'trend',
+      tagName: 'SinTrend',
+      positionXRatio: 0.3,
+      positionYRatio: 0.5,
+      positionX: 0,
+      positionY: 0,
+      svgWidth: 0,
+      widthRatio: 0.12,
+      strokeRGB: '255, 235, 59'
+    },
+    {
+      symbolId: uuid.v4(),
+      symbolType: 'trend',
+      tagName: 'Pump',
+      positionXRatio: 0.3,
+      positionYRatio: 0.5,
+      positionX: 0,
+      positionY: 0,
+      svgWidth: 0,
+      widthRatio: 0.12,
+      strokeRGB: '255, 235, 59'
+    },
+    {
+      symbolId: uuid.v4(),
+      symbolType: 'trend',
+      tagName: 'Pressure',
+      positionXRatio: 0.3,
+      positionYRatio: 0.5,
+      positionX: 0,
+      positionY: 0,
+      svgWidth: 0,
+      widthRatio: 0.12,
+      strokeRGB: '255, 235, 59'
+    },
+    {
+      symbolId: uuid.v4(),
+      symbolType: 'horizontal-bar',
+      tagName: 'Pressure',
+      positionXRatio: 0.3,
+      positionYRatio: 0.5,
+      positionX: 0,
+      positionY: 0,
+      svgWidth: 0,
+      widthRatio: 0.12,
+      strokeRGB: '255, 235, 59'
+    },
+    {
+      symbolId: uuid.v4(),
+      symbolType: 'radio-circle',
+      tagName: 'isPumping',
+      positionXRatio: 0.3,
+      positionYRatio: 0.5,
+      positionX: 0,
+      positionY: 0,
+      svgWidth: 0,
+      widthRatio: 0.05,
+      strokeRGB: '255, 235, 59'
+    },
+    {
+      symbolId: uuid.v4(),
+      symbolType: 'radio-rect',
+      tagName: 'noPumping',
+      positionXRatio: 0.3,
+      positionYRatio: 0.5,
+      positionX: 0,
+      positionY: 0,
+      svgWidth: 0,
+      widthRatio: 0.05,
+      strokeRGB: '255, 235, 59'
+    }
+  ];
   @ViewChild('contentHolder')
   contentHolder: ElementRef;
   private bgImageWidth: number;
@@ -108,6 +220,7 @@ export class ComposerViewComponent implements OnInit {
     }
 
     this.resizeBackground();
+    this.updateSymbolList();
   }
 
   changeSize(action: string, widthOrHeight: string) {
@@ -168,5 +281,13 @@ export class ComposerViewComponent implements OnInit {
           / this.bgImageHeight}px ${this.canvasHeight}px`;
         break;
     }
+  }
+
+  private updateSymbolList() {
+    this.symbolList.forEach(symbol => {
+      symbol.positionX = symbol.positionXRatio * this.canvasWidth;
+      symbol.positionY = symbol.positionYRatio * this.canvasHeight;
+      symbol.svgWidth = symbol.widthRatio * this.canvasWidth;
+    });
   }
 }

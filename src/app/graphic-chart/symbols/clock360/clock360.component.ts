@@ -16,6 +16,12 @@ export class Clock360Component implements OnInit, OnDestroy {
   private readonly centerY = 83 + this.tagNameHeight + 4;
   private readonly r = 75;
   private subscriptionId: string;
+  readonly viewBoxWidth = 190;
+  readonly viewBoxHeight = 182;
+  @Input() private strokeRGB = '0, 0, 0';
+  @Input() positionX = 0;
+  @Input() positionY = 0;
+  @Input() svgWidth = 100;
   @Input() tagName: string;
   currentValue: number;
   unit: string;
@@ -24,21 +30,25 @@ export class Clock360Component implements OnInit, OnDestroy {
   currentX: number;
   currentY: number;
   valueLargeArcFlag: number;
-  valuePath = 'M 29.96699141100894 156.03300858899107 A 75 75 0 1 1 153.88495080547727 78.49849495836901';
+  valuePath = '';
+  pathStroke: string;
+  valueStroke: string;
   constructor(private tagsValueSvc: TagsValueService) {}
 
   ngOnInit() {
+    this.pathStroke = `rgba(${this.strokeRGB}, 0.2)`;
+    this.valueStroke = `rgba(${this.strokeRGB}, 1)`;
+    this.min = 0;
+    this.max = 100;
+    this.currentValue = 0;
+    this.updateValueArcData();
+    this.unit = 'Second';
     this.subscriptionId = this.tagsValueSvc.subscribe(this.tagName, (tagValue, maxValue, minValue) => {
       this.currentValue = tagValue;
       this.max = maxValue;
       this.min = minValue;
       this.updateValueArcData.bind(this)();
     });
-    this.min = 0;
-    this.max = 100;
-    this.currentValue = 0;
-    this.updateValueArcData();
-    this.unit = 'Second';
   }
 
   ngOnDestroy() {

@@ -1,11 +1,26 @@
-<div class="back-ground" [style.background-image]="backgroundImage?'url('+backgroundImage+')':none" [style.background-size]="backgroundSize">
-  <app-symbol-wrapper tagName = "NewtonInsight.SysTimeSec"></app-symbol-wrapper>
-  <app-clock360 tagName = "NewtonInsight.SysTimeSec"></app-clock360>
-  <app-clock90 tagName = "SysTimeSec"></app-clock90>
-  <app-trend tagName="SinTrend"></app-trend>
-  <app-trend tagName="Pump"></app-trend>
-  <app-trend tagName="Pressure"></app-trend>
-  <app-horizontal-bar tagName="Pressure"></app-horizontal-bar>
-  <app-radio-circle tagName="isPumping"></app-radio-circle>
-  <app-radio-rect tagName="noPumping"></app-radio-rect>
+<div class="back-ground" [style.background-image]="backgroundImage?'url('+backgroundImage+')':none"
+  [style.background-size]="backgroundSize">
+  <ng-template ngFor let-symbol [ngForOf]="symbolList">
+    <app-symbol-wrapper *ngIf="symbol.symbolType === 'symbol-wrapper'" [tagName]="symbol.tagName"
+      [positionX]="symbol.positionX" [positionY]="symbol.positionY" [svgWidth]="symbol.svgWidth"
+      [strokeRGB]="symbol.strokeRGB"></app-symbol-wrapper>
+    <app-clock360 *ngIf="symbol.symbolType === 'clock360'" [tagName]="symbol.tagName"
+      [positionX]="symbol.positionX" [positionY]="symbol.positionY" [svgWidth]="symbol.svgWidth"
+      [strokeRGB]="symbol.strokeRGB"></app-clock360>
+    <app-clock90 *ngIf="symbol.symbolType === 'clock90'" [tagName]="symbol.tagName"
+      [positionX]="symbol.positionX" [positionY]="symbol.positionY" [svgWidth]="symbol.svgWidth"
+      [strokeRGB]="symbol.strokeRGB"></app-clock90>
+    <app-trend *ngIf="symbol.symbolType === 'trend'" [tagName]="symbol.tagName"
+      [positionX]="symbol.positionX" [positionY]="symbol.positionY" [svgWidth]="symbol.svgWidth"
+      [strokeRGB]="symbol.strokeRGB"></app-trend>
+    <app-horizontal-bar *ngIf="symbol.symbolType === 'horizontal-bar'" [tagName]="symbol.tagName"
+      [positionX]="symbol.positionX" [positionY]="symbol.positionY" [svgWidth]="symbol.svgWidth"
+      [strokeRGB]="symbol.strokeRGB"></app-horizontal-bar>
+    <app-radio-circle *ngIf="symbol.symbolType === 'radio-circle'" [tagName]="symbol.tagName"
+      [positionX]="symbol.positionX" [positionY]="symbol.positionY" [svgWidth]="symbol.svgWidth"
+      [strokeRGB]="symbol.strokeRGB"></app-radio-circle>
+    <app-radio-rect *ngIf="symbol.symbolType === 'radio-rect'" [tagName]="symbol.tagName"
+      [positionX]="symbol.positionX" [positionY]="symbol.positionY" [svgWidth]="symbol.svgWidth"
+      [strokeRGB]="symbol.strokeRGB"></app-radio-rect>
+  </ng-template>
 </div>

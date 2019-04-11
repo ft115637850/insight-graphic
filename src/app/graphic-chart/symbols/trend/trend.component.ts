@@ -19,16 +19,26 @@ export class TrendComponent implements OnInit, OnDestroy {
   private yAxisMin = 0;
   private timeRange = 60; // unit Second (* scale factor?)
   private ValuePts = [{x: 150, y: 0}];
+  readonly viewBoxWidth = 150;
+  readonly viewBoxHeight = 100;
+  @Input() private strokeRGB = '0, 0, 0';
+  @Input() positionX = 0;
+  @Input() positionY = 0;
+  @Input() svgWidth = 100;
   @Input() tagName: string;
   unit: string;
   max: number;
   min: number;
   valuePath: string;
   valueAreaPath: string;
+  pathStroke: string;
+  valueStroke: string;
 
   constructor(private tagsValueSvc: TagsValueService) { }
 
   ngOnInit() {
+    this.pathStroke = `rgba(${this.strokeRGB}, 0.2)`;
+    this.valueStroke = `rgba(${this.strokeRGB}, 1)`;
     this.subscriptionId = this.tagsValueSvc.subscribe(this.tagName, (tagValue, maxValue, minValue) => {
       this.currentValue = tagValue;
       this.max = maxValue;

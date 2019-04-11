@@ -5,7 +5,9 @@
       <div class="content-holder" #contentHolder style="width:calc(100% - 20px); height:calc(100% - 20px);"
         (window:resize)="onResize($event)">
         <div class="canvas" [style.width.px]="canvasWidth" [style.height.px]="canvasHeight">
-          <app-screen-view [backgroundImage]="backGroundImage" [backgroundSize]="backgroundSize"></app-screen-view>
+          <app-screen-view [backgroundImage]="backGroundImage" [backgroundSize]="backgroundSize"
+            [symbolList]="symbolList">
+          </app-screen-view>
         </div>
       </div>
     </mat-sidenav-content>
