@@ -131,6 +131,7 @@ export class ComposerViewComponent implements OnInit {
   }
 
   previewImage(e) {
+    this.canvasProps.get('bgSizeOption').setValue('stretch');
     const fr = new FileReader();
     fr.readAsDataURL(e.target.files[0]);
     fr.onload = () => {
@@ -146,6 +147,7 @@ export class ComposerViewComponent implements OnInit {
 
   removeBackground() {
     this.backGroundImage = null;
+    this.canvasProps.get('bgSizeOption').setValue('stretch');
   }
 
   resizeBackground() {

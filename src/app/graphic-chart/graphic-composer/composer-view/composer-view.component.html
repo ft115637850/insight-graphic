@@ -13,7 +13,7 @@
       <mat-tab-group dynamicHeight>
         <mat-tab label="Canvas Properties">
           <form [formGroup]="canvasProps">
-            <div>
+            <div class="property-row">
               <span>Width</span>
               <button mat-icon-button (click)="changeSize('minus', 'width')">
                 <mat-icon svgIcon="minus"></mat-icon>
@@ -24,7 +24,7 @@
                 <mat-icon svgIcon="add"></mat-icon>
               </button>
             </div>
-            <div>
+            <div class="property-row">
               <span>Height</span>
               <button mat-icon-button (click)="changeSize('minus', 'height')">
                 <mat-icon svgIcon="minus"></mat-icon>
@@ -35,13 +35,13 @@
                 <mat-icon svgIcon="add"></mat-icon>
               </button>
             </div>
-            <div>
+            <div class="property-row">
               <button mat-raised-button color="primary" (click)="imgFileInput.click()">Change Background</button>
               <input hidden #imgFileInput type="file" accept="image/jpeg,image/gif,image/png"
                 (change)="previewImage($event)" />
               <button mat-raised-button color="accent" (click)="removeBackground()">Remove Background</button>
             </div>
-            <div>
+            <div class="property-row">
               <mat-radio-group formControlName="bgSizeOption" (change)="resizeBackground()">
                 <mat-radio-button value="stretch">Stretch</mat-radio-button>
                 <mat-radio-button value="horizontal">Horizontal</mat-radio-button>

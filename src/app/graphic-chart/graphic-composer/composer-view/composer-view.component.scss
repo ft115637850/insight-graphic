@@ -26,6 +26,10 @@
     }
     mat-sidenav {
       width: 408px;
+      .property-row {
+        margin-top: 20px;
+        margin-left: 20px;
+      }
       // move to global
       // .mat-tab-label {
       //   min-width: 100px;
