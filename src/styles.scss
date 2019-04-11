@@ -5,3 +5,13 @@ body {
   margin: 0;
   padding: 0;
 }
+
+.composer-view {
+  mat-sidenav-container {
+    mat-sidenav {
+      .mat-tab-label {
+        min-width: 100px;
+      }
+    }
+  }
+}

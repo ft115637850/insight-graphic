@@ -95,7 +95,6 @@ export class ComposerViewComponent implements OnInit {
 
   onResize(e) {
     this.updateCanvasSize();
-    this.resizeBackground();
   }
 
   updateCanvasSize() {
@@ -107,6 +106,8 @@ export class ComposerViewComponent implements OnInit {
       this.canvasHeight = this.contentHolder.nativeElement.offsetHeight;
       this.canvasWidth = this.canvasHeight * this.canvasProps.value.width / this.canvasProps.value.height;
     }
+
+    this.resizeBackground();
   }
 
   changeSize(action: string, widthOrHeight: string) {
@@ -114,21 +115,17 @@ export class ComposerViewComponent implements OnInit {
       if (widthOrHeight === 'width' && this.canvasProps.value.width < this.canvasMaxSize) {
         this.canvasProps.get('width').setValue(this.canvasProps.value.width + 1);
         this.updateCanvasSize();
-        this.resizeBackground();
       } else if (widthOrHeight === 'height' && this.canvasProps.value.height < this.canvasMaxSize) {
         this.canvasProps.get('height').setValue(this.canvasProps.value.height + 1);
         this.updateCanvasSize();
-        this.resizeBackground();
       }
     } else {
       if (widthOrHeight === 'width' && this.canvasProps.value.width > this.canvasMinSize) {
         this.canvasProps.get('width').setValue(this.canvasProps.value.width - 1);
         this.updateCanvasSize();
-        this.resizeBackground();
       } else if (widthOrHeight === 'height' && this.canvasProps.value.height > this.canvasMinSize) {
         this.canvasProps.get('height').setValue(this.canvasProps.value.height - 1);
         this.updateCanvasSize();
-        this.resizeBackground();
       }
     }
   }
