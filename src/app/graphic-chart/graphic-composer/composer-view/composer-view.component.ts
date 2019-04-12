@@ -24,6 +24,7 @@ export class ComposerViewComponent implements OnInit {
   canvasHeight: number;
   backGroundImage: string | ArrayBuffer | null = null;
   backgroundSize = '100% 100%';
+  isEditMode = true;
   symbolList: SymbolInfo[] = [
     {
       symbolId: uuid.v4(),
@@ -199,7 +200,10 @@ export class ComposerViewComponent implements OnInit {
         sanitizer.bypassSecurityTrustResourceUrl('/assets/save.svg'))
       .addSvgIcon(
         'cancel',
-        sanitizer.bypassSecurityTrustResourceUrl('/assets/cancel.svg'));
+        sanitizer.bypassSecurityTrustResourceUrl('/assets/cancel.svg'))
+      .addSvgIcon(
+        'edit',
+        sanitizer.bypassSecurityTrustResourceUrl('/assets/edit.svg'));
     this.canvasProps = this.fb.group({
       width: [6],
       height: [6],
@@ -287,6 +291,22 @@ export class ComposerViewComponent implements OnInit {
           / this.bgImageHeight}px ${this.canvasHeight}px`;
         break;
     }
+  }
+
+  onSave() {
+    this.isEditMode = false;
+  }
+
+  onCloseEdit() {
+    this.updateCanvasSize();
+  }
+
+  onOpened() {
+    this.updateCanvasSize();
+  }
+
+  onEdit() {
+    this.isEditMode = true;
   }
 
   private updateSymbolList() {
