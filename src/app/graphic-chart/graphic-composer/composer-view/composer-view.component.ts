@@ -29,44 +29,44 @@ export class ComposerViewComponent implements OnInit {
       symbolId: uuid.v4(),
       symbolType: 'symbol-wrapper',
       tagName: 'NewtonInsight.SysTimeSec',
-      positionXRatio: 0.3,
-      positionYRatio: 0.5,
+      positionXRatio: 0.08,
+      positionYRatio: 0.1,
       positionX: 0,
       positionY: 0,
       svgWidth: 0,
-      widthRatio: 0.12,
+      widthRatio: 0.11,
       strokeRGB: '255, 235, 59'
     },
     {
       symbolId: uuid.v4(),
       symbolType: 'clock360',
       tagName: 'NewtonInsight.SysTimeSec',
-      positionXRatio: 0.3,
-      positionYRatio: 0.5,
+      positionXRatio: 0.08,
+      positionYRatio: 0.3,
       positionX: 0,
       positionY: 0,
       svgWidth: 0,
-      widthRatio: 0.12,
+      widthRatio: 0.11,
       strokeRGB: '255, 235, 59'
     },
     {
       symbolId: uuid.v4(),
       symbolType: 'clock90',
       tagName: 'SysTimeSec',
-      positionXRatio: 0.3,
-      positionYRatio: 0.5,
+      positionXRatio: 0.4,
+      positionYRatio: 0.85,
       positionX: 0,
       positionY: 0,
       svgWidth: 0,
-      widthRatio: 0.12,
+      widthRatio: 0.06,
       strokeRGB: '255, 235, 59'
     },
     {
       symbolId: uuid.v4(),
       symbolType: 'trend',
       tagName: 'SinTrend',
-      positionXRatio: 0.3,
-      positionYRatio: 0.5,
+      positionXRatio: 0.85,
+      positionYRatio: 0.1,
       positionX: 0,
       positionY: 0,
       svgWidth: 0,
@@ -77,8 +77,8 @@ export class ComposerViewComponent implements OnInit {
       symbolId: uuid.v4(),
       symbolType: 'trend',
       tagName: 'Pump',
-      positionXRatio: 0.3,
-      positionYRatio: 0.5,
+      positionXRatio: 0.85,
+      positionYRatio: 0.3,
       positionX: 0,
       positionY: 0,
       svgWidth: 0,
@@ -89,7 +89,7 @@ export class ComposerViewComponent implements OnInit {
       symbolId: uuid.v4(),
       symbolType: 'trend',
       tagName: 'Pressure',
-      positionXRatio: 0.3,
+      positionXRatio: 0.85,
       positionYRatio: 0.5,
       positionX: 0,
       positionY: 0,
@@ -101,8 +101,8 @@ export class ComposerViewComponent implements OnInit {
       symbolId: uuid.v4(),
       symbolType: 'horizontal-bar',
       tagName: 'Pressure',
-      positionXRatio: 0.3,
-      positionYRatio: 0.5,
+      positionXRatio: 0.4,
+      positionYRatio: 0.1,
       positionX: 0,
       positionY: 0,
       svgWidth: 0,
@@ -113,25 +113,25 @@ export class ComposerViewComponent implements OnInit {
       symbolId: uuid.v4(),
       symbolType: 'radio-circle',
       tagName: 'isPumping',
-      positionXRatio: 0.3,
-      positionYRatio: 0.5,
+      positionXRatio: 0.65,
+      positionYRatio: 0.65,
       positionX: 0,
       positionY: 0,
       svgWidth: 0,
       widthRatio: 0.05,
-      strokeRGB: '255, 235, 59'
+      strokeRGB: '76, 175, 80'
     },
     {
       symbolId: uuid.v4(),
       symbolType: 'radio-rect',
       tagName: 'noPumping',
       positionXRatio: 0.3,
-      positionYRatio: 0.5,
+      positionYRatio: 0.1,
       positionX: 0,
       positionY: 0,
       svgWidth: 0,
-      widthRatio: 0.05,
-      strokeRGB: '255, 235, 59'
+      widthRatio: 0.04,
+      strokeRGB: '76, 175, 80'
     }
   ];
   @ViewChild('contentHolder')
@@ -193,7 +193,13 @@ export class ComposerViewComponent implements OnInit {
       sanitizer.bypassSecurityTrustResourceUrl('/assets/add.svg'))
       .addSvgIcon(
         'minus',
-        sanitizer.bypassSecurityTrustResourceUrl('/assets/minus.svg'));
+        sanitizer.bypassSecurityTrustResourceUrl('/assets/minus.svg'))
+      .addSvgIcon(
+        'save',
+        sanitizer.bypassSecurityTrustResourceUrl('/assets/save.svg'))
+      .addSvgIcon(
+        'cancel',
+        sanitizer.bypassSecurityTrustResourceUrl('/assets/cancel.svg'));
     this.canvasProps = this.fb.group({
       width: [6],
       height: [6],
