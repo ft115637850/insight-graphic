@@ -55,6 +55,10 @@ export class SymbolWrapperComponent implements OnInit, OnDestroy {
     this.tagsValueSvc.unSubscribe(this.subscriptionId, this.tagName);
   }
 
+  onSymbolMoved(e) {
+    console.log(e);
+  }
+
   private updateValueArcData() {
     const valueSweepAngle = this.getSweepAngleFromValue(this.min, this.max, this.sweepAngle, this.currentValue);
     const valueEndPt = this.getXYFromAngle(this.centerX, this.centerY, this.r, this.startAngle + valueSweepAngle);
