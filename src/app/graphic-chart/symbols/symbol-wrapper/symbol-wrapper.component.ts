@@ -1,5 +1,6 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import {TagsValueService} from '../../../services/tags-value.service';
+import { SymbolPosition } from '../../../interfaces/symbol-position.data';
 
 @Component({
   selector: 'app-symbol-wrapper',
@@ -21,7 +22,9 @@ export class SymbolWrapperComponent implements OnInit, OnDestroy {
   @Input() positionX = 0;
   @Input() positionY = 0;
   @Input() svgWidth = 100;
+  @Input() symbolId = '';
   @Input() tagName: string;
+  @Output() symbolMoved = new EventEmitter<SymbolPosition>();
   currentValue: number;
   unit: string;
   max: number;
@@ -56,7 +59,8 @@ export class SymbolWrapperComponent implements OnInit, OnDestroy {
   }
 
   onSymbolMoved(e) {
-    console.log(e);
+    e.symbolId = this.symbolId;
+    this.symbolMoved.emit(e);
   }
 
   private updateValueArcData() {

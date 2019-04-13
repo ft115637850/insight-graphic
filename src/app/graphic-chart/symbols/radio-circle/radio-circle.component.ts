@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
 import {TagsValueService} from '../../../services/tags-value.service';
+import { SymbolPosition } from '../../../interfaces/symbol-position.data';
 
 @Component({
   selector: 'app-radio-circle',
@@ -15,7 +16,9 @@ export class RadioCircleComponent implements OnInit, OnDestroy {
   @Input() positionX = 0;
   @Input() positionY = 0;
   @Input() svgWidth = 100;
+  @Input() symbolId = '';
   @Input() tagName: string;
+  @Output() symbolMoved = new EventEmitter<SymbolPosition>();
   unit: string;
   lightened: boolean;
   pathStroke: string;
@@ -38,4 +41,8 @@ export class RadioCircleComponent implements OnInit, OnDestroy {
     this.tagsValueSvc.unSubscribe(this.subscriptionId, this.tagName);
   }
 
+  onSymbolMoved(e) {
+    e.symbolId = this.symbolId;
+    this.symbolMoved.emit(e);
+  }
 }

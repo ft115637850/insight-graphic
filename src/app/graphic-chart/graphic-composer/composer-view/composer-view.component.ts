@@ -309,6 +309,14 @@ export class ComposerViewComponent implements OnInit {
     this.isEditMode = true;
   }
 
+  onSymbolMoved(e) {
+    const sym = this.symbolList.find(s => s.symbolId === e.symbolId);
+    sym.positionX = e.positionX;
+    sym.positionXRatio = sym.positionX / this.canvasWidth;
+    sym.positionY = e.positionY;
+    sym.positionYRatio = sym.positionY / this.canvasHeight;
+  }
+
   private updateSymbolList() {
     this.symbolList.forEach(symbol => {
       symbol.positionX = symbol.positionXRatio * this.canvasWidth;

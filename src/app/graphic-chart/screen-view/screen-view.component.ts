@@ -1,6 +1,7 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import {TagsValueService} from '../../services/tags-value.service';
 import {SymbolInfo} from '../../interfaces/symbol-info.data';
+import { SymbolPosition } from '../../interfaces/symbol-position.data';
 
 @Component({
   selector: 'app-screen-view',
@@ -11,6 +12,7 @@ export class ScreenViewComponent implements OnInit, OnDestroy {
   @Input() backgroundImage: string;
   @Input() backgroundSize = '100% 100%';
   @Input() symbolList: SymbolInfo[] = [];
+  @Output() symbolMoved = new EventEmitter<SymbolPosition>();
   private socket: WebSocket;
   constructor(private tagsValueSvc: TagsValueService) {}
 
@@ -20,5 +22,9 @@ export class ScreenViewComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.tagsValueSvc.disconnectWs();
+  }
+
+  onSymbolMoved(e) {
+    this.symbolMoved.emit(e);
   }
 }

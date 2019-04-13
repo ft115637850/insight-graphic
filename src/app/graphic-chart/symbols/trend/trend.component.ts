@@ -1,6 +1,7 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { interval } from 'rxjs';
 import {TagsValueService} from '../../../services/tags-value.service';
+import { SymbolPosition } from '../../../interfaces/symbol-position.data';
 
 
 @Component({
@@ -25,7 +26,9 @@ export class TrendComponent implements OnInit, OnDestroy {
   @Input() positionX = 0;
   @Input() positionY = 0;
   @Input() svgWidth = 100;
+  @Input() symbolId = '';
   @Input() tagName: string;
+  @Output() symbolMoved = new EventEmitter<SymbolPosition>();
   unit: string;
   max: number;
   min: number;
@@ -62,6 +65,11 @@ export class TrendComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.tagsValueSvc.unSubscribe(this.subscriptionId, this.tagName);
     this.intervalSubscriber.unsubscribe();
+  }
+
+  onSymbolMoved(e) {
+    e.symbolId = this.symbolId;
+    this.symbolMoved.emit(e);
   }
 
   private getLastY(): number {
