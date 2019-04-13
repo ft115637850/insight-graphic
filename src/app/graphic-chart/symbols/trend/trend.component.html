@@ -1,11 +1,14 @@
-<div class="drag-wrapper" [style.top.px]="positionY" [style.left.px]="positionX" appSymbolResizable>
+<div class="drag-wrapper" [style.width.px]="svgWidth"
+  [style.height.px]="this.svgWidth * this.viewBoxHeight / this.viewBoxWidth" [style.top.px]="positionY"
+  [style.left.px]="positionX" appSymbolResizable (symbolResized)="onSymbolResized($event)">
   <div style="width: auto; height: auto; " appSymbolDragable (symbolMoved)="onSymbolMoved($event)">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 100" version="1.1"
-      [style.width.px]="svgWidth" [style.height.px]="this.svgWidth * this.viewBoxHeight / this.viewBoxWidth"
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 100" version="1.1" [style.width.px]="svgWidth"
+      [style.height.px]="this.svgWidth * this.viewBoxHeight / this.viewBoxWidth"
       style="top: 22px; left: -1px; overflow: hidden; visibility: inherit;">
       <path [attr.fill]="pathStroke" stroke="transparent" x="1px" y="1px" [attr.d]="valueAreaPath">
       </path>
-      <path fill="transparent" x="1px" y="1px" [attr.d]="valuePath" [style.stroke]="valueStroke" style="stroke-width: 2;">
+      <path fill="transparent" x="1px" y="1px" [attr.d]="valuePath" [style.stroke]="valueStroke"
+        style="stroke-width: 2;">
       </path>
     </svg>
   </div>

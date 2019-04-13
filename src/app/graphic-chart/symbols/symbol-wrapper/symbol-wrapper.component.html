@@ -1,13 +1,14 @@
-<div class="drag-wrapper" [style.top.px]="positionY" [style.left.px]="positionX" appSymbolResizable >
+<div class="drag-wrapper" [style.width.px]="svgWidth"
+  [style.height.px]="this.svgWidth * this.viewBoxHeight / this.viewBoxWidth" [style.top.px]="positionY"
+  [style.left.px]="positionX" appSymbolResizable (symbolResized)="onSymbolResized($event)">
   <div style="width: auto; height: auto; " appSymbolDragable (symbolMoved)="onSymbolMoved($event)">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 190 165" version="1.1"
-      [style.width.px]="svgWidth" [style.height.px]="this.svgWidth * this.viewBoxHeight / this.viewBoxWidth"
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 190 165" version="1.1" [style.width.px]="svgWidth"
+      [style.height.px]="this.svgWidth * this.viewBoxHeight / this.viewBoxWidth"
       style="top: 18.8003px; left: 0.333332px; transform-origin: -0.5px -0.5px; overflow: visible; visibility: inherit;">
       <path d="M 29.96699141100894 156.03300858899107 A 75 75 0 1 1 136.03300858899107 156.03300858899107"
-        fill="transparent"
-        style="stroke-dasharray: 0; stroke-width: 15;" [style.stroke]="pathStroke"></path>
-      <path [attr.d]="valuePath" fill="transparent"
-        style="stroke-dasharray: 0; stroke-width: 15;" [style.stroke]="valueStroke"></path>
+        fill="transparent" style="stroke-dasharray: 0; stroke-width: 15;" [style.stroke]="pathStroke"></path>
+      <path [attr.d]="valuePath" fill="transparent" style="stroke-dasharray: 0; stroke-width: 15;"
+        [style.stroke]="valueStroke"></path>
       <text x="3" y="16" style="font:19px Microsoft Sans Serif;fill:rgba(33, 33, 33, 0.6);">{{tagName}}</text>
       <text x="83" y="103" text-anchor="middle"
         style="font:23px Microsoft Sans Serif;fill:rgba(33, 33, 33, 1);">{{currentValue}}</text>

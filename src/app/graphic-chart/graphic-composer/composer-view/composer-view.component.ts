@@ -317,6 +317,12 @@ export class ComposerViewComponent implements OnInit {
     sym.positionYRatio = sym.positionY / this.canvasHeight;
   }
 
+  onSymbolResized(e) {
+    const sym = this.symbolList.find(s => s.symbolId === e.symbolId);
+    sym.svgWidth = e.svgWidth;
+    sym.widthRatio = sym.svgWidth / this.canvasWidth;
+  }
+
   private updateSymbolList() {
     this.symbolList.forEach(symbol => {
       symbol.positionX = symbol.positionXRatio * this.canvasWidth;

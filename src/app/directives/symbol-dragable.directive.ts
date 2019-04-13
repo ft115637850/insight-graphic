@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener, EventEmitter, Output, NgZone } from '@angular/core';
+import { Directive, ElementRef, HostListener, EventEmitter, Output } from '@angular/core';
 import { SymbolPosition } from '../interfaces/symbol-position.data';
 
 @Directive({
@@ -13,7 +13,7 @@ export class SymbolDragableDirective {
   private pos4 = 0;
   private wrapperEle: HTMLElement;
 
-  constructor(private elementRef: ElementRef, private ngZone: NgZone) {
+  constructor(private elementRef: ElementRef) {
     if (this.elementRef && this.elementRef.nativeElement.parentElement) {
       this.wrapperEle = this.elementRef.nativeElement.parentElement;
     }
@@ -38,11 +38,9 @@ export class SymbolDragableDirective {
     /* stop moving when mouse button is released:*/
     document.onmouseup = null;
     document.onmousemove = null;
-    this.ngZone.runOutsideAngular(() => {
-      const newLeft = parseFloat(this.wrapperEle.style.left.substr(0, this.wrapperEle.style.left.length - 2));
-      const newTop = parseFloat(this.wrapperEle.style.top.substr(0, this.wrapperEle.style.top.length - 2));
-      this.symbolMoved.emit({symbolId: '', positionX: newLeft, positionY: newTop});
-    });
+    const newLeft = parseFloat(this.wrapperEle.style.left.substr(0, this.wrapperEle.style.left.length - 2));
+    const newTop = parseFloat(this.wrapperEle.style.top.substr(0, this.wrapperEle.style.top.length - 2));
+    this.symbolMoved.emit({symbolId: '', positionX: newLeft, positionY: newTop});
   }
 
   private elementDrag(e: MouseEvent) {

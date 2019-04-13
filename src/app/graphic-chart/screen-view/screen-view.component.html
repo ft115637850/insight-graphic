@@ -3,24 +3,31 @@
   <ng-template ngFor let-symbol [ngForOf]="symbolList">
     <app-symbol-wrapper *ngIf="symbol.symbolType === 'symbol-wrapper'" [tagName]="symbol.tagName"
       [positionX]="symbol.positionX" [positionY]="symbol.positionY" [svgWidth]="symbol.svgWidth"
-      [strokeRGB]="symbol.strokeRGB" [symbolId]="symbol.symbolId" (symbolMoved)="onSymbolMoved($event)"></app-symbol-wrapper>
-    <app-clock360 *ngIf="symbol.symbolType === 'clock360'" [tagName]="symbol.tagName"
-      [positionX]="symbol.positionX" [positionY]="symbol.positionY" [svgWidth]="symbol.svgWidth"
-      [strokeRGB]="symbol.strokeRGB" [symbolId]="symbol.symbolId" (symbolMoved)="onSymbolMoved($event)"></app-clock360>
-    <app-clock90 *ngIf="symbol.symbolType === 'clock90'" [tagName]="symbol.tagName"
-      [positionX]="symbol.positionX" [positionY]="symbol.positionY" [svgWidth]="symbol.svgWidth"
-      [strokeRGB]="symbol.strokeRGB" [symbolId]="symbol.symbolId" (symbolMoved)="onSymbolMoved($event)"></app-clock90>
-    <app-trend *ngIf="symbol.symbolType === 'trend'" [tagName]="symbol.tagName"
-      [positionX]="symbol.positionX" [positionY]="symbol.positionY" [svgWidth]="symbol.svgWidth"
-      [strokeRGB]="symbol.strokeRGB" [symbolId]="symbol.symbolId" (symbolMoved)="onSymbolMoved($event)"></app-trend>
+      [strokeRGB]="symbol.strokeRGB" [symbolId]="symbol.symbolId" (symbolMoved)="onSymbolMoved($event)"
+      (symbolResized)="onSymbolResized($event)"></app-symbol-wrapper>
+    <app-clock360 *ngIf="symbol.symbolType === 'clock360'" [tagName]="symbol.tagName" [positionX]="symbol.positionX"
+      [positionY]="symbol.positionY" [svgWidth]="symbol.svgWidth" [strokeRGB]="symbol.strokeRGB"
+      [symbolId]="symbol.symbolId" (symbolMoved)="onSymbolMoved($event)" (symbolResized)="onSymbolResized($event)">
+    </app-clock360>
+    <app-clock90 *ngIf="symbol.symbolType === 'clock90'" [tagName]="symbol.tagName" [positionX]="symbol.positionX"
+      [positionY]="symbol.positionY" [svgWidth]="symbol.svgWidth" [strokeRGB]="symbol.strokeRGB"
+      [symbolId]="symbol.symbolId" (symbolMoved)="onSymbolMoved($event)" (symbolResized)="onSymbolResized($event)">
+    </app-clock90>
+    <app-trend *ngIf="symbol.symbolType === 'trend'" [tagName]="symbol.tagName" [positionX]="symbol.positionX"
+      [positionY]="symbol.positionY" [svgWidth]="symbol.svgWidth" [strokeRGB]="symbol.strokeRGB"
+      [symbolId]="symbol.symbolId" (symbolMoved)="onSymbolMoved($event)" (symbolResized)="onSymbolResized($event)">
+    </app-trend>
     <app-horizontal-bar *ngIf="symbol.symbolType === 'horizontal-bar'" [tagName]="symbol.tagName"
       [positionX]="symbol.positionX" [positionY]="symbol.positionY" [svgWidth]="symbol.svgWidth"
-      [strokeRGB]="symbol.strokeRGB" [symbolId]="symbol.symbolId" (symbolMoved)="onSymbolMoved($event)"></app-horizontal-bar>
+      [strokeRGB]="symbol.strokeRGB" [symbolId]="symbol.symbolId" (symbolMoved)="onSymbolMoved($event)"
+      (symbolResized)="onSymbolResized($event)"></app-horizontal-bar>
     <app-radio-circle *ngIf="symbol.symbolType === 'radio-circle'" [tagName]="symbol.tagName"
       [positionX]="symbol.positionX" [positionY]="symbol.positionY" [svgWidth]="symbol.svgWidth"
-      [strokeRGB]="symbol.strokeRGB" [symbolId]="symbol.symbolId" (symbolMoved)="onSymbolMoved($event)"></app-radio-circle>
-    <app-radio-rect *ngIf="symbol.symbolType === 'radio-rect'" [tagName]="symbol.tagName"
-      [positionX]="symbol.positionX" [positionY]="symbol.positionY" [svgWidth]="symbol.svgWidth"
-      [strokeRGB]="symbol.strokeRGB" [symbolId]="symbol.symbolId" (symbolMoved)="onSymbolMoved($event)"></app-radio-rect>
+      [strokeRGB]="symbol.strokeRGB" [symbolId]="symbol.symbolId" (symbolMoved)="onSymbolMoved($event)"
+      (symbolResized)="onSymbolResized($event)"></app-radio-circle>
+    <app-radio-rect *ngIf="symbol.symbolType === 'radio-rect'" [tagName]="symbol.tagName" [positionX]="symbol.positionX"
+      [positionY]="symbol.positionY" [svgWidth]="symbol.svgWidth" [strokeRGB]="symbol.strokeRGB"
+      [symbolId]="symbol.symbolId" (symbolMoved)="onSymbolMoved($event)" (symbolResized)="onSymbolResized($event)">
+    </app-radio-rect>
   </ng-template>
 </div>

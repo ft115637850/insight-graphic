@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
 import {TagsValueService} from '../../../services/tags-value.service';
 import { SymbolPosition } from '../../../interfaces/symbol-position.data';
+import { SymbolSize } from '../../../interfaces/symbol-size.data';
 
 @Component({
   selector: 'app-radio-circle',
@@ -19,6 +20,7 @@ export class RadioCircleComponent implements OnInit, OnDestroy {
   @Input() symbolId = '';
   @Input() tagName: string;
   @Output() symbolMoved = new EventEmitter<SymbolPosition>();
+  @Output() symbolResized = new EventEmitter<SymbolSize>();
   unit: string;
   lightened: boolean;
   pathStroke: string;
@@ -44,5 +46,10 @@ export class RadioCircleComponent implements OnInit, OnDestroy {
   onSymbolMoved(e) {
     e.symbolId = this.symbolId;
     this.symbolMoved.emit(e);
+  }
+
+  onSymbolResized(e) {
+    e.symbolId = this.symbolId;
+    this.symbolResized.emit(e);
   }
 }

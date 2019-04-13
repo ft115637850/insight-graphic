@@ -1,10 +1,12 @@
-import { Directive, ElementRef, HostListener } from '@angular/core';
+import { Directive, ElementRef, HostListener, Output, EventEmitter } from '@angular/core';
+import { SymbolSize } from '../interfaces/symbol-size.data';
 
 @Directive({
   selector: '[appSymbolResizable]'
 })
 export class SymbolResizableDirective {
-
+  @Output()
+  public symbolResized = new EventEmitter<SymbolSize>();
   private pos1 = 0;
   private pos2 = 0;
   private pos3 = 0;
@@ -35,7 +37,7 @@ export class SymbolResizableDirective {
     // get the mouse cursor position at startup:
     this.pos3 = event.clientX;
     this.pos4 = event.clientY;
-    document.onmouseup = this.closeDragElement;
+    document.onmouseup = this.closeDragElement.bind(this);
     // call a function whenever the cursor moves:
     document.onmousemove = this.elementDrag.bind(this);
   }
@@ -44,6 +46,9 @@ export class SymbolResizableDirective {
     /* stop moving when mouse button is released:*/
     document.onmouseup = null;
     document.onmousemove = null;
+    const newWidth = parseFloat(this.svgEle.style.getPropertyValue('width'));
+    const newHeight = parseFloat(this.svgEle.style.getPropertyValue('height'));
+    this.symbolResized.emit({symbolId: '', svgWidth: newWidth, svgHeight: newHeight});
   }
 
   private elementDrag(e: MouseEvent) {

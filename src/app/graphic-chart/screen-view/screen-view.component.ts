@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angu
 import {TagsValueService} from '../../services/tags-value.service';
 import {SymbolInfo} from '../../interfaces/symbol-info.data';
 import { SymbolPosition } from '../../interfaces/symbol-position.data';
+import { SymbolSize } from '../../interfaces/symbol-size.data';
 
 @Component({
   selector: 'app-screen-view',
@@ -13,6 +14,7 @@ export class ScreenViewComponent implements OnInit, OnDestroy {
   @Input() backgroundSize = '100% 100%';
   @Input() symbolList: SymbolInfo[] = [];
   @Output() symbolMoved = new EventEmitter<SymbolPosition>();
+  @Output() symbolResized = new EventEmitter<SymbolSize>();
   private socket: WebSocket;
   constructor(private tagsValueSvc: TagsValueService) {}
 
@@ -26,5 +28,9 @@ export class ScreenViewComponent implements OnInit, OnDestroy {
 
   onSymbolMoved(e) {
     this.symbolMoved.emit(e);
+  }
+
+  onSymbolResized(e) {
+    this.symbolResized.emit(e);
   }
 }

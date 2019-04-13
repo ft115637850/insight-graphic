@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import {TagsValueService} from '../../../services/tags-value.service';
 import { SymbolPosition } from '../../../interfaces/symbol-position.data';
+import { SymbolSize } from '../../../interfaces/symbol-size.data';
 
 @Component({
   selector: 'app-horizontal-bar',
@@ -20,6 +21,7 @@ export class HorizontalBarComponent implements OnInit, OnDestroy {
   @Input() symbolId = '';
   @Input() tagName: string;
   @Output() symbolMoved = new EventEmitter<SymbolPosition>();
+  @Output() symbolResized = new EventEmitter<SymbolSize>();
   currentValue: number;
   unit: string;
   max: number;
@@ -52,6 +54,11 @@ export class HorizontalBarComponent implements OnInit, OnDestroy {
   onSymbolMoved(e) {
     e.symbolId = this.symbolId;
     this.symbolMoved.emit(e);
+  }
+
+  onSymbolResized(e) {
+    e.symbolId = this.symbolId;
+    this.symbolResized.emit(e);
   }
 
   private getLastX(): number {

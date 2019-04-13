@@ -17,7 +17,7 @@
         (window:resize)="onResize($event)">
         <div class="canvas" [style.width.px]="canvasWidth" [style.height.px]="canvasHeight">
           <app-screen-view [backgroundImage]="backGroundImage" [backgroundSize]="backgroundSize"
-            [symbolList]="symbolList" (symbolMoved)="onSymbolMoved($event)">
+            [symbolList]="symbolList" (symbolMoved)="onSymbolMoved($event)" (symbolResized)="onSymbolResized($event)">
           </app-screen-view>
         </div>
       </div>

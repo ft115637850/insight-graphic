@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angu
 import { interval } from 'rxjs';
 import {TagsValueService} from '../../../services/tags-value.service';
 import { SymbolPosition } from '../../../interfaces/symbol-position.data';
-
+import { SymbolSize } from '../../../interfaces/symbol-size.data';
 
 @Component({
   selector: 'app-trend',
@@ -29,6 +29,7 @@ export class TrendComponent implements OnInit, OnDestroy {
   @Input() symbolId = '';
   @Input() tagName: string;
   @Output() symbolMoved = new EventEmitter<SymbolPosition>();
+  @Output() symbolResized = new EventEmitter<SymbolSize>();
   unit: string;
   max: number;
   min: number;
@@ -70,6 +71,11 @@ export class TrendComponent implements OnInit, OnDestroy {
   onSymbolMoved(e) {
     e.symbolId = this.symbolId;
     this.symbolMoved.emit(e);
+  }
+
+  onSymbolResized(e) {
+    e.symbolId = this.symbolId;
+    this.symbolResized.emit(e);
   }
 
   private getLastY(): number {
