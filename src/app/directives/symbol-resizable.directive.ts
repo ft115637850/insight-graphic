@@ -18,7 +18,7 @@ export class SymbolResizableDirective {
 
   @HostListener('mousedown', ['$event', '$event.target'])
   public onMouseDown(event: MouseEvent, targetElement: HTMLElement): void {
-    if (!this.elementRef) {
+    if (!this.elementRef || targetElement.nodeName.toLocaleLowerCase() !== 'div') {
         return;
     }
     if (!this.svgEle) {
