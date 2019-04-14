@@ -58,7 +58,7 @@
               <button mat-raised-button color="accent" (click)="removeBackground()">Remove Background</button>
             </div>
             <div class="property-row">
-              <mat-radio-group formControlName="bgSizeOption" (change)="resizeBackground()">
+              <mat-radio-group formControlName="bgSizeOption" (change)="resizeBackground()" [disabled]="backGroundImage === null">
                 <mat-radio-button value="horizontal">Horizontal</mat-radio-button>
                 <mat-radio-button value="vertical">Vertical</mat-radio-button>
                 <mat-radio-button value="stretch">Stretch</mat-radio-button>
@@ -66,7 +66,7 @@
             </div>
           </form>
         </mat-tab>
-        <mat-tab label="Show Data"> Show Data </mat-tab>
+        <mat-tab label="Show Data"> <app-tag-list></app-tag-list> </mat-tab>
         <mat-tab label="Cards"> Cards </mat-tab>
       </mat-tab-group>
     </mat-sidenav>

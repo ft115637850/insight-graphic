@@ -14,7 +14,8 @@ import { RadioCircleComponent } from './symbols/radio-circle/radio-circle.compon
 import { RadioRectComponent } from './symbols/radio-rect/radio-rect.component';
 import { ComposerViewComponent } from './graphic-composer/composer-view/composer-view.component';
 import {MatCardModule, MatSidenavModule, MatButtonModule,
-  MatIconModule, MatSliderModule, MatRadioModule, MatTabsModule} from '@angular/material';
+  MatIconModule, MatSliderModule, MatRadioModule, MatTabsModule, MatExpansionModule} from '@angular/material';
+import { TagListComponent } from './graphic-composer/tag-list/tag-list.component';
 
 @NgModule({
   declarations: [SymbolWrapperComponent,
@@ -22,7 +23,8 @@ import {MatCardModule, MatSidenavModule, MatButtonModule,
     ScreenViewComponent, TrendComponent, Clock360Component,
     Clock90Component, HorizontalBarComponent, RadioCircleComponent,
     RadioRectComponent,
-    ComposerViewComponent],
+    ComposerViewComponent,
+    TagListComponent],
   imports: [
     MatCardModule,
     MatSidenavModule,
@@ -31,6 +33,7 @@ import {MatCardModule, MatSidenavModule, MatButtonModule,
     MatSliderModule,
     MatRadioModule,
     MatTabsModule,
+    MatExpansionModule,
     ReactiveFormsModule,
     CommonModule,
     GraphicChartRoutingModule
