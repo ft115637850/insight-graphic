@@ -203,7 +203,10 @@ export class ComposerViewComponent implements OnInit {
         sanitizer.bypassSecurityTrustResourceUrl('/assets/cancel.svg'))
       .addSvgIcon(
         'edit',
-        sanitizer.bypassSecurityTrustResourceUrl('/assets/edit.svg'));
+        sanitizer.bypassSecurityTrustResourceUrl('/assets/edit.svg'))
+      .addSvgIcon(
+        'fullscreen',
+        sanitizer.bypassSecurityTrustResourceUrl('/assets/fullscreen.svg'));
     this.canvasProps = this.fb.group({
       width: [6],
       height: [6],
