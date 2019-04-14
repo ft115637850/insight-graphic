@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener, EventEmitter, Output, Input } from '@angular/core';
+import { Directive, ElementRef, HostListener, EventEmitter, Output, Input, NgZone } from '@angular/core';
 import { SymbolPosition } from '../interfaces/symbol-position.data';
 
 @Directive({
@@ -16,7 +16,7 @@ export class SymbolDragableDirective {
   private wrapperEle: HTMLElement;
   private boundaryEle: HTMLElement;
 
-  constructor(private elementRef: ElementRef) {
+  constructor(private elementRef: ElementRef, private ngZone: NgZone) {
     if (this.elementRef && this.elementRef.nativeElement.parentElement) {
       this.wrapperEle = this.elementRef.nativeElement.parentElement;
     }
@@ -28,12 +28,14 @@ export class SymbolDragableDirective {
         return;
     }
 
+    event.preventDefault();
     if (!this.boundaryEle)
     {
-      this.boundaryEle = this.getBoundaryElement();
+      this.ngZone.runOutsideAngular(() => {
+        this.boundaryEle = this.getBoundaryElement();
+      });
     }
 
-    event.preventDefault();
     // get the mouse cursor position at startup:
     this.pos3 = event.clientX;
     this.pos4 = event.clientY;
@@ -53,26 +55,28 @@ export class SymbolDragableDirective {
 
   private elementDrag(e: MouseEvent) {
     e.preventDefault();
-    const boundary = this.boundaryEle.getBoundingClientRect();
-    if (e.clientX < boundary.left || e.clientX > boundary.right || e.clientY < boundary.top || e.clientY > boundary.bottom) {
-      return;
-    }
-    const wrapper = this.wrapperEle.getBoundingClientRect();
+    this.ngZone.runOutsideAngular(() => {
+      const boundary = this.boundaryEle.getBoundingClientRect();
+      if (e.clientX < boundary.left || e.clientX > boundary.right || e.clientY < boundary.top || e.clientY > boundary.bottom) {
+        return;
+      }
+      const wrapper = this.wrapperEle.getBoundingClientRect();
 
-    // calculate the new cursor position:
-    this.pos1 = this.pos3 - e.clientX;
-    this.pos2 = this.pos4 - e.clientY;
-    this.pos3 = e.clientX;
-    this.pos4 = e.clientY;
-    // set the element's new position:
-    // TO DO: coerce position
-    let newTop = this.wrapperEle.offsetTop - this.pos2 > 0 ? this.wrapperEle.offsetTop - this.pos2 : 0;
-    let newLeft = this.wrapperEle.offsetLeft - this.pos1 > 0 ? this.wrapperEle.offsetLeft - this.pos1 : 0;
-    newTop = newTop > boundary.height - wrapper.height ? boundary.height - wrapper.height : newTop;
-    newLeft = newLeft > boundary.width - wrapper.width ? boundary.width - wrapper.width : newLeft;
+      // calculate the new cursor position:
+      this.pos1 = this.pos3 - e.clientX;
+      this.pos2 = this.pos4 - e.clientY;
+      this.pos3 = e.clientX;
+      this.pos4 = e.clientY;
+      // set the element's new position:
+      // TO DO: coerce position
+      let newTop = this.wrapperEle.offsetTop - this.pos2 > 0 ? this.wrapperEle.offsetTop - this.pos2 : 0;
+      let newLeft = this.wrapperEle.offsetLeft - this.pos1 > 0 ? this.wrapperEle.offsetLeft - this.pos1 : 0;
+      newTop = newTop > boundary.height - wrapper.height ? boundary.height - wrapper.height : newTop;
+      newLeft = newLeft > boundary.width - wrapper.width ? boundary.width - wrapper.width : newLeft;
 
-    this.wrapperEle.style.top = newTop + 'px';
-    this.wrapperEle.style.left = newLeft + 'px';
+      this.wrapperEle.style.top = newTop + 'px';
+      this.wrapperEle.style.left = newLeft + 'px';
+    });
   }
 
   private getBoundaryElement() {
