@@ -207,7 +207,7 @@ export class ComposerViewComponent implements OnInit {
     this.canvasProps = this.fb.group({
       width: [6],
       height: [6],
-      bgSizeOption: ['stretch']
+      bgSizeOption: ['horizontal']
     });
   }
 
@@ -254,7 +254,7 @@ export class ComposerViewComponent implements OnInit {
   }
 
   previewImage(e) {
-    this.canvasProps.get('bgSizeOption').setValue('stretch');
+    this.canvasProps.get('bgSizeOption').setValue('horizontal');
     const fr = new FileReader();
     fr.readAsDataURL(e.target.files[0]);
     fr.onload = () => {
@@ -264,13 +264,15 @@ export class ComposerViewComponent implements OnInit {
         this.backGroundImage = fr.result;
         this.bgImageWidth = img.width;
         this.bgImageHeight = img.height;
+        this.backgroundSize = `${this.canvasWidth}px ${this.canvasWidth * this.bgImageHeight
+          / this.bgImageWidth}px`;
       };
     };
   }
 
   removeBackground() {
     this.backGroundImage = null;
-    this.canvasProps.get('bgSizeOption').setValue('stretch');
+    this.canvasProps.get('bgSizeOption').setValue('horizontal');
   }
 
   resizeBackground() {

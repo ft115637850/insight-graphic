@@ -12,24 +12,26 @@ export class SymbolResizableDirective {
   private pos3 = 0;
   private pos4 = 0;
   private svgEle: SVGElement;
+  private originalWith: number;
+  private originalHeight: number;
 
   constructor(private elementRef: ElementRef) {
   }
 
   @HostListener('mousedown', ['$event', '$event.target'])
   public onMouseDown(event: MouseEvent, targetElement: HTMLElement): void {
-    if (!this.elementRef || targetElement.nodeName.toLocaleLowerCase() !== 'div') {
+    if (!this.elementRef || targetElement !== this.elementRef.nativeElement) {
         return;
     }
     if (!this.svgEle) {
       this.svgEle = this.elementRef.nativeElement.getElementsByTagNameNS('http://www.w3.org/2000/svg', 'svg')[0];
     }
 
-    const width = this.elementRef.nativeElement.offsetWidth;
-    const height = this.elementRef.nativeElement.offsetHeight;
+    this.originalWith = this.elementRef.nativeElement.offsetWidth;
+    this.originalHeight = this.elementRef.nativeElement.offsetHeight;
     const x = event.offsetX;
     const y = event.offsetY;
-    if (x < width - 17 || y < height - 17) {
+    if (x < this.originalWith - 17 || y < this.originalHeight - 17) {
         return;
     }
 
@@ -46,8 +48,11 @@ export class SymbolResizableDirective {
     /* stop moving when mouse button is released:*/
     document.onmouseup = null;
     document.onmousemove = null;
-    const newWidth = parseFloat(this.svgEle.style.getPropertyValue('width'));
+    let newWidth = parseFloat(this.svgEle.style.getPropertyValue('width'));
     const newHeight = parseFloat(this.svgEle.style.getPropertyValue('height'));
+    if (newHeight / newWidth > this.originalHeight / this.originalWith) {
+      newWidth = newHeight * this.originalWith / this.originalHeight;
+    }
     this.symbolResized.emit({symbolId: '', svgWidth: newWidth, svgHeight: newHeight});
   }
 
