@@ -1,10 +1,12 @@
-import { Directive, ElementRef, HostListener, EventEmitter, Output } from '@angular/core';
+import { Directive, ElementRef, HostListener, EventEmitter, Output, Input } from '@angular/core';
 import { SymbolPosition } from '../interfaces/symbol-position.data';
 
 @Directive({
   selector: '[appSymbolDragable]'
 })
 export class SymbolDragableDirective {
+  @Input()
+  public dragBoundarySelector: string;
   @Output()
   public symbolMoved = new EventEmitter<SymbolPosition>();
   private pos1 = 0;
@@ -12,6 +14,7 @@ export class SymbolDragableDirective {
   private pos3 = 0;
   private pos4 = 0;
   private wrapperEle: HTMLElement;
+  private boundaryEle: HTMLElement;
 
   constructor(private elementRef: ElementRef) {
     if (this.elementRef && this.elementRef.nativeElement.parentElement) {
@@ -23,6 +26,11 @@ export class SymbolDragableDirective {
   public onMouseDown(event: MouseEvent, targetElement: HTMLElement): void {
     if (!this.elementRef || !this.wrapperEle) {
         return;
+    }
+
+    if (!this.boundaryEle)
+    {
+      this.boundaryEle = this.getBoundaryElement();
     }
 
     event.preventDefault();
@@ -45,14 +53,43 @@ export class SymbolDragableDirective {
 
   private elementDrag(e: MouseEvent) {
     e.preventDefault();
+    const boundary = this.boundaryEle.getBoundingClientRect();
+    if (e.clientX < boundary.left || e.clientX > boundary.right || e.clientY < boundary.top || e.clientY > boundary.bottom) {
+      return;
+    }
+    const wrapper = this.wrapperEle.getBoundingClientRect();
+
     // calculate the new cursor position:
     this.pos1 = this.pos3 - e.clientX;
     this.pos2 = this.pos4 - e.clientY;
     this.pos3 = e.clientX;
     this.pos4 = e.clientY;
     // set the element's new position:
-    // TO DO: restrict position
-    this.wrapperEle.style.top = (this.wrapperEle.offsetTop - this.pos2) + 'px';
-    this.wrapperEle.style.left = (this.wrapperEle.offsetLeft - this.pos1) + 'px';
+    // TO DO: coerce position
+    let newTop = this.wrapperEle.offsetTop - this.pos2 > 0 ? this.wrapperEle.offsetTop - this.pos2 : 0;
+    let newLeft = this.wrapperEle.offsetLeft - this.pos1 > 0 ? this.wrapperEle.offsetLeft - this.pos1 : 0;
+    newTop = newTop > boundary.height - wrapper.height ? boundary.height - wrapper.height : newTop;
+    newLeft = newLeft > boundary.width - wrapper.width ? boundary.width - wrapper.width : newLeft;
+
+    this.wrapperEle.style.top = newTop + 'px';
+    this.wrapperEle.style.left = newLeft + 'px';
+  }
+
+  private getBoundaryElement() {
+    const selector = this.dragBoundarySelector;
+    return selector ? this.getClosestMatchingAncestor(this.elementRef.nativeElement, selector) : null;
+  }
+
+  private getClosestMatchingAncestor(element: HTMLElement, selector: string) {
+    let currentElement = element.parentElement as HTMLElement | null;
+    while (currentElement) {
+      // IE doesn't support `matches` so we have to fall back to `msMatchesSelector`.
+      if (currentElement.matches ? currentElement.matches(selector) :
+          (currentElement as any).msMatchesSelector(selector)) {
+        return currentElement;
+      }
+      currentElement = currentElement.parentElement;
+    }
+    return null;
   }
 }
