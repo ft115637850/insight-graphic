@@ -1,0 +1,17 @@
+.taginfo-row {
+  font-size: 14px;
+  color: #000;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+  .label {
+    flex: 1;
+    opacity: .54;
+    text-align: right;
+    margin-right: 10px;
+  }
+  .value {
+    flex: 2;
+    opacity: .87;
+  }
+}

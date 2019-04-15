@@ -2,7 +2,9 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material';
+import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import { SymbolInfo } from '../../../interfaces/symbol-info.data';
+import { TagInfo } from '../../../interfaces/tag-info.data';
 import { v4 as uuid } from 'uuid';
 
 /*
@@ -25,10 +27,12 @@ export class ComposerViewComponent implements OnInit {
   backGroundImage: string | ArrayBuffer | null = null;
   backgroundSize = '100% 100%';
   isEditMode = true;
+  tagList: TagInfo[];
   symbolList: SymbolInfo[] = [
     {
       symbolId: uuid.v4(),
       symbolType: 'symbol-wrapper',
+      tagId: '',
       tagName: 'NewtonInsight.SysTimeSec',
       positionXRatio: 0.08,
       positionYRatio: 0.1,
@@ -41,6 +45,7 @@ export class ComposerViewComponent implements OnInit {
     {
       symbolId: uuid.v4(),
       symbolType: 'clock360',
+      tagId: '',
       tagName: 'NewtonInsight.SysTimeSec',
       positionXRatio: 0.08,
       positionYRatio: 0.3,
@@ -53,6 +58,7 @@ export class ComposerViewComponent implements OnInit {
     {
       symbolId: uuid.v4(),
       symbolType: 'clock90',
+      tagId: '',
       tagName: 'SysTimeSec',
       positionXRatio: 0.4,
       positionYRatio: 0.85,
@@ -65,6 +71,7 @@ export class ComposerViewComponent implements OnInit {
     {
       symbolId: uuid.v4(),
       symbolType: 'trend',
+      tagId: '',
       tagName: 'SinTrend',
       positionXRatio: 0.85,
       positionYRatio: 0.1,
@@ -77,6 +84,7 @@ export class ComposerViewComponent implements OnInit {
     {
       symbolId: uuid.v4(),
       symbolType: 'trend',
+      tagId: '',
       tagName: 'Pump',
       positionXRatio: 0.85,
       positionYRatio: 0.3,
@@ -89,6 +97,7 @@ export class ComposerViewComponent implements OnInit {
     {
       symbolId: uuid.v4(),
       symbolType: 'trend',
+      tagId: '',
       tagName: 'Pressure',
       positionXRatio: 0.85,
       positionYRatio: 0.5,
@@ -101,6 +110,7 @@ export class ComposerViewComponent implements OnInit {
     {
       symbolId: uuid.v4(),
       symbolType: 'horizontal-bar',
+      tagId: '',
       tagName: 'Pressure',
       positionXRatio: 0.4,
       positionYRatio: 0.1,
@@ -113,6 +123,7 @@ export class ComposerViewComponent implements OnInit {
     {
       symbolId: uuid.v4(),
       symbolType: 'radio-circle',
+      tagId: '',
       tagName: 'isPumping',
       positionXRatio: 0.65,
       positionYRatio: 0.65,
@@ -125,6 +136,7 @@ export class ComposerViewComponent implements OnInit {
     {
       symbolId: uuid.v4(),
       symbolType: 'radio-rect',
+      tagId: '',
       tagName: 'noPumping',
       positionXRatio: 0.3,
       positionYRatio: 0.1,
@@ -326,6 +338,26 @@ export class ComposerViewComponent implements OnInit {
     const sym = this.symbolList.find(s => s.symbolId === e.symbolId);
     sym.svgWidth = e.svgWidth;
     sym.widthRatio = sym.svgWidth / this.canvasWidth;
+  }
+
+  onAddTag(e: CdkDragDrop<TagInfo[]>) {
+    if (e.previousContainer === e.container) {
+      return;
+    }
+    const newTag = e.previousContainer.data[e.previousIndex];
+    this.symbolList = [...this.symbolList, {
+      symbolId: uuid.v4(),
+      symbolType: 'symbol-wrapper',
+      tagId: newTag.tagId,
+      tagName: newTag.tagName,
+      positionXRatio: 0.5,
+      positionYRatio: 0.5,
+      positionX: 0.5 * this.canvasWidth,
+      positionY: 0.5 * this.canvasHeight,
+      svgWidth: 0.11 * this.canvasWidth,
+      widthRatio: 0.11,
+      strokeRGB: '255, 235, 59'
+    }];
   }
 
   private updateSymbolList() {

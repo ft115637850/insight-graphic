@@ -11,13 +11,13 @@
       <mat-icon svgIcon="edit"></mat-icon>
     </button>
     <button mat-icon-button *ngIf="!isEditMode" >
-      <mat-icon svgIcon="fullscreen"></mat-icon>
+      <mat-icon svgIcon="fullscreen" ></mat-icon>
     </button>
   </mat-card>
-  <mat-sidenav-container>
-    <mat-sidenav-content>
+  <mat-sidenav-container cdkDropListGroup>
+    <mat-sidenav-content >
       <div class="content-holder" #contentHolder (window:resize)="onResize($event)">
-        <div class="canvas" [style.width.px]="canvasWidth" [style.height.px]="canvasHeight">
+        <div class="canvas" [style.width.px]="canvasWidth" [style.height.px]="canvasHeight" cdkDropList  (cdkDropListDropped)="onAddTag($event)">
           <app-screen-view [backgroundImage]="backGroundImage" [backgroundSize]="backgroundSize"
             [symbolList]="symbolList" (symbolMoved)="onSymbolMoved($event)" (symbolResized)="onSymbolResized($event)">
           </app-screen-view>

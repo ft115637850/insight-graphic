@@ -15,6 +15,7 @@ import { RadioRectComponent } from './symbols/radio-rect/radio-rect.component';
 import { ComposerViewComponent } from './graphic-composer/composer-view/composer-view.component';
 import {MatCardModule, MatSidenavModule, MatButtonModule,
   MatIconModule, MatSliderModule, MatRadioModule, MatTabsModule, MatExpansionModule} from '@angular/material';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 import { TagListComponent } from './graphic-composer/tag-list/tag-list.component';
 
 @NgModule({
@@ -34,6 +35,7 @@ import { TagListComponent } from './graphic-composer/tag-list/tag-list.component
     MatRadioModule,
     MatTabsModule,
     MatExpansionModule,
+    DragDropModule,
     ReactiveFormsModule,
     CommonModule,
     GraphicChartRoutingModule

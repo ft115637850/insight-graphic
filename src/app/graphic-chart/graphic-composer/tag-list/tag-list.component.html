@@ -1,26 +1,18 @@
-<mat-accordion>
-  <mat-expansion-panel>
+<mat-accordion cdkDropList [cdkDropListData]="tagList">
+  <mat-expansion-panel *ngFor="let tagInfo of tagList" cdkDrag>
     <mat-expansion-panel-header>
       <mat-panel-title>
-        Personal data
+        {{tagInfo.tagName}}
       </mat-panel-title>
-      <mat-panel-description>
-        Type your name and age
-      </mat-panel-description>
     </mat-expansion-panel-header>
-    <p>I'm visible because I am open</p>
-  </mat-expansion-panel>
-  <mat-expansion-panel (opened)="panelOpenState = true"
-                       (closed)="panelOpenState = false">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Self aware panel
-      </mat-panel-title>
-      <mat-panel-description>
-        Currently I am {{panelOpenState ? 'open' : 'closed'}}
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <p>I'm visible because I am open</p>
+    <div class="taginfo-row"><div class="label">Source:</div><div class="value">{{tagInfo.source}}</div></div>
+    <div class="taginfo-row"><div class="label">Tag Name:</div><div class="value">{{tagInfo.tagName}}</div></div>
+    <div class="taginfo-row"><div class="label">Alias:</div><div class="value">{{tagInfo.alias}}</div></div>
+    <div class="taginfo-row"><div class="label">Location:</div><div class="value">{{tagInfo.location}}</div></div>
+    <div class="taginfo-row"><div class="label">Data Type:</div><div class="value">{{tagInfo.dataType}}</div></div>
+    <div class="taginfo-row"><div class="label">Units:</div><div class="value">{{tagInfo.units}}</div></div>
+    <div class="taginfo-row"><div class="label">Range:</div><div class="value">{{tagInfo.min}} to {{tagInfo.max}}</div></div>
+    <div class="taginfo-row"><div class="label">Description:</div><div class="value">{{tagInfo.description}}</div></div>
   </mat-expansion-panel>
 </mat-accordion>
 <div style="height:5px;"></div>

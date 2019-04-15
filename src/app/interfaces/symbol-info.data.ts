@@ -1,6 +1,7 @@
 export interface SymbolInfo {
     symbolId: string;
     symbolType: string;
+    tagId: string;
     tagName: string;
     positionXRatio: number;
     positionYRatio: number;
