@@ -41,32 +41,32 @@ export class SymbolResizableDirective {
     this.pos4 = event.clientY;
     document.onmouseup = this.closeDragElement.bind(this);
     // call a function whenever the cursor moves:
-    document.onmousemove = this.elementDrag.bind(this);
+    // document.onmousemove = this.elementDrag.bind(this);
   }
 
   private closeDragElement() {
     /* stop moving when mouse button is released:*/
     document.onmouseup = null;
     document.onmousemove = null;
-    let newWidth = parseFloat(this.svgEle.style.getPropertyValue('width'));
-    const newHeight = parseFloat(this.svgEle.style.getPropertyValue('height'));
+    let newWidth = this.elementRef.nativeElement.offsetWidth;
+    const newHeight = this.elementRef.nativeElement.offsetHeight;
     if (newHeight / newWidth > this.originalHeight / this.originalWith) {
       newWidth = newHeight * this.originalWith / this.originalHeight;
     }
     this.symbolResized.emit({symbolId: '', svgWidth: newWidth, svgHeight: newHeight});
   }
 
-  private elementDrag(e: MouseEvent) {
-    // e.preventDefault();
-    // calculate the new cursor position:
-    this.pos1 = this.pos3 - e.clientX;
-    this.pos2 = this.pos4 - e.clientY;
-    this.pos3 = e.clientX;
-    this.pos4 = e.clientY;
+  // private elementDrag(e: MouseEvent) {
+  //   // e.preventDefault();
+  //   // calculate the new cursor position:
+  //   this.pos1 = this.pos3 - e.clientX;
+  //   this.pos2 = this.pos4 - e.clientY;
+  //   this.pos3 = e.clientX;
+  //   this.pos4 = e.clientY;
 
-    // set the svg's new scale:
-    this.svgEle.style.setProperty('width', `${this.elementRef.nativeElement.offsetWidth - this.pos1 - 5}px`);
-    this.svgEle.style.setProperty('height', `${this.elementRef.nativeElement.offsetHeight - this.pos2 - 5}px`);
-  }
+  //   // set the svg's new scale:
+  //   this.svgEle.style.setProperty('width', `${this.elementRef.nativeElement.offsetWidth - this.pos1 - 5}px`);
+  //   this.svgEle.style.setProperty('height', `${this.elementRef.nativeElement.offsetHeight - this.pos2 - 5}px`);
+  // }
 
 }

@@ -2,8 +2,7 @@
   [style.height.px]="this.svgWidth * this.viewBoxHeight / this.viewBoxWidth" [style.top.px]="positionY"
   [style.left.px]="positionX" appSymbolResizable (symbolResized)="onSymbolResized($event)">
   <div style="width: auto; height: auto; " appSymbolDragable (symbolMoved)="onSymbolMoved($event)" dragBoundarySelector=".back-ground">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 151 72" version="1.1" [style.width.px]="svgWidth"
-      [style.height.px]="this.svgWidth * this.viewBoxHeight / this.viewBoxWidth"
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 151 72" version="1.1" 
       style="top: 0px; left: 0.5px; overflow: visible; visibility: inherit;">
       <text x="0" y="30" font-family="Microsoft Sans Serif" font-size="16" fill="rgba(255,255,255,1)">
         {{currentValue}}

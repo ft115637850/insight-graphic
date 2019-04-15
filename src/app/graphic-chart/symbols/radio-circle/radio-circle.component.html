@@ -2,8 +2,7 @@
   [style.height.px]="this.svgWidth * this.viewBoxHeight / this.viewBoxWidth" [style.top.px]="positionY"
   [style.left.px]="positionX" appSymbolResizable (symbolResized)="onSymbolResized($event)">
   <div style="width: auto; height: auto; " appSymbolDragable (symbolMoved)="onSymbolMoved($event)" dragBoundarySelector=".back-ground">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" version="1.1" [style.width.px]="svgWidth"
-      [style.height.px]="this.svgWidth * this.viewBoxHeight / this.viewBoxWidth"
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" version="1.1" 
       style="top: 0px; left: 0.5px; overflow: visible;">
       <circle cx="30" cy="30" r="25" [style.fill]="pathStroke" />
       <circle *ngIf="lightened" cx="30" cy="30" r="15" [style.fill]="valueStroke" />

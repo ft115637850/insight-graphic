@@ -11,7 +11,7 @@ export class TagListComponent implements OnInit {
   constructor() {
     this.tagList = [{
         tagId: '123456',
-        tagName: 'NewtonInsight.SysTimeSec',
+        tagName: 'SysTimeSec',
         alias: '',
         units: 'Seconds',
         max: 59,
