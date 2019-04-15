@@ -1,0 +1,4 @@
+<span class="drag-wrapper" [style.top.px]="positionY" [style.left.px]="positionX">
+  <span appSymbolDragable (symbolMoved)="onSymbolMoved($event)"
+    dragBoundarySelector=".back-ground">{{currentValue}}</span>
+</span>

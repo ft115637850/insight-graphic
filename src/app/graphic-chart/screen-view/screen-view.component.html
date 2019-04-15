@@ -29,5 +29,6 @@
       [positionY]="symbol.positionY" [svgWidth]="symbol.svgWidth" [strokeRGB]="symbol.strokeRGB"
       [symbolId]="symbol.symbolId" (symbolMoved)="onSymbolMoved($event)" (symbolResized)="onSymbolResized($event)">
     </app-radio-rect>
+    <app-label-text *ngIf="symbol.symbolType === 'text'"></app-label-text>
   </ng-template>
 </div>

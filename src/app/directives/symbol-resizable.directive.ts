@@ -11,7 +11,7 @@ export class SymbolResizableDirective {
   private pos2 = 0;
   private pos3 = 0;
   private pos4 = 0;
-  private svgEle: SVGElement;
+  // private svgEle: SVGElement;
   private originalWith: number;
   private originalHeight: number;
 
@@ -23,9 +23,9 @@ export class SymbolResizableDirective {
     if (!this.elementRef || targetElement !== this.elementRef.nativeElement) {
         return;
     }
-    if (!this.svgEle) {
-      this.svgEle = this.elementRef.nativeElement.getElementsByTagNameNS('http://www.w3.org/2000/svg', 'svg')[0];
-    }
+    // if (!this.svgEle) {
+    //   this.svgEle = this.elementRef.nativeElement.getElementsByTagNameNS('http://www.w3.org/2000/svg', 'svg')[0];
+    // }
 
     this.originalWith = this.elementRef.nativeElement.offsetWidth;
     this.originalHeight = this.elementRef.nativeElement.offsetHeight;

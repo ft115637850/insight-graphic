@@ -347,7 +347,7 @@ export class ComposerViewComponent implements OnInit {
     const newTag = e.previousContainer.data[e.previousIndex];
     this.symbolList = [...this.symbolList, {
       symbolId: uuid.v4(),
-      symbolType: 'symbol-wrapper',
+      symbolType: 'text',
       tagId: newTag.tagId,
       tagName: newTag.tagName,
       positionXRatio: 0.5,
