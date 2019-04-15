@@ -29,8 +29,7 @@ export class SymbolDragableDirective {
     }
 
     event.preventDefault();
-    if (!this.boundaryEle)
-    {
+    if (!this.boundaryEle) {
       this.ngZone.runOutsideAngular(() => {
         this.boundaryEle = this.getBoundaryElement();
       });
