@@ -27,6 +27,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        width:calc(100% - 20px);
+        height:calc(100% - 20px);
         .canvas {
           box-shadow: 0px 0px 3px #888888;
           overflow: hidden;
