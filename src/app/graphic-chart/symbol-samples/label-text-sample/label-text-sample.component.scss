@@ -1,0 +1,11 @@
+svg text {
+  pointer-events:none;
+  user-select: none;
+}
+.sample-wrapper {
+  padding: 0px;
+  margin-left: -50px;
+  border: 1px dashed gray;
+  width: 106px;
+  height: 48px; 
+}

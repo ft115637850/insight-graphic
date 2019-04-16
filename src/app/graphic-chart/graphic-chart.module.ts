@@ -18,6 +18,7 @@ import {MatCardModule, MatSidenavModule, MatButtonModule,
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { TagListComponent } from './graphic-composer/tag-list/tag-list.component';
 import { LabelTextComponent } from './symbols/label-text/label-text.component';
+import { LabelTextSampleComponent } from './symbol-samples/label-text-sample/label-text-sample.component';
 
 @NgModule({
   declarations: [SymbolWrapperComponent,
@@ -27,7 +28,8 @@ import { LabelTextComponent } from './symbols/label-text/label-text.component';
     RadioRectComponent,
     ComposerViewComponent,
     TagListComponent,
-    LabelTextComponent],
+    LabelTextComponent,
+    LabelTextSampleComponent],
   imports: [
     MatCardModule,
     MatSidenavModule,

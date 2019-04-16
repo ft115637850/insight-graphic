@@ -63,4 +63,7 @@ export class TagListComponent implements OnInit {
   ngOnInit() {
   }
 
+  onAddingTag(e) {
+    console.log(e.pointerPosition);
+  }
 }

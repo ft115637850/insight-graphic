@@ -1,5 +1,6 @@
 <mat-accordion cdkDropList [cdkDropListData]="tagList">
-  <mat-expansion-panel *ngFor="let tagInfo of tagList" cdkDrag>
+  <mat-expansion-panel *ngFor="let tagInfo of tagList" cdkDrag (cdkDragMoved)="onAddingTag($event)">
+    <app-label-text-sample *cdkDragPreview></app-label-text-sample>
     <mat-expansion-panel-header>
       <mat-panel-title>
         {{tagInfo.tagName}}

@@ -341,7 +341,7 @@ export class ComposerViewComponent implements OnInit {
   }
 
   onAddTag(e: CdkDragDrop<TagInfo[]>) {
-    if (e.previousContainer === e.container) {
+    if (e.previousContainer === e.container || !e.isPointerOverContainer) {
       return;
     }
     const newTag = e.previousContainer.data[e.previousIndex];
@@ -358,6 +358,7 @@ export class ComposerViewComponent implements OnInit {
       widthRatio: 0.11,
       strokeRGB: '33, 33, 33'
     }];
+    console.log(e);
   }
 
   private updateSymbolList() {
