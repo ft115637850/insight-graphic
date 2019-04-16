@@ -44,6 +44,18 @@ export class TagListComponent implements OnInit {
         source: 'Wuhan Water Plant',
         description: 'Datetime seconds',
         location: '\\Quebec\\Pointe-Claire'
+      },
+      {
+        tagId: '189013',
+        tagName: 'changingString',
+        alias: '',
+        units: '',
+        max: 0,
+        min: 0,
+        dataType: 'String',
+        source: 'Wuhan Water Plant',
+        description: 'label string',
+        location: '\\Quebec\\Pointe-Claire'
       }
     ];
   }
