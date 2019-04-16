@@ -19,6 +19,7 @@ export class LabelTextComponent implements OnInit, OnDestroy {
   @Input() svgWidth = 100;
   @Input() symbolId = '';
   @Input() tagName: string;
+  @Input() isEditMode: boolean;
   @Output() symbolMoved = new EventEmitter<SymbolPosition>();
   @Output() symbolResized = new EventEmitter<SymbolSize>();
   unit: string;

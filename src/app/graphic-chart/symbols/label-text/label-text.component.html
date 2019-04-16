@@ -1,8 +1,8 @@
-<div class="drag-wrapper" [style.width.px]="svgWidth"
+<div class="drag-wrapper" [class.edit-mode]="isEditMode" [style.width.px]="svgWidth"
   [style.height.px]="this.svgWidth * this.viewBoxHeight / this.viewBoxWidth" [style.top.px]="positionY"
   [style.left.px]="positionX" appSymbolResizable (symbolResized)="onSymbolResized($event)">
   <div style="width: auto; height: auto; " appSymbolDragable (symbolMoved)="onSymbolMoved($event)"
-    dragBoundarySelector=".back-ground">
+    dragBoundarySelector=".back-ground" [disableDrag]="!isEditMode">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 53 21" version="1.1" style="overflow: visible;">
       <text x="0" y="0" dominant-baseline="hanging" text-anchor="start" [style.fill]="valueStroke"
         style="font:19px Microsoft Sans Serif;">{{currentValue}}</text>

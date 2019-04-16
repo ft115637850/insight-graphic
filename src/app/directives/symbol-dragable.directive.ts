@@ -7,6 +7,8 @@ import { SymbolPosition } from '../interfaces/symbol-position.data';
 export class SymbolDragableDirective {
   @Input()
   public dragBoundarySelector: string;
+  @Input()
+  public disableDrag: boolean;
   @Output()
   public symbolMoved = new EventEmitter<SymbolPosition>();
   private pos1 = 0;
@@ -24,7 +26,7 @@ export class SymbolDragableDirective {
 
   @HostListener('mousedown', ['$event', '$event.target'])
   public onMouseDown(event: MouseEvent, targetElement: HTMLElement): void {
-    if (!this.elementRef || !this.wrapperEle) {
+    if (this.disableDrag || !this.elementRef || !this.wrapperEle) {
         return;
     }
 

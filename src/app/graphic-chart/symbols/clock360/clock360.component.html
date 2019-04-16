@@ -1,8 +1,9 @@
-<div class="drag-wrapper" [style.width.px]="svgWidth"
+<div class="drag-wrapper" [class.edit-mode]="isEditMode" [style.width.px]="svgWidth"
   [style.height.px]="this.svgWidth * this.viewBoxHeight / this.viewBoxWidth" [style.top.px]="positionY"
   [style.left.px]="positionX" appSymbolResizable (symbolResized)="onSymbolResized($event)">
-  <div style="width: auto; height: auto; " appSymbolDragable (symbolMoved)="onSymbolMoved($event)" dragBoundarySelector=".back-ground">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 190 182" version="1.1" 
+  <div style="width: auto; height: auto; " appSymbolDragable (symbolMoved)="onSymbolMoved($event)"
+    dragBoundarySelector=".back-ground" [disableDrag]="!isEditMode">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 190 182" version="1.1"
       style="top: 18.8003px; left: 0.333332px; overflow: visible; visibility: inherit;">
       <!-- <path d="M 82.99999999999999 28 A 75 75 0 1 1 82.9997643805509 28.000000000370108"
         fill="transparent"

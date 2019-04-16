@@ -13,6 +13,7 @@ export class ScreenViewComponent implements OnInit, OnDestroy {
   @Input() backgroundImage: string;
   @Input() backgroundSize = '100% 100%';
   @Input() symbolList: SymbolInfo[] = [];
+  @Input() isEditMode: boolean;
   @Output() symbolMoved = new EventEmitter<SymbolPosition>();
   @Output() symbolResized = new EventEmitter<SymbolSize>();
   private socket: WebSocket;

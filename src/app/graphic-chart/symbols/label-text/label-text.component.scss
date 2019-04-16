@@ -7,8 +7,10 @@ svg text {
   height:auto;
   padding: 0px;
   position: absolute;
+}
+.edit-mode {
   cursor: move;
   border: 1px dashed gray;
   resize: both;
-  overflow: auto;
+  overflow: hidden;
 }
