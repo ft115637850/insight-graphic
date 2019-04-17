@@ -69,7 +69,6 @@ export class SymbolDragableDirective {
       this.pos3 = e.clientX;
       this.pos4 = e.clientY;
       // set the element's new position:
-      // TO DO: coerce position
       let newTop = this.wrapperEle.offsetTop - this.pos2 > 0 ? this.wrapperEle.offsetTop - this.pos2 : 0;
       let newLeft = this.wrapperEle.offsetLeft - this.pos1 > 0 ? this.wrapperEle.offsetLeft - this.pos1 : 0;
       newTop = newTop > boundary.height - wrapper.height ? boundary.height - wrapper.height : newTop;
