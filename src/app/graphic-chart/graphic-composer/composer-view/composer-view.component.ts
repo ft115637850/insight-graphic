@@ -358,6 +358,7 @@ export class ComposerViewComponent implements OnInit {
     const posY = this.addingTagPosition.y - canvasRect.top - 20;
 
     const newTag = e.previousContainer.data[e.previousIndex];
+    // better performance than this.symbolList.push()
     this.symbolList = [...this.symbolList, {
       symbolId: uuid.v4(),
       symbolType: 'text',
