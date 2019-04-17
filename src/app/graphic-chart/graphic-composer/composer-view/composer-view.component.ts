@@ -19,6 +19,7 @@ interface Resolution {
   styleUrls: ['./composer-view.component.scss']
 })
 export class ComposerViewComponent implements OnInit {
+  private addingTagPosition = null;
   canvasProps: FormGroup;
   canvasMaxSize = 20;
   canvasMinSize = 3;
@@ -149,6 +150,8 @@ export class ComposerViewComponent implements OnInit {
   ];
   @ViewChild('contentHolder')
   contentHolder: ElementRef;
+  @ViewChild('mainCanvas')
+  mainCanvas: ElementRef;
   private bgImageWidth: number;
   private bgImageHeight: number;
   /*
@@ -340,25 +343,34 @@ export class ComposerViewComponent implements OnInit {
     sym.widthRatio = sym.svgWidth / this.canvasWidth;
   }
 
+  onAddingTagMoved(e) {
+    this.addingTagPosition = e;
+  }
+
   onAddTag(e: CdkDragDrop<TagInfo[]>) {
     if (e.previousContainer === e.container || !e.isPointerOverContainer) {
+      this.addingTagPosition = null;
       return;
     }
+
+    const canvasRect = this.mainCanvas.nativeElement.getBoundingClientRect();
+    const posX = this.addingTagPosition.x - canvasRect.left - 50; // 50px is the label-text margin
+    const posY = this.addingTagPosition.y - canvasRect.top;
+
     const newTag = e.previousContainer.data[e.previousIndex];
     this.symbolList = [...this.symbolList, {
       symbolId: uuid.v4(),
       symbolType: 'text',
       tagId: newTag.tagId,
       tagName: newTag.tagName,
-      positionXRatio: 0.5,
-      positionYRatio: 0.5,
-      positionX: 0.5 * this.canvasWidth,
-      positionY: 0.5 * this.canvasHeight,
+      positionXRatio: posX / this.canvasWidth,
+      positionYRatio: posY / this.canvasHeight,
+      positionX: posX,
+      positionY: posY,
       svgWidth: 0.11 * this.canvasWidth,
       widthRatio: 0.11,
       strokeRGB: '33, 33, 33'
     }];
-    console.log(e);
   }
 
   private updateSymbolList() {

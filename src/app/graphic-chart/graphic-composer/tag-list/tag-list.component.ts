@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { TagInfo } from '../../../interfaces/tag-info.data';
 
 @Component({
@@ -7,6 +7,7 @@ import { TagInfo } from '../../../interfaces/tag-info.data';
   styleUrls: ['./tag-list.component.scss']
 })
 export class TagListComponent implements OnInit {
+  @Output() addingTagMoved = new EventEmitter<any>();
   tagList: TagInfo[];
   constructor() {
     this.tagList = [{
@@ -64,6 +65,6 @@ export class TagListComponent implements OnInit {
   }
 
   onAddingTag(e) {
-    console.log(e.pointerPosition);
+    this.addingTagMoved.emit(e.pointerPosition);
   }
 }

@@ -17,7 +17,7 @@
   <mat-sidenav-container cdkDropListGroup>
     <mat-sidenav-content >
       <div class="content-holder" #contentHolder (window:resize)="onResize($event)">
-        <div class="canvas" [style.width.px]="canvasWidth" [style.height.px]="canvasHeight" cdkDropList (cdkDropListDropped)="onAddTag($event)">
+        <div class="canvas" #mainCanvas [style.width.px]="canvasWidth" [style.height.px]="canvasHeight" cdkDropList (cdkDropListDropped)="onAddTag($event)">
           <app-screen-view [backgroundImage]="backGroundImage" [backgroundSize]="backgroundSize" [isEditMode]="isEditMode"
             [symbolList]="symbolList" (symbolMoved)="onSymbolMoved($event)" (symbolResized)="onSymbolResized($event)">
           </app-screen-view>
@@ -65,7 +65,7 @@
             </div>
           </form>
         </mat-tab>
-        <mat-tab label="Show Data"> <app-tag-list></app-tag-list> </mat-tab>
+        <mat-tab label="Show Data"> <app-tag-list (addingTagMoved)="onAddingTagMoved($event)"></app-tag-list> </mat-tab>
         <mat-tab label="Cards"> Cards </mat-tab>
       </mat-tab-group>
     </mat-sidenav>
