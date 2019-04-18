@@ -17,6 +17,7 @@ export class SymbolWrapperComponent implements OnInit, OnDestroy {
   private readonly centerY = 83 + this.tagNameHeight + 4;
   private readonly r = 75;
   private subscriptionId: string;
+  private isEdit = false;
   readonly viewBoxWidth = 190;
   readonly viewBoxHeight = 165;
   @Input() private strokeRGB = '0, 0, 0';
@@ -25,7 +26,14 @@ export class SymbolWrapperComponent implements OnInit, OnDestroy {
   @Input() svgWidth = 100;
   @Input() symbolId = '';
   @Input() tagName: string;
-  @Input() isEditMode: boolean;
+  @Input()
+  set isEditMode(isEditing: boolean) {
+    this.isEdit = isEditing;
+    if (!this.isEdit) {
+      this.isFocus = false;
+    }
+  }
+  get isEditMode(): boolean { return this.isEdit; }
   @Output() symbolMoved = new EventEmitter<SymbolPosition>();
   @Output() symbolResized = new EventEmitter<SymbolSize>();
   currentValue: number;
@@ -38,6 +46,7 @@ export class SymbolWrapperComponent implements OnInit, OnDestroy {
   valuePath = '';
   pathStroke: string;
   valueStroke: string;
+  isFocus = false;
   constructor(private tagsValueSvc: TagsValueService) {}
 
   ngOnInit() {
@@ -69,6 +78,12 @@ export class SymbolWrapperComponent implements OnInit, OnDestroy {
   onSymbolResized(e) {
     e.symbolId = this.symbolId;
     this.symbolResized.emit(e);
+  }
+
+  onFocus() {
+    if (this.isEditMode) {
+      this.isFocus = true;
+    }
   }
 
   private updateValueArcData() {
