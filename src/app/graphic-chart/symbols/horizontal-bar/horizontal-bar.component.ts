@@ -30,6 +30,7 @@ export class HorizontalBarComponent implements OnInit, OnDestroy {
   valueX: number;
   pathStroke: string;
   valueStroke: string;
+  isFocus = false;
   constructor(private tagsValueSvc: TagsValueService) { }
 
   ngOnInit() {
@@ -60,6 +61,12 @@ export class HorizontalBarComponent implements OnInit, OnDestroy {
   onSymbolResized(e) {
     e.symbolId = this.symbolId;
     this.symbolResized.emit(e);
+  }
+
+  onFocus() {
+    if (this.isEditMode) {
+      this.isFocus = true;
+    }
   }
 
   private getLastX(): number {

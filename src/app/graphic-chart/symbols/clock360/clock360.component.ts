@@ -39,6 +39,7 @@ export class Clock360Component implements OnInit, OnDestroy {
   valuePath = '';
   pathStroke: string;
   valueStroke: string;
+  isFocus = false;
   constructor(private tagsValueSvc: TagsValueService) {}
 
   ngOnInit() {
@@ -69,6 +70,12 @@ export class Clock360Component implements OnInit, OnDestroy {
   onSymbolResized(e) {
     e.symbolId = this.symbolId;
     this.symbolResized.emit(e);
+  }
+
+  onFocus() {
+    if (this.isEditMode) {
+      this.isFocus = true;
+    }
   }
 
   private updateValueArcData() {

@@ -24,6 +24,7 @@ export class LabelTextComponent implements OnInit, OnDestroy {
   @Output() symbolResized = new EventEmitter<SymbolSize>();
   unit: string;
   valueStroke: string;
+  isFocus = false;
   constructor(private tagsValueSvc: TagsValueService) { }
 
   ngOnInit() {
@@ -47,5 +48,11 @@ export class LabelTextComponent implements OnInit, OnDestroy {
   onSymbolResized(e) {
     e.symbolId = this.symbolId;
     this.symbolResized.emit(e);
+  }
+
+  onFocus() {
+    if (this.isEditMode) {
+      this.isFocus = true;
+    }
   }
 }
