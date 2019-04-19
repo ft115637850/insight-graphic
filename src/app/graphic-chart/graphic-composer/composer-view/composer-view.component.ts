@@ -426,8 +426,19 @@ export class ComposerViewComponent implements OnInit {
     }
 
     const canvasRect = this.mainCanvas.nativeElement.getBoundingClientRect();
-    const posX = this.addingTagPosition.x - canvasRect.left - 50; // 50px 20px is the label-text margin
-    const posY = this.addingTagPosition.y - canvasRect.top - 20;
+    let posX = this.addingTagPosition.x - canvasRect.left - 50; // 50px 20px is the label-text margin
+    let posY = this.addingTagPosition.y - canvasRect.top - 20;
+    if (posX < 0) {
+      posX = 0;
+    } else if (posX + 106 > canvasRect.width) {
+      posX = canvasRect.width - 106;
+    }
+
+    if (posY < 0) {
+      posY = 0;
+    } else if (posY + 48 > canvasRect.height) {
+      posY = canvasRect.height - 48;
+    }
 
     const newTag = e.previousContainer.data[e.previousIndex];
     // better performance than this.symbolList.push()

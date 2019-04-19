@@ -18,7 +18,6 @@ import {MatCardModule, MatSidenavModule, MatButtonModule,
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { TagListComponent } from './graphic-composer/tag-list/tag-list.component';
 import { LabelTextComponent } from './symbols/label-text/label-text.component';
-import { LabelTextSampleComponent } from './symbol-samples/label-text-sample/label-text-sample.component';
 import { SymbolPropertiesComponent } from './graphic-composer/symbol-properties/symbol-properties.component';
 import { ClickOutsideDirective } from '../directives/click-outside.directive';
 
@@ -31,7 +30,6 @@ import { ClickOutsideDirective } from '../directives/click-outside.directive';
     ComposerViewComponent,
     TagListComponent,
     LabelTextComponent,
-    LabelTextSampleComponent,
     SymbolPropertiesComponent,
     ClickOutsideDirective],
   imports: [

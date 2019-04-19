@@ -1,4 +1,4 @@
-<div class="back-ground" [style.background-image]="backgroundImage?'url('+backgroundImage+')':none"
+<div class="back-ground" [style.background-image]="backgroundImage?'url('+backgroundImage+')':'none'"
   [style.background-size]="backgroundSize">
   <ng-template ngFor let-symbol [ngForOf]="symbolList">
     <app-symbol-wrapper *ngIf="symbol.symbolType === 'symbol-wrapper'" [isEditMode]="isEditMode" [symbolInfo]="symbol"

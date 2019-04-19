@@ -11,7 +11,6 @@ import {SymbolInfo} from '../../../interfaces/symbol-info.data';
 })
 export class LabelTextComponent implements OnInit, OnDestroy {
   private subscriptionId: string;
-  private currentValue: string;
   readonly viewBoxWidth = 53;
   readonly viewBoxHeight = 23;
   @Input() symbolInfo: SymbolInfo;
@@ -20,6 +19,7 @@ export class LabelTextComponent implements OnInit, OnDestroy {
   @Output() symbolResized = new EventEmitter<SymbolSize>();
   unit: string;
   valueStroke: string;
+  currentValue: string;
   constructor(private tagsValueSvc: TagsValueService) { }
 
   ngOnInit() {
