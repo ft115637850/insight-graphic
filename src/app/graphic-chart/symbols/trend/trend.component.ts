@@ -3,6 +3,7 @@ import { interval } from 'rxjs';
 import {TagsValueService} from '../../../services/tags-value.service';
 import { SymbolPosition } from '../../../interfaces/symbol-position.data';
 import { SymbolSize } from '../../../interfaces/symbol-size.data';
+import {SymbolInfo} from '../../../interfaces/symbol-info.data';
 
 @Component({
   selector: 'app-trend',
@@ -22,12 +23,7 @@ export class TrendComponent implements OnInit, OnDestroy {
   private ValuePts = [{x: 150, y: 0}];
   readonly viewBoxWidth = 150;
   readonly viewBoxHeight = 100;
-  @Input() private strokeRGB = '0, 0, 0';
-  @Input() positionX = 0;
-  @Input() positionY = 0;
-  @Input() svgWidth = 100;
-  @Input() symbolId = '';
-  @Input() tagName: string;
+  @Input() symbolInfo: SymbolInfo;
   @Input() isEditMode: boolean;
   @Output() symbolMoved = new EventEmitter<SymbolPosition>();
   @Output() symbolResized = new EventEmitter<SymbolSize>();
@@ -38,14 +34,13 @@ export class TrendComponent implements OnInit, OnDestroy {
   valueAreaPath: string;
   pathStroke: string;
   valueStroke: string;
-  isFocus = false;
 
   constructor(private tagsValueSvc: TagsValueService) { }
 
   ngOnInit() {
-    this.pathStroke = `rgba(${this.strokeRGB}, 0.2)`;
-    this.valueStroke = `rgba(${this.strokeRGB}, 1)`;
-    this.subscriptionId = this.tagsValueSvc.subscribe(this.tagName, (tagValue, maxValue, minValue) => {
+    this.pathStroke = `rgba(${this.symbolInfo.strokeRGB}, 0.2)`;
+    this.valueStroke = `rgba(${this.symbolInfo.strokeRGB}, 1)`;
+    this.subscriptionId = this.tagsValueSvc.subscribe(this.symbolInfo.tagName, (tagValue, maxValue, minValue) => {
       this.currentValue = tagValue;
       this.max = maxValue;
       this.min = minValue;
@@ -66,23 +61,23 @@ export class TrendComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.tagsValueSvc.unSubscribe(this.subscriptionId, this.tagName);
+    this.tagsValueSvc.unSubscribe(this.subscriptionId, this.symbolInfo.tagName);
     this.intervalSubscriber.unsubscribe();
   }
 
   onSymbolMoved(e) {
-    e.symbolId = this.symbolId;
+    e.symbolId = this.symbolInfo.symbolId;
     this.symbolMoved.emit(e);
   }
 
   onSymbolResized(e) {
-    e.symbolId = this.symbolId;
+    e.symbolId = this.symbolInfo.symbolId;
     this.symbolResized.emit(e);
   }
 
   onFocus() {
     if (this.isEditMode) {
-      this.isFocus = true;
+      this.symbolInfo.isFocus = true;
     }
   }
 

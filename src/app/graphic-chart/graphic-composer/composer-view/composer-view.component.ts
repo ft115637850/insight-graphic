@@ -41,7 +41,8 @@ export class ComposerViewComponent implements OnInit {
       positionY: 0,
       svgWidth: 0,
       widthRatio: 0.11,
-      strokeRGB: '255, 235, 59'
+      strokeRGB: '255, 235, 59',
+      isFocus: false
     },
     {
       symbolId: uuid.v4(),
@@ -54,7 +55,8 @@ export class ComposerViewComponent implements OnInit {
       positionY: 0,
       svgWidth: 0,
       widthRatio: 0.11,
-      strokeRGB: '255, 235, 59'
+      strokeRGB: '255, 235, 59',
+      isFocus: false
     },
     {
       symbolId: uuid.v4(),
@@ -67,7 +69,8 @@ export class ComposerViewComponent implements OnInit {
       positionY: 0,
       svgWidth: 0,
       widthRatio: 0.06,
-      strokeRGB: '255, 235, 59'
+      strokeRGB: '255, 235, 59',
+      isFocus: false
     },
     {
       symbolId: uuid.v4(),
@@ -80,7 +83,8 @@ export class ComposerViewComponent implements OnInit {
       positionY: 0,
       svgWidth: 0,
       widthRatio: 0.12,
-      strokeRGB: '255, 235, 59'
+      strokeRGB: '255, 235, 59',
+      isFocus: false
     },
     {
       symbolId: uuid.v4(),
@@ -93,7 +97,8 @@ export class ComposerViewComponent implements OnInit {
       positionY: 0,
       svgWidth: 0,
       widthRatio: 0.12,
-      strokeRGB: '255, 235, 59'
+      strokeRGB: '255, 235, 59',
+      isFocus: false
     },
     {
       symbolId: uuid.v4(),
@@ -106,7 +111,8 @@ export class ComposerViewComponent implements OnInit {
       positionY: 0,
       svgWidth: 0,
       widthRatio: 0.12,
-      strokeRGB: '255, 235, 59'
+      strokeRGB: '255, 235, 59',
+      isFocus: false
     },
     {
       symbolId: uuid.v4(),
@@ -119,7 +125,8 @@ export class ComposerViewComponent implements OnInit {
       positionY: 0,
       svgWidth: 0,
       widthRatio: 0.12,
-      strokeRGB: '255, 235, 59'
+      strokeRGB: '255, 235, 59',
+      isFocus: false
     },
     {
       symbolId: uuid.v4(),
@@ -132,7 +139,8 @@ export class ComposerViewComponent implements OnInit {
       positionY: 0,
       svgWidth: 0,
       widthRatio: 0.05,
-      strokeRGB: '76, 175, 80'
+      strokeRGB: '76, 175, 80',
+      isFocus: false
     },
     {
       symbolId: uuid.v4(),
@@ -145,7 +153,8 @@ export class ComposerViewComponent implements OnInit {
       positionY: 0,
       svgWidth: 0,
       widthRatio: 0.04,
-      strokeRGB: '76, 175, 80'
+      strokeRGB: '76, 175, 80',
+      isFocus: false
     }
   ];
   @ViewChild('contentHolder')
@@ -370,7 +379,8 @@ export class ComposerViewComponent implements OnInit {
       positionY: posY,
       svgWidth: 0.11 * this.canvasWidth,
       widthRatio: 0.11,
-      strokeRGB: '33, 33, 33'
+      strokeRGB: '33, 33, 33',
+      isFocus: false
     }];
   }
 

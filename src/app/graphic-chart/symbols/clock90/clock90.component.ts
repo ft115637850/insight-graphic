@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angu
 import {TagsValueService} from '../../../services/tags-value.service';
 import { SymbolPosition } from '../../../interfaces/symbol-position.data';
 import { SymbolSize } from '../../../interfaces/symbol-size.data';
+import {SymbolInfo} from '../../../interfaces/symbol-info.data';
 
 @Component({
   selector: 'app-clock90',
@@ -20,12 +21,7 @@ export class Clock90Component implements OnInit, OnDestroy {
   private subscriptionId: string;
   readonly viewBoxWidth = 120;
   readonly viewBoxHeight = 120;
-  @Input() private strokeRGB = '0, 0, 0';
-  @Input() positionX = 0;
-  @Input() positionY = 0;
-  @Input() svgWidth = 100;
-  @Input() symbolId = '';
-  @Input() tagName: string;
+  @Input() symbolInfo: SymbolInfo;
   @Input() isEditMode: boolean;
   @Output() symbolMoved = new EventEmitter<SymbolPosition>();
   @Output() symbolResized = new EventEmitter<SymbolSize>();
@@ -39,18 +35,17 @@ export class Clock90Component implements OnInit, OnDestroy {
   valuePath = '';
   pathStroke: string;
   valueStroke: string;
-  isFocus = false;
   constructor(private tagsValueSvc: TagsValueService) {}
 
   ngOnInit() {
-    this.pathStroke = `rgba(${this.strokeRGB}, 0.2)`;
-    this.valueStroke = `rgba(${this.strokeRGB}, 1)`;
+    this.pathStroke = `rgba(${this.symbolInfo.strokeRGB}, 0.2)`;
+    this.valueStroke = `rgba(${this.symbolInfo.strokeRGB}, 1)`;
     this.min = 0;
     this.max = 100;
     this.currentValue = 0;
     this.updateValueArcData();
     this.unit = 'Second';
-    this.subscriptionId = this.tagsValueSvc.subscribe(this.tagName, (tagValue, maxValue, minValue) => {
+    this.subscriptionId = this.tagsValueSvc.subscribe(this.symbolInfo.tagName, (tagValue, maxValue, minValue) => {
       this.currentValue = tagValue;
       this.max = maxValue;
       this.min = minValue;
@@ -59,22 +54,22 @@ export class Clock90Component implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.tagsValueSvc.unSubscribe(this.subscriptionId, this.tagName);
+    this.tagsValueSvc.unSubscribe(this.subscriptionId, this.symbolInfo.tagName);
   }
 
   onSymbolMoved(e) {
-    e.symbolId = this.symbolId;
+    e.symbolId = this.symbolInfo.symbolId;
     this.symbolMoved.emit(e);
   }
 
   onSymbolResized(e) {
-    e.symbolId = this.symbolId;
+    e.symbolId = this.symbolInfo.symbolId;
     this.symbolResized.emit(e);
   }
 
   onFocus() {
     if (this.isEditMode) {
-      this.isFocus = true;
+      this.symbolInfo.isFocus = true;
     }
   }
 

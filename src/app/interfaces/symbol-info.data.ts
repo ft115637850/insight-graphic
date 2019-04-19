@@ -10,4 +10,5 @@ export interface SymbolInfo {
     widthRatio: number;
     svgWidth: number;
     strokeRGB: string;
+    isFocus: boolean;
 }
