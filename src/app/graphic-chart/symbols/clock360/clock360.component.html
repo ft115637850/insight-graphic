@@ -1,10 +1,10 @@
 <div class="drag-wrapper" [class.edit-mode]="isEditMode" [class.edit-focus]="symbolInfo.isFocus" (click)="onFocus()"
-(appClickOutside)="symbolInfo.isFocus = false" [style.width.px]="symbolInfo.svgWidth"
+(appClickOutside)="loseFocus()" exemptSelector="symbol-focus-exempt" [style.width.px]="symbolInfo.svgWidth"
   [style.height.px]="symbolInfo.svgWidth * viewBoxHeight / viewBoxWidth" [style.top.px]="symbolInfo.positionY"
   [style.left.px]="symbolInfo.positionX" appSymbolResizable (symbolResized)="onSymbolResized($event)">
   <div style="width: auto; height: auto; " appSymbolDragable (symbolMoved)="onSymbolMoved($event)"
     dragBoundarySelector=".back-ground" [disableDrag]="!isEditMode">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 190 182" version="1.1"
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 190 190" version="1.1"
       style="top: 18.8003px; left: 0.333332px; overflow: visible; visibility: inherit;">
       <!-- <path d="M 82.99999999999999 28 A 75 75 0 1 1 82.9997643805509 28.000000000370108"
         fill="transparent"

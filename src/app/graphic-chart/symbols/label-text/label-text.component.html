@@ -1,5 +1,5 @@
 <div class="drag-wrapper" [class.edit-mode]="isEditMode" [class.edit-focus]="symbolInfo.isFocus" (click)="onFocus()"
-(appClickOutside)="symbolInfo.isFocus = false" [style.width.px]="symbolInfo.svgWidth"
+(appClickOutside)="loseFocus()" exemptSelector="symbol-focus-exempt" [style.width.px]="symbolInfo.svgWidth"
   [style.height.px]="symbolInfo.svgWidth * viewBoxHeight / viewBoxWidth" [style.top.px]="symbolInfo.positionY"
   [style.left.px]="symbolInfo.positionX" appSymbolResizable (symbolResized)="onSymbolResized($event)">
   <div style="width: auto; height: auto; " appSymbolDragable (symbolMoved)="onSymbolMoved($event)"

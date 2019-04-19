@@ -35,8 +35,10 @@ export class TagsValueService {
   }
 
   unSubscribe(subscriptionId: string, tagName: string) {
-    this.ws.sendRequest({ action: 'unsubscribe', tagName});
     this.subscriptionTagList = this.subscriptionTagList.filter(x => x.subscriptionId !== subscriptionId);
+    if (this.subscriptionTagList.findIndex(x => x.tagName === tagName) === -1) {
+      this.ws.sendRequest({ action: 'unsubscribe', tagName});
+    }
   }
 
   connectWs() {

@@ -68,7 +68,7 @@
         </mat-tab>
         <mat-tab *ngIf="focusedSymbols.length === 0" label="Show Data"> <app-tag-list [tagList]="tagList" (addingTagMoved)="onAddingTagMoved($event)"></app-tag-list> </mat-tab>
         <mat-tab *ngIf="focusedSymbols.length === 0" label="Cards"> Cards </mat-tab>
-        <mat-tab *ngIf="focusedSymbols.length !== 0" label="Symbol Properties"> <app-symbol-properties [focusedSymbols]="focusedSymbols"></app-symbol-properties> </mat-tab>
+        <mat-tab *ngIf="focusedSymbols.length !== 0" label="Symbol Properties"> <app-symbol-properties [focusedSymbols]="focusedSymbols" (graphicChanged)="onGraphicChanged($event)"></app-symbol-properties> </mat-tab>
       </mat-tab-group>
     </mat-sidenav>
   </mat-sidenav-container>

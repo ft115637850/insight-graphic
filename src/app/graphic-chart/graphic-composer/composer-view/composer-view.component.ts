@@ -178,21 +178,21 @@ export class ComposerViewComponent implements OnInit {
           isFocus: false,
           tagInfo: this.tagList[0]
         },
-        {
-          symbolId: uuid.v4(),
-          symbolType: 'clock360',
-          tagId: '',
-          tagName: 'NewtonInsight.SysTimeSec',
-          positionXRatio: 0.08,
-          positionYRatio: 0.3,
-          positionX: 0,
-          positionY: 0,
-          svgWidth: 0,
-          widthRatio: 0.11,
-          strokeRGB: '255, 235, 59',
-          isFocus: false,
-          tagInfo: this.tagList[0]
-        },
+        // {
+        //   symbolId: uuid.v4(),
+        //   symbolType: 'clock360',
+        //   tagId: '',
+        //   tagName: 'NewtonInsight.SysTimeSec',
+        //   positionXRatio: 0.08,
+        //   positionYRatio: 0.3,
+        //   positionX: 0,
+        //   positionY: 0,
+        //   svgWidth: 0,
+        //   widthRatio: 0.11,
+        //   strokeRGB: '255, 235, 59',
+        //   isFocus: false,
+        //   tagInfo: this.tagList[0]
+        // },
         {
           symbolId: uuid.v4(),
           symbolType: 'clock90',
@@ -465,6 +465,19 @@ export class ComposerViewComponent implements OnInit {
     } else {
       this.focusedSymbols = this.focusedSymbols.filter(x => x.symbolId !== e.symbolId);
     }
+  }
+
+  onGraphicChanged(e) {
+    const newList = this.symbolList.filter(x => x.symbolId !== e.oldSymbol.symbolId);
+    this.symbolList = [
+      ...newList,
+      e.newSymbol
+    ];
+    const newfocusedSymbols = this.focusedSymbols.filter(x => x.symbolId !== e.oldSymbol.symbolId);
+    this.focusedSymbols = [
+      ...newfocusedSymbols,
+      e.newSymbol
+    ];
   }
 
   private updateSymbolList() {

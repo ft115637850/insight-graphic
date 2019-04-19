@@ -1,11 +1,15 @@
 <mat-accordion >
-  <mat-expansion-panel >
+  <mat-expansion-panel expanded="true">
     <mat-expansion-panel-header>
       <mat-panel-title>
-        samples
+        Choose Graphic
       </mat-panel-title>
     </mat-expansion-panel-header>
-    samples
+    <img class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'symbol-wrapper'" src="/assets/symbol-wrapper-sample.svg" (click)="onClickSample('symbol-wrapper')">
+    <img class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'clock90'" src="/assets/clock90-sample.svg" (click)="onClickSample('clock90')">
+    <img class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'clock360'" src="/assets/clock360-sample.svg" (click)="onClickSample('clock360')">
+    <img class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'horizontal-bar'" src="/assets/horizontal-bar-sample.svg" (click)="onClickSample('horizontal-bar')">
+    <img class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'trend'" src="/assets/trend-sample.svg" (click)="onClickSample('trend')">
   </mat-expansion-panel>
 </mat-accordion>
 <div style="height:5px;"></div>

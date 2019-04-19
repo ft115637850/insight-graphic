@@ -1,0 +1,11 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 190 190" version="1.1"
+  style="top: 18.8003px; left: 0.333332px; overflow: visible; visibility: inherit;">
+  <circle cx="83" cy="103" r="75" style="fill:none; stroke-width: 15; stroke:rgb(15, 118, 199);" />
+  <text x="3" y="16" style="font:19px Microsoft Sans Serif;fill:rgba(33, 33, 33, 0.6);">Tag</text>
+  <text x="83" y="103" text-anchor="middle"
+    style="font:23px Microsoft Sans Serif;fill:rgba(33, 33, 33, 1);">#.#</text>
+  <text x="83" y="119" text-anchor="middle"
+    style="font:13px Microsoft Sans Serif;fill:rgba(33, 33, 33, 0.6);">Units</text>
+</svg>

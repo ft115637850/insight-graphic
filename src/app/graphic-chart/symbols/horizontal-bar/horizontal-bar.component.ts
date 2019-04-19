@@ -14,11 +14,12 @@ export class HorizontalBarComponent implements OnInit, OnDestroy {
   private xAxisMax = 150;
   private xAxisMin = 0;
   readonly viewBoxWidth = 151;
-  readonly viewBoxHeight = 72;
+  readonly viewBoxHeight = 85;
   @Input() symbolInfo: SymbolInfo;
   @Input() isEditMode: boolean;
   @Output() symbolMoved = new EventEmitter<SymbolPosition>();
   @Output() symbolResized = new EventEmitter<SymbolSize>();
+  @Output() symbolFocusChanged = new EventEmitter<SymbolInfo>();
   currentValue: number;
   unit: string;
   max: number;
@@ -59,8 +60,16 @@ export class HorizontalBarComponent implements OnInit, OnDestroy {
   }
 
   onFocus() {
-    if (this.isEditMode) {
+    if (this.isEditMode && !this.symbolInfo.isFocus) {
       this.symbolInfo.isFocus = true;
+      this.symbolFocusChanged.emit(this.symbolInfo);
+    }
+  }
+
+  loseFocus() {
+    if (this.symbolInfo.isFocus) {
+      this.symbolInfo.isFocus = false;
+      this.symbolFocusChanged.emit(this.symbolInfo);
     }
   }
 

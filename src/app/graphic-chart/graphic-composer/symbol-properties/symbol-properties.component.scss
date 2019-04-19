@@ -1,0 +1,13 @@
+.graphic-preview {
+  width: 105px;
+  height: 105px;
+  box-shadow: 0px 0px 3px #888888;
+  margin: 0 5px 2px 0;
+  padding: 2px;
+  cursor: pointer;
+}
+
+.selected {
+  background-color: rgba(0, 187, 255, 0.2);
+  border: 1px solid rgb(0, 187, 255);
+}  
