@@ -16,6 +16,7 @@ export class ScreenViewComponent implements OnInit, OnDestroy {
   @Input() isEditMode: boolean;
   @Output() symbolMoved = new EventEmitter<SymbolPosition>();
   @Output() symbolResized = new EventEmitter<SymbolSize>();
+  @Output() symbolFocusChanged = new EventEmitter<SymbolInfo>();
   private socket: WebSocket;
   constructor(private tagsValueSvc: TagsValueService) {}
 
@@ -33,5 +34,9 @@ export class ScreenViewComponent implements OnInit, OnDestroy {
 
   onSymbolResized(e) {
     this.symbolResized.emit(e);
+  }
+
+  onSymbolFocusChanged(e) {
+    this.symbolFocusChanged.emit(e);
   }
 }

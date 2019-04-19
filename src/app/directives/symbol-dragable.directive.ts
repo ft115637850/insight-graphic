@@ -1,10 +1,10 @@
-import { Directive, ElementRef, HostListener, EventEmitter, Output, Input, NgZone } from '@angular/core';
+import { Directive, ElementRef, HostListener, EventEmitter, Output, Input, NgZone, AfterViewInit } from '@angular/core';
 import { SymbolPosition } from '../interfaces/symbol-position.data';
 
 @Directive({
   selector: '[appSymbolDragable]'
 })
-export class SymbolDragableDirective {
+export class SymbolDragableDirective implements AfterViewInit {
   @Input()
   public dragBoundarySelector: string;
   @Input()
@@ -24,6 +24,14 @@ export class SymbolDragableDirective {
     }
   }
 
+  ngAfterViewInit() {
+    if (!this.boundaryEle) {
+      this.ngZone.runOutsideAngular(() => {
+        this.boundaryEle = this.getBoundaryElement();
+      });
+    }
+  }
+
   @HostListener('mousedown', ['$event', '$event.target'])
   public onMouseDown(event: MouseEvent, targetElement: HTMLElement): void {
     if (this.disableDrag || !this.elementRef || !this.wrapperEle) {
@@ -31,11 +39,6 @@ export class SymbolDragableDirective {
     }
 
     event.preventDefault();
-    if (!this.boundaryEle) {
-      this.ngZone.runOutsideAngular(() => {
-        this.boundaryEle = this.getBoundaryElement();
-      });
-    }
 
     // get the mouse cursor position at startup:
     this.pos3 = event.clientX;

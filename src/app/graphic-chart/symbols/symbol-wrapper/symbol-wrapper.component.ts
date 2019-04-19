@@ -20,16 +20,11 @@ export class SymbolWrapperComponent implements OnInit, OnDestroy {
   private subscriptionId: string;
   readonly viewBoxWidth = 190;
   readonly viewBoxHeight = 165;
-  // @Input() private strokeRGB = '0, 0, 0';
-  // @Input() positionX = 0;
-  // @Input() positionY = 0;
-  // @Input() svgWidth = 100;
-  // @Input() symbolId = '';
-  // @Input() tagName: string;
   @Input() symbolInfo: SymbolInfo;
   @Input() isEditMode: boolean;
   @Output() symbolMoved = new EventEmitter<SymbolPosition>();
   @Output() symbolResized = new EventEmitter<SymbolSize>();
+  @Output() symbolFocusChanged = new EventEmitter<SymbolInfo>();
   currentValue: number;
   unit: string;
   max: number;
@@ -74,8 +69,16 @@ export class SymbolWrapperComponent implements OnInit, OnDestroy {
   }
 
   onFocus() {
-    if (this.isEditMode) {
+    if (this.isEditMode && !this.symbolInfo.isFocus) {
       this.symbolInfo.isFocus = true;
+      this.symbolFocusChanged.emit(this.symbolInfo);
+    }
+  }
+
+  loseFocus() {
+    if (this.symbolInfo.isFocus) {
+      this.symbolInfo.isFocus = false;
+      this.symbolFocusChanged.emit(this.symbolInfo);
     }
   }
 

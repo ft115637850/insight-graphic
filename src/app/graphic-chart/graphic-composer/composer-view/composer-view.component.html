@@ -19,14 +19,15 @@
       <div class="content-holder" #contentHolder (window:resize)="onResize($event)">
         <div class="canvas" #mainCanvas [style.width.px]="canvasWidth" [style.height.px]="canvasHeight" cdkDropList (cdkDropListDropped)="onAddTag($event)">
           <app-screen-view [backgroundImage]="backGroundImage" [backgroundSize]="backgroundSize" [isEditMode]="isEditMode"
-            [symbolList]="symbolList" (symbolMoved)="onSymbolMoved($event)" (symbolResized)="onSymbolResized($event)">
+            [symbolList]="symbolList" (symbolMoved)="onSymbolMoved($event)" (symbolResized)="onSymbolResized($event)"
+            (symbolFocusChanged)="onSymbolFocusChanged($event)">
           </app-screen-view>
         </div>
       </div>
     </mat-sidenav-content>
-    <mat-sidenav position="end" mode="side" [opened]="isEditMode" (closed)="onCloseEdit()" (opened)="onOpened()">
+    <mat-sidenav class="symbol-focus-exempt" position="end" mode="side" [opened]="isEditMode" (closed)="onCloseEdit()" (opened)="onOpened()">
       <mat-tab-group dynamicHeight>
-        <mat-tab label="Canvas Properties">
+        <mat-tab *ngIf="focusedSymbols.length === 0" label="Canvas Properties">
           <form [formGroup]="canvasProps">
             <div class="property-row">
               <span>Width</span>
@@ -65,9 +66,9 @@
             </div>
           </form>
         </mat-tab>
-        <mat-tab label="Show Data"> <app-tag-list (addingTagMoved)="onAddingTagMoved($event)"></app-tag-list> </mat-tab>
-        <mat-tab label="Cards"> Cards </mat-tab>
-        <mat-tab label="Symbol Properties"> <app-symbol-properties></app-symbol-properties> </mat-tab>
+        <mat-tab *ngIf="focusedSymbols.length === 0" label="Show Data"> <app-tag-list [tagList]="tagList" (addingTagMoved)="onAddingTagMoved($event)"></app-tag-list> </mat-tab>
+        <mat-tab *ngIf="focusedSymbols.length === 0" label="Cards"> Cards </mat-tab>
+        <mat-tab *ngIf="focusedSymbols.length !== 0" label="Symbol Properties"> <app-symbol-properties [focusedSymbols]="focusedSymbols"></app-symbol-properties> </mat-tab>
       </mat-tab-group>
     </mat-sidenav>
   </mat-sidenav-container>

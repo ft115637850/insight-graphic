@@ -1,3 +1,4 @@
+import {TagInfo} from './tag-info.data';
 export interface SymbolInfo {
     symbolId: string;
     symbolType: string;
@@ -11,4 +12,5 @@ export interface SymbolInfo {
     svgWidth: number;
     strokeRGB: string;
     isFocus: boolean;
+    tagInfo: TagInfo;
 }

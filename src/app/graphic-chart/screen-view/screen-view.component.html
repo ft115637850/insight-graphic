@@ -2,7 +2,8 @@
   [style.background-size]="backgroundSize">
   <ng-template ngFor let-symbol [ngForOf]="symbolList">
     <app-symbol-wrapper *ngIf="symbol.symbolType === 'symbol-wrapper'" [isEditMode]="isEditMode" [symbolInfo]="symbol"
-      (symbolMoved)="onSymbolMoved($event)" (symbolResized)="onSymbolResized($event)"></app-symbol-wrapper>
+      (symbolMoved)="onSymbolMoved($event)" (symbolResized)="onSymbolResized($event)"
+      (symbolFocusChanged)="onSymbolFocusChanged($event)"></app-symbol-wrapper>
     <app-clock360 *ngIf="symbol.symbolType === 'clock360'" [isEditMode]="isEditMode" [symbolInfo]="symbol"
       (symbolMoved)="onSymbolMoved($event)" (symbolResized)="onSymbolResized($event)">
     </app-clock360>

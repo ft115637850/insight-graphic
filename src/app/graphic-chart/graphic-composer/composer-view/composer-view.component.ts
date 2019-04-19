@@ -2,7 +2,7 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material';
-import {CdkDragDrop} from '@angular/cdk/drag-drop';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { SymbolInfo } from '../../../interfaces/symbol-info.data';
 import { TagInfo } from '../../../interfaces/tag-info.data';
 import { v4 as uuid } from 'uuid';
@@ -29,134 +29,8 @@ export class ComposerViewComponent implements OnInit {
   backgroundSize = '100% 100%';
   isEditMode = true;
   tagList: TagInfo[];
-  symbolList: SymbolInfo[] = [
-    {
-      symbolId: uuid.v4(),
-      symbolType: 'symbol-wrapper',
-      tagId: '',
-      tagName: 'NewtonInsight.SysTimeSec',
-      positionXRatio: 0.08,
-      positionYRatio: 0.1,
-      positionX: 0,
-      positionY: 0,
-      svgWidth: 0,
-      widthRatio: 0.11,
-      strokeRGB: '255, 235, 59',
-      isFocus: false
-    },
-    {
-      symbolId: uuid.v4(),
-      symbolType: 'clock360',
-      tagId: '',
-      tagName: 'NewtonInsight.SysTimeSec',
-      positionXRatio: 0.08,
-      positionYRatio: 0.3,
-      positionX: 0,
-      positionY: 0,
-      svgWidth: 0,
-      widthRatio: 0.11,
-      strokeRGB: '255, 235, 59',
-      isFocus: false
-    },
-    {
-      symbolId: uuid.v4(),
-      symbolType: 'clock90',
-      tagId: '',
-      tagName: 'SysTimeSec',
-      positionXRatio: 0.4,
-      positionYRatio: 0.85,
-      positionX: 0,
-      positionY: 0,
-      svgWidth: 0,
-      widthRatio: 0.06,
-      strokeRGB: '255, 235, 59',
-      isFocus: false
-    },
-    {
-      symbolId: uuid.v4(),
-      symbolType: 'trend',
-      tagId: '',
-      tagName: 'SinTrend',
-      positionXRatio: 0.85,
-      positionYRatio: 0.1,
-      positionX: 0,
-      positionY: 0,
-      svgWidth: 0,
-      widthRatio: 0.12,
-      strokeRGB: '255, 235, 59',
-      isFocus: false
-    },
-    {
-      symbolId: uuid.v4(),
-      symbolType: 'trend',
-      tagId: '',
-      tagName: 'Pump',
-      positionXRatio: 0.85,
-      positionYRatio: 0.3,
-      positionX: 0,
-      positionY: 0,
-      svgWidth: 0,
-      widthRatio: 0.12,
-      strokeRGB: '255, 235, 59',
-      isFocus: false
-    },
-    {
-      symbolId: uuid.v4(),
-      symbolType: 'trend',
-      tagId: '',
-      tagName: 'Pressure',
-      positionXRatio: 0.85,
-      positionYRatio: 0.5,
-      positionX: 0,
-      positionY: 0,
-      svgWidth: 0,
-      widthRatio: 0.12,
-      strokeRGB: '255, 235, 59',
-      isFocus: false
-    },
-    {
-      symbolId: uuid.v4(),
-      symbolType: 'horizontal-bar',
-      tagId: '',
-      tagName: 'Pressure',
-      positionXRatio: 0.4,
-      positionYRatio: 0.1,
-      positionX: 0,
-      positionY: 0,
-      svgWidth: 0,
-      widthRatio: 0.12,
-      strokeRGB: '255, 235, 59',
-      isFocus: false
-    },
-    {
-      symbolId: uuid.v4(),
-      symbolType: 'radio-circle',
-      tagId: '',
-      tagName: 'isPumping',
-      positionXRatio: 0.65,
-      positionYRatio: 0.65,
-      positionX: 0,
-      positionY: 0,
-      svgWidth: 0,
-      widthRatio: 0.05,
-      strokeRGB: '76, 175, 80',
-      isFocus: false
-    },
-    {
-      symbolId: uuid.v4(),
-      symbolType: 'radio-rect',
-      tagId: '',
-      tagName: 'noPumping',
-      positionXRatio: 0.3,
-      positionYRatio: 0.1,
-      positionX: 0,
-      positionY: 0,
-      svgWidth: 0,
-      widthRatio: 0.04,
-      strokeRGB: '76, 175, 80',
-      isFocus: false
-    }
-  ];
+  symbolList: SymbolInfo[];
+  focusedSymbols: SymbolInfo[] = [];
   @ViewChild('contentHolder')
   contentHolder: ElementRef;
   @ViewChild('mainCanvas')
@@ -236,6 +110,195 @@ export class ComposerViewComponent implements OnInit {
       height: [6],
       bgSizeOption: ['horizontal']
     });
+
+    this.tagList = [
+      {
+        tagId: '123456',
+        tagName: 'SysTimeSec',
+        alias: '',
+        units: 'Seconds',
+        max: 59,
+        min: 0,
+        dataType: 'Analog',
+        source: 'Wuhan Water Plant',
+        description: 'Datetime seconds',
+        location: '\\Quebec\\Pointe-Claire'
+      },
+      {
+        tagId: '789012',
+        tagName: 'Pressure',
+        alias: '',
+        units: 'Seconds',
+        max: 59,
+        min: 0,
+        dataType: 'Analog',
+        source: 'Wuhan Water Plant',
+        description: 'Datetime seconds',
+        location: '\\Quebec\\Pointe-Claire'
+      },
+      {
+        tagId: '189012',
+        tagName: 'SinTrend',
+        alias: '',
+        units: 'Seconds',
+        max: 59,
+        min: 0,
+        dataType: 'Analog',
+        source: 'Wuhan Water Plant',
+        description: 'Datetime seconds',
+        location: '\\Quebec\\Pointe-Claire'
+      },
+      {
+        tagId: '189013',
+        tagName: 'changingString',
+        alias: '',
+        units: '',
+        max: 0,
+        min: 0,
+        dataType: 'String',
+        source: 'Wuhan Water Plant',
+        description: 'label string',
+        location: '\\Quebec\\Pointe-Claire'
+      }
+    ];
+
+    this.symbolList = [
+        {
+          symbolId: uuid.v4(),
+          symbolType: 'symbol-wrapper',
+          tagId: '',
+          tagName: 'NewtonInsight.SysTimeSec',
+          positionXRatio: 0.08,
+          positionYRatio: 0.1,
+          positionX: 0,
+          positionY: 0,
+          svgWidth: 0,
+          widthRatio: 0.11,
+          strokeRGB: '255, 235, 59',
+          isFocus: false,
+          tagInfo: this.tagList[0]
+        },
+        {
+          symbolId: uuid.v4(),
+          symbolType: 'clock360',
+          tagId: '',
+          tagName: 'NewtonInsight.SysTimeSec',
+          positionXRatio: 0.08,
+          positionYRatio: 0.3,
+          positionX: 0,
+          positionY: 0,
+          svgWidth: 0,
+          widthRatio: 0.11,
+          strokeRGB: '255, 235, 59',
+          isFocus: false,
+          tagInfo: this.tagList[0]
+        },
+        {
+          symbolId: uuid.v4(),
+          symbolType: 'clock90',
+          tagId: '',
+          tagName: 'SysTimeSec',
+          positionXRatio: 0.4,
+          positionYRatio: 0.85,
+          positionX: 0,
+          positionY: 0,
+          svgWidth: 0,
+          widthRatio: 0.06,
+          strokeRGB: '255, 235, 59',
+          isFocus: false,
+          tagInfo: this.tagList[0]
+        },
+        {
+          symbolId: uuid.v4(),
+          symbolType: 'trend',
+          tagId: '',
+          tagName: 'SinTrend',
+          positionXRatio: 0.85,
+          positionYRatio: 0.1,
+          positionX: 0,
+          positionY: 0,
+          svgWidth: 0,
+          widthRatio: 0.12,
+          strokeRGB: '255, 235, 59',
+          isFocus: false,
+          tagInfo: this.tagList[2]
+        },
+        {
+          symbolId: uuid.v4(),
+          symbolType: 'trend',
+          tagId: '',
+          tagName: 'Pump',
+          positionXRatio: 0.85,
+          positionYRatio: 0.3,
+          positionX: 0,
+          positionY: 0,
+          svgWidth: 0,
+          widthRatio: 0.12,
+          strokeRGB: '255, 235, 59',
+          isFocus: false,
+          tagInfo: this.tagList[0]
+        },
+        {
+          symbolId: uuid.v4(),
+          symbolType: 'trend',
+          tagId: '',
+          tagName: 'Pressure',
+          positionXRatio: 0.85,
+          positionYRatio: 0.5,
+          positionX: 0,
+          positionY: 0,
+          svgWidth: 0,
+          widthRatio: 0.12,
+          strokeRGB: '255, 235, 59',
+          isFocus: false,
+          tagInfo: this.tagList[0]
+        },
+        {
+          symbolId: uuid.v4(),
+          symbolType: 'horizontal-bar',
+          tagId: '',
+          tagName: 'Pressure',
+          positionXRatio: 0.4,
+          positionYRatio: 0.1,
+          positionX: 0,
+          positionY: 0,
+          svgWidth: 0,
+          widthRatio: 0.12,
+          strokeRGB: '255, 235, 59',
+          isFocus: false,
+          tagInfo: this.tagList[0]
+        },
+        {
+          symbolId: uuid.v4(),
+          symbolType: 'radio-circle',
+          tagId: '',
+          tagName: 'isPumping',
+          positionXRatio: 0.65,
+          positionYRatio: 0.65,
+          positionX: 0,
+          positionY: 0,
+          svgWidth: 0,
+          widthRatio: 0.05,
+          strokeRGB: '76, 175, 80',
+          isFocus: false,
+          tagInfo: this.tagList[0]
+        },
+        {
+          symbolId: uuid.v4(),
+          symbolType: 'radio-rect',
+          tagId: '',
+          tagName: 'noPumping',
+          positionXRatio: 0.3,
+          positionYRatio: 0.1,
+          positionX: 0,
+          positionY: 0,
+          svgWidth: 0,
+          widthRatio: 0.04,
+          strokeRGB: '76, 175, 80',
+          isFocus: false,
+          tagInfo: this.tagList[0]
+        }
+      ];
   }
 
   ngOnInit() {
@@ -380,8 +443,17 @@ export class ComposerViewComponent implements OnInit {
       svgWidth: 0.11 * this.canvasWidth,
       widthRatio: 0.11,
       strokeRGB: '33, 33, 33',
-      isFocus: false
+      isFocus: false,
+      tagInfo: newTag
     }];
+  }
+
+  onSymbolFocusChanged(e: SymbolInfo) {
+    if (e.isFocus) {
+      this.focusedSymbols.push(e);
+    } else {
+      this.focusedSymbols = this.focusedSymbols.filter(x => x.symbolId !== e.symbolId);
+    }
   }
 
   private updateSymbolList() {
