@@ -18,8 +18,6 @@ export class TrendComponent extends SymbolBase implements OnInit, OnDestroy {
   private yAxisMin = 0;
   private timeRange = 60; // unit Second (* scale factor?)
   private ValuePts = [{x: 150, y: 0}];
-  readonly viewBoxWidth = 150;
-  readonly viewBoxHeight = 100;
   valuePath: string;
   valueAreaPath: string;
   currentValue: number;

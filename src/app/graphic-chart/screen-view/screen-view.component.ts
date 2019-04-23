@@ -28,15 +28,27 @@ export class ScreenViewComponent implements OnInit, OnDestroy {
     this.tagsValueSvc.disconnectWs();
   }
 
-  onSymbolMoved(e) {
+  onSymbolMoved(e, symbolId) {
+    e.symbolId = symbolId;
     this.symbolMoved.emit(e);
   }
 
-  onSymbolResized(e) {
+  onSymbolResized(e, symbolId) {
+    e.symbolId = symbolId;
     this.symbolResized.emit(e);
   }
 
-  onSymbolFocusChanged(e) {
-    this.symbolFocusChanged.emit(e);
+  onFocus(symbolInfo) {
+    if (this.isEditMode && !symbolInfo.isFocus) {
+      symbolInfo.isFocus = true;
+      this.symbolFocusChanged.emit(symbolInfo);
+    }
+  }
+
+  loseFocus(symbolInfo) {
+    if (symbolInfo.isFocus) {
+      symbolInfo.isFocus = false;
+      this.symbolFocusChanged.emit(symbolInfo);
+    }
   }
 }

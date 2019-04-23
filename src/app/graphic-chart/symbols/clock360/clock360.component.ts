@@ -17,8 +17,6 @@ export class Clock360Component extends SymbolBase implements OnInit, OnDestroy {
   private readonly centerY = 83 + this.tagNameHeight + 4;
   private readonly r = 75;
   private subscriptionId: string;
-  readonly viewBoxWidth = 190;
-  readonly viewBoxHeight = 190;
   currentValue: number;
   currentX: number;
   currentY: number;

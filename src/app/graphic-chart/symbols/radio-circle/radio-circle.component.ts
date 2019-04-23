@@ -9,8 +9,6 @@ import {SymbolBase} from '../symbol-base';
 })
 export class RadioCircleComponent extends SymbolBase implements OnInit, OnDestroy {
   private subscriptionId: string;
-  readonly viewBoxWidth = 60;
-  readonly viewBoxHeight = 60;
   lightened: boolean;
   constructor(private tagsValueSvc: TagsValueService) { super(); }
 

@@ -2,6 +2,9 @@ import {TagInfo} from './tag-info.data';
 export interface SymbolInfo {
     symbolId: string;
     symbolType: string;
+    viewBox: string;
+    viewBoxHeight: number;
+    viewBoxWidth: number;
     tagId: string;
     tagName: string;
     positionXRatio: number;

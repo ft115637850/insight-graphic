@@ -1,24 +1,15 @@
-<div class="drag-wrapper" [class.edit-mode]="isEditMode" [class.edit-focus]="symbolInfo.isFocus" (click)="onFocus()"
-(appClickOutside)="loseFocus()" exemptSelector="symbol-focus-exempt" [style.width.px]="symbolInfo.svgWidth"
-  [style.height.px]="symbolInfo.svgWidth * viewBoxHeight / viewBoxWidth" [style.top.px]="symbolInfo.positionY"
-  [style.left.px]="symbolInfo.positionX" appSymbolResizable (symbolResized)="onSymbolResized($event)">
-  <div style="width: auto; height: auto; " appSymbolDragable (symbolMoved)="onSymbolMoved($event)"
-    dragBoundarySelector=".back-ground" [disableDrag]="!isEditMode">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 151 85" version="1.1"
-      style="top: 0px; left: 0.5px; overflow: visible; visibility: inherit;">
-      <text x="0" y="16" style="font:19px Microsoft Sans Serif;fill:rgba(33, 33, 33, 0.6);">{{symbolInfo.tagName}}</text>
-      <text x="0" y="35" font-family="Microsoft Sans Serif" font-size="16" fill="rgba(33, 33, 33 ,1)">
-        {{currentValue}}
-      </text>
-      <line x1="0" y1="50" x2="150" y2="50" [attr.stroke]="pathStroke" stroke-width="15" />
-      <line x1="0" y1="50" [attr.x2]="valueX" y2="50" [attr.stroke]="valueStroke" stroke-width="15" />
-      <text x="0" y="70" font-family="Microsoft Sans Serif" font-size="13" fill="rgba(33, 33, 33 ,0.6)">
-        {{min}}
-      </text>
-      <text x="150" y="70" font-family="Microsoft Sans Serif" font-size="13" fill="rgba(33, 33, 33 ,0.6)"
-        text-anchor="end">
-        {{max}}
-      </text>
-    </svg>
-  </div>
-</div>
+<svg xmlns="http://www.w3.org/2000/svg" [attr.viewBox]="symbolInfo.viewBox" version="1.1"
+  style="top: 0px; left: 0.5px; overflow: visible; visibility: inherit;">
+  <text x="0" y="16" style="font:19px Microsoft Sans Serif;fill:rgba(33, 33, 33, 0.6);">{{symbolInfo.tagName}}</text>
+  <text x="0" y="35" font-family="Microsoft Sans Serif" font-size="16" fill="rgba(33, 33, 33 ,1)">
+    {{currentValue}}
+  </text>
+  <line x1="0" y1="50" x2="150" y2="50" [attr.stroke]="pathStroke" stroke-width="15" />
+  <line x1="0" y1="50" [attr.x2]="valueX" y2="50" [attr.stroke]="valueStroke" stroke-width="15" />
+  <text x="0" y="70" font-family="Microsoft Sans Serif" font-size="13" fill="rgba(33, 33, 33 ,0.6)">
+    {{min}}
+  </text>
+  <text x="150" y="70" font-family="Microsoft Sans Serif" font-size="13" fill="rgba(33, 33, 33 ,0.6)" text-anchor="end">
+    {{max}}
+  </text>
+</svg>

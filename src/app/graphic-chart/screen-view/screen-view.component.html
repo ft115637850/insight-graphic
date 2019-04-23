@@ -1,33 +1,21 @@
 <div class="back-ground" [style.background-image]="backgroundImage?'url('+backgroundImage+')':'none'"
   [style.background-size]="backgroundSize">
   <ng-template ngFor let-symbol [ngForOf]="symbolList">
-    <app-clock270 *ngIf="symbol.symbolType === 'clock270'" [isEditMode]="isEditMode" [symbolInfo]="symbol"
-      (symbolMoved)="onSymbolMoved($event)" (symbolResized)="onSymbolResized($event)"
-      (symbolFocusChanged)="onSymbolFocusChanged($event)"></app-clock270>
-    <app-clock360 *ngIf="symbol.symbolType === 'clock360'" [isEditMode]="isEditMode" [symbolInfo]="symbol"
-      (symbolMoved)="onSymbolMoved($event)" (symbolResized)="onSymbolResized($event)"
-      (symbolFocusChanged)="onSymbolFocusChanged($event)">
-    </app-clock360>
-    <app-clock90 *ngIf="symbol.symbolType === 'clock90'" [isEditMode]="isEditMode" [symbolInfo]="symbol"
-      (symbolMoved)="onSymbolMoved($event)" (symbolResized)="onSymbolResized($event)"
-      (symbolFocusChanged)="onSymbolFocusChanged($event)">
-    </app-clock90>
-    <app-trend *ngIf="symbol.symbolType === 'trend'" [isEditMode]="isEditMode" [symbolInfo]="symbol"
-      (symbolMoved)="onSymbolMoved($event)" (symbolResized)="onSymbolResized($event)"
-      (symbolFocusChanged)="onSymbolFocusChanged($event)">
-    </app-trend>
-    <app-horizontal-bar *ngIf="symbol.symbolType === 'horizontal-bar'" [isEditMode]="isEditMode" [symbolInfo]="symbol"
-      (symbolMoved)="onSymbolMoved($event)" (symbolResized)="onSymbolResized($event)"
-      (symbolFocusChanged)="onSymbolFocusChanged($event)"></app-horizontal-bar>
-    <app-radio-circle *ngIf="symbol.symbolType === 'radio-circle'" [isEditMode]="isEditMode" [symbolInfo]="symbol"
-      (symbolMoved)="onSymbolMoved($event)" (symbolResized)="onSymbolResized($event)"
-      (symbolFocusChanged)="onSymbolFocusChanged($event)"></app-radio-circle>
-    <app-radio-rect *ngIf="symbol.symbolType === 'radio-rect'" [isEditMode]="isEditMode" [symbolInfo]="symbol"
-      (symbolMoved)="onSymbolMoved($event)" (symbolResized)="onSymbolResized($event)"
-      (symbolFocusChanged)="onSymbolFocusChanged($event)">
-    </app-radio-rect>
-    <app-label-text *ngIf="symbol.symbolType === 'text'" [isEditMode]="isEditMode" [symbolInfo]="symbol"
-      (symbolMoved)="onSymbolMoved($event)" (symbolResized)="onSymbolResized($event)"
-      (symbolFocusChanged)="onSymbolFocusChanged($event)"></app-label-text>
+    <div class="drag-wrapper" [class.edit-mode]="isEditMode" [class.edit-focus]="symbol.isFocus" (click)="onFocus(symbol)"
+    (appClickOutside)="loseFocus(symbol)" exemptSelector="symbol-focus-exempt" [style.width.px]="symbol.svgWidth"
+      [style.height.px]="symbol.svgWidth * symbol.viewBoxHeight / symbol.viewBoxWidth" [style.top.px]="symbol.positionY"
+      [style.left.px]="symbol.positionX" appSymbolResizable (symbolResized)="onSymbolResized($event, symbol.symbolId)">
+      <div style="width: auto; height: auto; " appSymbolDragable (symbolMoved)="onSymbolMoved($event, symbol.symbolId)"
+        dragBoundarySelector=".back-ground" [disableDrag]="!isEditMode">
+        <app-clock270 *ngIf="symbol.symbolType === 'clock270'" [symbolInfo]="symbol"></app-clock270>
+        <app-clock360 *ngIf="symbol.symbolType === 'clock360'" [symbolInfo]="symbol"></app-clock360>
+        <app-clock90 *ngIf="symbol.symbolType === 'clock90'" [symbolInfo]="symbol"></app-clock90>
+        <app-trend *ngIf="symbol.symbolType === 'trend'" [symbolInfo]="symbol"></app-trend>
+        <app-horizontal-bar *ngIf="symbol.symbolType === 'horizontal-bar'" [symbolInfo]="symbol"></app-horizontal-bar>
+        <app-radio-circle *ngIf="symbol.symbolType === 'radio-circle'" [symbolInfo]="symbol"></app-radio-circle>
+        <app-radio-rect *ngIf="symbol.symbolType === 'radio-rect'" [symbolInfo]="symbol"></app-radio-rect>
+        <app-label-text *ngIf="symbol.symbolType === 'text'" [symbolInfo]="symbol"></app-label-text>
+      </div>
+    </div>
   </ng-template>
 </div>

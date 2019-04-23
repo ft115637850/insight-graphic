@@ -11,8 +11,6 @@ export class HorizontalBarComponent extends SymbolBase implements OnInit, OnDest
   private subscriptionId: string;
   private xAxisMax = 150;
   private xAxisMin = 0;
-  readonly viewBoxWidth = 151;
-  readonly viewBoxHeight = 85;
   currentValue: number;
   valueX: number;
   constructor(private tagsValueSvc: TagsValueService) { super(); }

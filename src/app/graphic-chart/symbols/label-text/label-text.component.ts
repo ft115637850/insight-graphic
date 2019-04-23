@@ -9,8 +9,6 @@ import {SymbolBase} from '../symbol-base';
 })
 export class LabelTextComponent extends SymbolBase implements OnInit, OnDestroy {
   private subscriptionId: string;
-  readonly viewBoxWidth = 53;
-  readonly viewBoxHeight = 23;
   currentValue: string;
 
   constructor(private tagsValueSvc: TagsValueService) { super(); }
