@@ -1,19 +1,16 @@
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { interval } from 'rxjs';
 import {TagsValueService} from '../../../services/tags-value.service';
-import { SymbolPosition } from '../../../interfaces/symbol-position.data';
-import { SymbolSize } from '../../../interfaces/symbol-size.data';
-import {SymbolInfo} from '../../../interfaces/symbol-info.data';
+import {SymbolBase} from '../symbol-base';
 
 @Component({
   selector: 'app-trend',
   templateUrl: './trend.component.html',
   styleUrls: ['./trend.component.scss']
 })
-export class TrendComponent implements OnInit, OnDestroy {
+export class TrendComponent extends SymbolBase implements OnInit, OnDestroy {
 
   private intervalSubscriber;
-  private currentValue: number;
   private subscriptionId: string;
   private xAxisMax = 150;
   private xAxisMin = 0;
@@ -23,20 +20,11 @@ export class TrendComponent implements OnInit, OnDestroy {
   private ValuePts = [{x: 150, y: 0}];
   readonly viewBoxWidth = 150;
   readonly viewBoxHeight = 100;
-  @Input() symbolInfo: SymbolInfo;
-  @Input() isEditMode: boolean;
-  @Output() symbolMoved = new EventEmitter<SymbolPosition>();
-  @Output() symbolResized = new EventEmitter<SymbolSize>();
-  @Output() symbolFocusChanged = new EventEmitter<SymbolInfo>();
-  unit: string;
-  max: number;
-  min: number;
   valuePath: string;
   valueAreaPath: string;
-  pathStroke: string;
-  valueStroke: string;
+  currentValue: number;
 
-  constructor(private tagsValueSvc: TagsValueService) { }
+  constructor(private tagsValueSvc: TagsValueService) { super(); }
 
   ngOnInit() {
     this.pathStroke = `rgba(${this.symbolInfo.strokeRGB}, 0.2)`;
@@ -64,30 +52,6 @@ export class TrendComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.tagsValueSvc.unSubscribe(this.subscriptionId, this.symbolInfo.tagName);
     this.intervalSubscriber.unsubscribe();
-  }
-
-  onSymbolMoved(e) {
-    e.symbolId = this.symbolInfo.symbolId;
-    this.symbolMoved.emit(e);
-  }
-
-  onSymbolResized(e) {
-    e.symbolId = this.symbolInfo.symbolId;
-    this.symbolResized.emit(e);
-  }
-
-  onFocus() {
-    if (this.isEditMode && !this.symbolInfo.isFocus) {
-      this.symbolInfo.isFocus = true;
-      this.symbolFocusChanged.emit(this.symbolInfo);
-    }
-  }
-
-  loseFocus() {
-    if (this.symbolInfo.isFocus) {
-      this.symbolInfo.isFocus = false;
-      this.symbolFocusChanged.emit(this.symbolInfo);
-    }
   }
 
   private getLastY(): number {

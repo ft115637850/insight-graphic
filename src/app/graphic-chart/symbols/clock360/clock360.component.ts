@@ -1,15 +1,13 @@
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {TagsValueService} from '../../../services/tags-value.service';
-import { SymbolPosition } from '../../../interfaces/symbol-position.data';
-import { SymbolSize } from '../../../interfaces/symbol-size.data';
-import {SymbolInfo} from '../../../interfaces/symbol-info.data';
+import {SymbolBase} from '../symbol-base';
 
 @Component({
   selector: 'app-clock360',
   templateUrl: './clock360.component.html',
   styleUrls: ['./clock360.component.scss']
 })
-export class Clock360Component implements OnInit, OnDestroy {
+export class Clock360Component extends SymbolBase implements OnInit, OnDestroy {
 
   // design value
   private readonly tagNameHeight = 16;
@@ -21,22 +19,12 @@ export class Clock360Component implements OnInit, OnDestroy {
   private subscriptionId: string;
   readonly viewBoxWidth = 190;
   readonly viewBoxHeight = 190;
-  @Input() symbolInfo: SymbolInfo;
-  @Input() isEditMode: boolean;
-  @Output() symbolMoved = new EventEmitter<SymbolPosition>();
-  @Output() symbolResized = new EventEmitter<SymbolSize>();
-  @Output() symbolFocusChanged = new EventEmitter<SymbolInfo>();
   currentValue: number;
-  unit: string;
-  max: number;
-  min: number;
   currentX: number;
   currentY: number;
   valueLargeArcFlag: number;
   valuePath = '';
-  pathStroke: string;
-  valueStroke: string;
-  constructor(private tagsValueSvc: TagsValueService) {}
+  constructor(private tagsValueSvc: TagsValueService) { super(); }
 
   ngOnInit() {
     this.pathStroke = `rgba(${this.symbolInfo.strokeRGB}, 0.2)`;
@@ -56,30 +44,6 @@ export class Clock360Component implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.tagsValueSvc.unSubscribe(this.subscriptionId, this.symbolInfo.tagName);
-  }
-
-  onSymbolMoved(e) {
-    e.symbolId = this.symbolInfo.symbolId;
-    this.symbolMoved.emit(e);
-  }
-
-  onSymbolResized(e) {
-    e.symbolId = this.symbolInfo.symbolId;
-    this.symbolResized.emit(e);
-  }
-
-  onFocus() {
-    if (this.isEditMode && !this.symbolInfo.isFocus) {
-      this.symbolInfo.isFocus = true;
-      this.symbolFocusChanged.emit(this.symbolInfo);
-    }
-  }
-
-  loseFocus() {
-    if (this.symbolInfo.isFocus) {
-      this.symbolInfo.isFocus = false;
-      this.symbolFocusChanged.emit(this.symbolInfo);
-    }
   }
 
   private updateValueArcData() {

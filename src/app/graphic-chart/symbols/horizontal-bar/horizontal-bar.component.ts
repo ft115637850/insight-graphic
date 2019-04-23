@@ -1,33 +1,21 @@
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {TagsValueService} from '../../../services/tags-value.service';
-import { SymbolPosition } from '../../../interfaces/symbol-position.data';
-import { SymbolSize } from '../../../interfaces/symbol-size.data';
-import {SymbolInfo} from '../../../interfaces/symbol-info.data';
+import {SymbolBase} from '../symbol-base';
 
 @Component({
   selector: 'app-horizontal-bar',
   templateUrl: './horizontal-bar.component.html',
   styleUrls: ['./horizontal-bar.component.scss']
 })
-export class HorizontalBarComponent implements OnInit, OnDestroy {
+export class HorizontalBarComponent extends SymbolBase implements OnInit, OnDestroy {
   private subscriptionId: string;
   private xAxisMax = 150;
   private xAxisMin = 0;
   readonly viewBoxWidth = 151;
   readonly viewBoxHeight = 85;
-  @Input() symbolInfo: SymbolInfo;
-  @Input() isEditMode: boolean;
-  @Output() symbolMoved = new EventEmitter<SymbolPosition>();
-  @Output() symbolResized = new EventEmitter<SymbolSize>();
-  @Output() symbolFocusChanged = new EventEmitter<SymbolInfo>();
   currentValue: number;
-  unit: string;
-  max: number;
-  min: number;
   valueX: number;
-  pathStroke: string;
-  valueStroke: string;
-  constructor(private tagsValueSvc: TagsValueService) { }
+  constructor(private tagsValueSvc: TagsValueService) { super(); }
 
   ngOnInit() {
     this.pathStroke = `rgba(${this.symbolInfo.strokeRGB}, 0.2)`;
@@ -47,30 +35,6 @@ export class HorizontalBarComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.tagsValueSvc.unSubscribe(this.subscriptionId, this.symbolInfo.tagName);
-  }
-
-  onSymbolMoved(e) {
-    e.symbolId = this.symbolInfo.symbolId;
-    this.symbolMoved.emit(e);
-  }
-
-  onSymbolResized(e) {
-    e.symbolId = this.symbolInfo.symbolId;
-    this.symbolResized.emit(e);
-  }
-
-  onFocus() {
-    if (this.isEditMode && !this.symbolInfo.isFocus) {
-      this.symbolInfo.isFocus = true;
-      this.symbolFocusChanged.emit(this.symbolInfo);
-    }
-  }
-
-  loseFocus() {
-    if (this.symbolInfo.isFocus) {
-      this.symbolInfo.isFocus = false;
-      this.symbolFocusChanged.emit(this.symbolInfo);
-    }
   }
 
   private getLastX(): number {
