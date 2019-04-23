@@ -4,16 +4,6 @@ import { SymbolSize } from '../../interfaces/symbol-size.data';
 import {SymbolInfo} from '../../interfaces/symbol-info.data';
 
 export class SymbolBase {
-  // design value
-  // private readonly tagNameHeight = 16;
-  // private readonly startAngle = 0.75;    // Unit PI
-  // private readonly sweepAngle = 1.5;
-  // private readonly centerX = 83;
-  // private readonly centerY = 83 + this.tagNameHeight + 4;
-  // private readonly r = 75;
-  // private subscriptionId: string;
-  // readonly viewBoxWidth = 190;
-  // readonly viewBoxHeight = 165;
   @Input() symbolInfo: SymbolInfo;
   @Input() isEditMode: boolean;
   @Output() symbolMoved = new EventEmitter<SymbolPosition>();
@@ -22,10 +12,6 @@ export class SymbolBase {
   unit: string;
   max: number;
   min: number;
-  // currentX: number;
-  // currentY: number;
-  // valueLargeArcFlag: number;
-  // valuePath = '';
   pathStroke: string;
   valueStroke: string;
 

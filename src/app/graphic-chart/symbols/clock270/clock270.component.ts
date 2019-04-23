@@ -3,11 +3,11 @@ import {TagsValueService} from '../../../services/tags-value.service';
 import {SymbolBase} from '../symbol-base';
 
 @Component({
-  selector: 'app-symbol-wrapper',
-  templateUrl: './symbol-wrapper.component.html',
-  styleUrls: ['./symbol-wrapper.component.scss']
+  selector: 'app-clock270',
+  templateUrl: './clock270.component.html',
+  styleUrls: ['./clock270.component.scss']
 })
-export class SymbolWrapperComponent extends SymbolBase implements OnInit, OnDestroy {
+export class Clock270Component extends SymbolBase implements OnInit, OnDestroy {
   // design value
   private readonly tagNameHeight = 16;
   private readonly startAngle = 0.75;    // Unit PI

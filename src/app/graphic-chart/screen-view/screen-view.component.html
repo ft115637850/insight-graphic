@@ -1,9 +1,9 @@
 <div class="back-ground" [style.background-image]="backgroundImage?'url('+backgroundImage+')':'none'"
   [style.background-size]="backgroundSize">
   <ng-template ngFor let-symbol [ngForOf]="symbolList">
-    <app-symbol-wrapper *ngIf="symbol.symbolType === 'symbol-wrapper'" [isEditMode]="isEditMode" [symbolInfo]="symbol"
+    <app-clock270 *ngIf="symbol.symbolType === 'clock270'" [isEditMode]="isEditMode" [symbolInfo]="symbol"
       (symbolMoved)="onSymbolMoved($event)" (symbolResized)="onSymbolResized($event)"
-      (symbolFocusChanged)="onSymbolFocusChanged($event)"></app-symbol-wrapper>
+      (symbolFocusChanged)="onSymbolFocusChanged($event)"></app-clock270>
     <app-clock360 *ngIf="symbol.symbolType === 'clock360'" [isEditMode]="isEditMode" [symbolInfo]="symbol"
       (symbolMoved)="onSymbolMoved($event)" (symbolResized)="onSymbolResized($event)"
       (symbolFocusChanged)="onSymbolFocusChanged($event)">

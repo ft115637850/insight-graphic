@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { SymbolWrapperComponent } from './symbols/symbol-wrapper/symbol-wrapper.component';
 import { GraphicChartRoutingModule } from './graphic-chart-routing.module';
 import { SymbolDragableDirective } from '../directives/symbol-dragable.directive';
 import { SymbolResizableDirective } from '../directives/symbol-resizable.directive';
@@ -20,9 +19,10 @@ import { TagListComponent } from './graphic-composer/tag-list/tag-list.component
 import { LabelTextComponent } from './symbols/label-text/label-text.component';
 import { SymbolPropertiesComponent } from './graphic-composer/symbol-properties/symbol-properties.component';
 import { ClickOutsideDirective } from '../directives/click-outside.directive';
+import { Clock270Component } from './symbols/clock270/clock270.component';
 
 @NgModule({
-  declarations: [SymbolWrapperComponent,
+  declarations: [
     SymbolDragableDirective, SymbolResizableDirective,
     ScreenViewComponent, TrendComponent, Clock360Component,
     Clock90Component, HorizontalBarComponent, RadioCircleComponent,
@@ -31,7 +31,8 @@ import { ClickOutsideDirective } from '../directives/click-outside.directive';
     TagListComponent,
     LabelTextComponent,
     SymbolPropertiesComponent,
-    ClickOutsideDirective],
+    ClickOutsideDirective,
+    Clock270Component],
   imports: [
     MatCardModule,
     MatSidenavModule,

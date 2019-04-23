@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SymbolWrapperComponent } from './symbol-wrapper.component';
+import { Clock270Component } from './clock270.component';
 
-describe('SymbolWrapperComponent', () => {
-  let component: SymbolWrapperComponent;
-  let fixture: ComponentFixture<SymbolWrapperComponent>;
+describe('Clock270Component', () => {
+  let component: Clock270Component;
+  let fixture: ComponentFixture<Clock270Component>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SymbolWrapperComponent ]
+      declarations: [ Clock270Component ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SymbolWrapperComponent);
+    fixture = TestBed.createComponent(Clock270Component);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

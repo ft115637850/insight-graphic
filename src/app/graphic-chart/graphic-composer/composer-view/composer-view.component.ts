@@ -165,7 +165,7 @@ export class ComposerViewComponent implements OnInit {
     this.symbolList = [
         {
           symbolId: uuid.v4(),
-          symbolType: 'symbol-wrapper',
+          symbolType: 'clock270',
           tagId: '',
           tagName: 'NewtonInsight.SysTimeSec',
           positionXRatio: 0.08,
