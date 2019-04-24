@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { interval } from 'rxjs';
-import {TagsValueService} from '../../../services/tags-value.service';
+import {TagsValueService} from '../../services/tags-value.service';
 import {SymbolBase} from '../symbol-base';
 
 @Component({

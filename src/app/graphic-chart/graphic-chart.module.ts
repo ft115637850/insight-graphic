@@ -2,8 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { GraphicChartRoutingModule } from './graphic-chart-routing.module';
-import { SymbolDragableDirective } from '../directives/symbol-dragable.directive';
-import { SymbolResizableDirective } from '../directives/symbol-resizable.directive';
+import { SymbolDragableDirective } from './directives/symbol-dragable.directive';
+import { SymbolResizableDirective } from './directives/symbol-resizable.directive';
+import { ClickOutsideDirective } from './directives/click-outside.directive';
 import { ScreenViewComponent } from './screen-view/screen-view.component';
 import { TrendComponent } from './symbols/trend/trend.component';
 import { Clock360Component } from './symbols/clock360/clock360.component';
@@ -18,7 +19,6 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import { TagListComponent } from './graphic-composer/tag-list/tag-list.component';
 import { LabelTextComponent } from './symbols/label-text/label-text.component';
 import { SymbolPropertiesComponent } from './graphic-composer/symbol-properties/symbol-properties.component';
-import { ClickOutsideDirective } from '../directives/click-outside.directive';
 import { Clock270Component } from './symbols/clock270/clock270.component';
 
 @NgModule({

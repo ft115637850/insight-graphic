@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { SymbolInfo } from '../../../interfaces/symbol-info.data';
-import { TagInfo } from '../../../interfaces/tag-info.data';
+import { SymbolInfo } from '../../interfaces/symbol-info.data';
+import { TagInfo } from '../../interfaces/tag-info.data';
 import { v4 as uuid } from 'uuid';
 
 /*

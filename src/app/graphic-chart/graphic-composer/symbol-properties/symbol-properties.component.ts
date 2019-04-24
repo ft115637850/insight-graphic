@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { v4 as uuid } from 'uuid';
-import { SymbolInfo } from '../../../interfaces/symbol-info.data';
+import { SymbolInfo } from '../../interfaces/symbol-info.data';
 
 @Component({
   selector: 'app-symbol-properties',

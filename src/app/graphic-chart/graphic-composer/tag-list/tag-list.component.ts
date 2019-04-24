@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { TagInfo } from '../../../interfaces/tag-info.data';
+import { TagInfo } from '../../interfaces/tag-info.data';
 
 @Component({
   selector: 'app-tag-list',

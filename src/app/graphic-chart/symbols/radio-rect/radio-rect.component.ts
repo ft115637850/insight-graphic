@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
-import {TagsValueService} from '../../../services/tags-value.service';
+import {TagsValueService} from '../../services/tags-value.service';
 import {SymbolBase} from '../symbol-base';
 
 @Component({

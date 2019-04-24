@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
-import {TagsValueService} from '../../services/tags-value.service';
-import {SymbolInfo} from '../../interfaces/symbol-info.data';
-import { SymbolPosition } from '../../interfaces/symbol-position.data';
-import { SymbolSize } from '../../interfaces/symbol-size.data';
+import {TagsValueService} from '../services/tags-value.service';
+import {SymbolInfo} from '../interfaces/symbol-info.data';
+import { SymbolPosition } from '../interfaces/symbol-position.data';
+import { SymbolSize } from '../interfaces/symbol-size.data';
 
 @Component({
   selector: 'app-screen-view',
