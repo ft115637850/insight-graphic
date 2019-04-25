@@ -20,6 +20,8 @@ import { TagListComponent } from './graphic-composer/tag-list/tag-list.component
 import { LabelTextComponent } from './symbols/label-text/label-text.component';
 import { SymbolPropertiesComponent } from './graphic-composer/symbol-properties/symbol-properties.component';
 import { Clock270Component } from './symbols/clock270/clock270.component';
+import { Clock180Component } from './symbols/clock180/clock180.component';
+import { VerticalBarComponent } from './symbols/vertical-bar/vertical-bar.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { Clock270Component } from './symbols/clock270/clock270.component';
     LabelTextComponent,
     SymbolPropertiesComponent,
     ClickOutsideDirective,
-    Clock270Component],
+    Clock270Component,
+    Clock180Component,
+    VerticalBarComponent],
   imports: [
     MatCardModule,
     MatSidenavModule,

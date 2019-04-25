@@ -1,0 +1,11 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 151 151" version="1.1"
+  style="top: 0px; left: 0px;">
+  <text x="0" y="0" text-anchor="start" dominant-baseline="hanging" style="font:19px Microsoft Sans Serif;fill:rgba(33, 33, 33, 0.6);">Tag</text>
+  <line x1="8" y1="23" x2="8" y2="150" stroke-width="15" stroke="rgb(15, 118, 199)" />
+  <text x="25" y="23" text-anchor="start" dominant-baseline="hanging" font-family="Microsoft Sans Serif" font-size="12" fill="rgba(33, 33, 33 ,0.6)">#</text>
+  <text x="25" y="65" text-anchor="start" dominant-baseline="hanging" style="font:19px Microsoft Sans Serif;fill:rgba(33, 33, 33, 1);">#.#</text>
+  <text x="25" y="80" text-anchor="start" dominant-baseline="hanging" font-family="Microsoft Sans Serif" font-size="12" fill="rgba(33, 33, 33 ,0.6)">Units</text>
+  <text x="25" y="150" text-anchor="start" dominant-baseline="baseline" font-family="Microsoft Sans Serif" font-size="12" fill="rgba(33, 33, 33 ,0.6)">#</text>
+</svg>

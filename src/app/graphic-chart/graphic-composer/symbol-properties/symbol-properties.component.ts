@@ -9,6 +9,11 @@ import { SymbolInfo } from '../../interfaces/symbol-info.data';
 })
 export class SymbolPropertiesComponent implements OnInit {
   private symbolViewBoxs = {
+    clock180: {
+      viewBox: '0 0 190 120',
+      viewBoxWidth: 190,
+      viewBoxHeight: 120
+    },
     clock270: {
       viewBox: '0 0 190 165',
       viewBoxWidth: 190,
@@ -28,6 +33,11 @@ export class SymbolPropertiesComponent implements OnInit {
       viewBox: '0 0 151 85',
       viewBoxWidth: 151,
       viewBoxHeight: 85
+    },
+    'vertical-bar': {
+      viewBox: '0 0 151 151',
+      viewBoxWidth: 151,
+      viewBoxHeight: 151
     },
     trend: {
       viewBox: '0 0 150 100',

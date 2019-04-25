@@ -7,11 +7,13 @@
       [style.left.px]="symbol.positionX" appSymbolResizable (symbolResized)="onSymbolResized($event, symbol.symbolId)">
       <div style="width: auto; height: auto; " appSymbolDragable (symbolMoved)="onSymbolMoved($event, symbol.symbolId)"
         dragBoundarySelector=".back-ground" [disableDrag]="!isEditMode">
+        <app-clock180 *ngIf="symbol.symbolType === 'clock180'" [symbolInfo]="symbol"></app-clock180>
         <app-clock270 *ngIf="symbol.symbolType === 'clock270'" [symbolInfo]="symbol"></app-clock270>
         <app-clock360 *ngIf="symbol.symbolType === 'clock360'" [symbolInfo]="symbol"></app-clock360>
         <app-clock90 *ngIf="symbol.symbolType === 'clock90'" [symbolInfo]="symbol"></app-clock90>
         <app-trend *ngIf="symbol.symbolType === 'trend'" [symbolInfo]="symbol"></app-trend>
         <app-horizontal-bar *ngIf="symbol.symbolType === 'horizontal-bar'" [symbolInfo]="symbol"></app-horizontal-bar>
+        <app-vertical-bar *ngIf="symbol.symbolType === 'vertical-bar'" [symbolInfo]="symbol"></app-vertical-bar>
         <app-radio-circle *ngIf="symbol.symbolType === 'radio-circle'" [symbolInfo]="symbol"></app-radio-circle>
         <app-radio-rect *ngIf="symbol.symbolType === 'radio-rect'" [symbolInfo]="symbol"></app-radio-rect>
         <app-label-text *ngIf="symbol.symbolType === 'text'" [symbolInfo]="symbol"></app-label-text>

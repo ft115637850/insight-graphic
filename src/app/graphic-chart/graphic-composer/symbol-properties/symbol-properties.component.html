@@ -5,10 +5,12 @@
         Choose Graphic
       </mat-panel-title>
     </mat-expansion-panel-header>
-    <img class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'clock270'" src="/assets/clock270-sample.svg" (click)="onClickSample('clock270')">
-    <img class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'clock90'" src="/assets/clock90-sample.svg" (click)="onClickSample('clock90')">
     <img class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'clock360'" src="/assets/clock360-sample.svg" (click)="onClickSample('clock360')">
+    <img class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'clock270'" src="/assets/clock270-sample.svg" (click)="onClickSample('clock270')">
+    <img class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'clock180'" src="/assets/clock180-sample.svg" (click)="onClickSample('clock180')">
+    <img class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'clock90'" src="/assets/clock90-sample.svg" (click)="onClickSample('clock90')">
     <img class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'horizontal-bar'" src="/assets/horizontal-bar-sample.svg" (click)="onClickSample('horizontal-bar')">
+    <img class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'vertical-bar'" src="/assets/vertical-bar-sample.svg" (click)="onClickSample('vertical-bar')">
     <img class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'trend'" src="/assets/trend-sample.svg" (click)="onClickSample('trend')">
   </mat-expansion-panel>
 </mat-accordion>
