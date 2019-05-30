@@ -43,6 +43,16 @@ export class SymbolPropertiesComponent implements OnInit {
       viewBox: '0 0 150 100',
       viewBoxWidth: 150,
       viewBoxHeight: 100
+    },
+    'radio-circle': {
+      viewBox: '0 0 60 60',
+      viewBoxWidth: 151,
+      viewBoxHeight: 151
+    },
+    'radio-rect': {
+      viewBox: '0 0 60 60',
+      viewBoxWidth: 60,
+      viewBoxHeight: 60
     }
   };
   currentGraphic: SymbolInfo;
