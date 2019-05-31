@@ -18,7 +18,7 @@ export class RadioCircleComponent extends SymbolBase implements OnInit, OnDestro
 
     this.lightened = false;
     this.subscriptionId = this.tagsValueSvc.subscribe(this.symbolInfo.tagName, (tagValue, maxValue, minValue) => {
-      this.lightened = tagValue.toLowerCase() === 'true';
+      this.lightened = tagValue.toLowerCase() === 'on';
     });
   }
 

@@ -159,6 +159,18 @@ export class ComposerViewComponent implements OnInit {
         source: 'Wuhan Water Plant',
         description: 'label string',
         location: '\\Quebec\\Pointe-Claire'
+      },
+      {
+        tagId: '128897',
+        tagName: 'isPumping',
+        alias: '',
+        units: '',
+        max: 0,
+        min: 0,
+        dataType: 'Boolean',
+        source: 'Wuhan Water Plant',
+        description: 'label string',
+        location: '\\Quebec\\Pointe-Claire'
       }
     ];
 
