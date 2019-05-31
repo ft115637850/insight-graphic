@@ -5,6 +5,7 @@
         Choose Graphic
       </mat-panel-title>
     </mat-expansion-panel-header>
+    <img class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'text'" src="/assets/label-text-sample.svg" (click)="onClickSample('text')">
     <img class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'clock360'" src="/assets/clock360-sample.svg" (click)="onClickSample('clock360')">
     <img class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'clock270'" src="/assets/clock270-sample.svg" (click)="onClickSample('clock270')">
     <img class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'clock180'" src="/assets/clock180-sample.svg" (click)="onClickSample('clock180')">
@@ -14,6 +15,8 @@
     <img class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'trend'" src="/assets/trend-sample.svg" (click)="onClickSample('trend')">
     <img class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'radio-circle'" src="/assets/radio-circle-sample.svg" (click)="onClickSample('radio-circle')">
     <img class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'radio-rect'" src="/assets/radio-rect-sample.svg" (click)="onClickSample('radio-rect')">
+    <img class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'toggle'" src="/assets/toggle-sample.svg" (click)="onClickSample('toggle')">
+    <img class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'toggle-line'" src="/assets/toggle-line-sample.svg" (click)="onClickSample('toggle-line')">
   </mat-expansion-panel>
 </mat-accordion>
 <div style="height:5px;"></div>

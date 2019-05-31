@@ -9,6 +9,11 @@ import { SymbolInfo } from '../../interfaces/symbol-info.data';
 })
 export class SymbolPropertiesComponent implements OnInit {
   private symbolViewBoxs = {
+    text: {
+      viewBox: '0 0 53 21',
+      viewBoxWidth: 53,
+      viewBoxHeight: 21
+    },
     clock180: {
       viewBox: '0 0 190 120',
       viewBoxWidth: 190,
@@ -46,8 +51,8 @@ export class SymbolPropertiesComponent implements OnInit {
     },
     'radio-circle': {
       viewBox: '0 0 60 60',
-      viewBoxWidth: 151,
-      viewBoxHeight: 151
+      viewBoxWidth: 60,
+      viewBoxHeight: 60
     },
     'radio-rect': {
       viewBox: '0 0 60 60',
@@ -80,7 +85,9 @@ export class SymbolPropertiesComponent implements OnInit {
         ...this.symbolViewBoxs[e]
       };
 
-      if (this.currentGraphic.symbolType === 'text') {
+      if (e === 'text') {
+        newSymbol.strokeRGB = '33, 33, 33';
+      } else {
         newSymbol.strokeRGB = '15, 118, 199';
       }
       this.graphicChanged.emit({oldSymbol: this.currentGraphic, newSymbol});

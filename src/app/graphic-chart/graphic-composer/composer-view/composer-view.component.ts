@@ -164,10 +164,10 @@ export class ComposerViewComponent implements OnInit {
         tagId: '128897',
         tagName: 'isPumping',
         alias: '',
-        units: '',
+        units: 'ON/OFF',
         max: 0,
         min: 0,
-        dataType: 'Boolean',
+        dataType: 'Discrete',
         source: 'Wuhan Water Plant',
         description: 'label string',
         location: '\\Quebec\\Pointe-Claire'
