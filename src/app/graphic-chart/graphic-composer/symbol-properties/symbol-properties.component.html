@@ -6,17 +6,18 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
     <img class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'text'" src="/assets/label-text-sample.svg" (click)="onClickSample('text')">
-    <img class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'clock360'" src="/assets/clock360-sample.svg" (click)="onClickSample('clock360')">
-    <img class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'clock270'" src="/assets/clock270-sample.svg" (click)="onClickSample('clock270')">
-    <img class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'clock180'" src="/assets/clock180-sample.svg" (click)="onClickSample('clock180')">
-    <img class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'clock90'" src="/assets/clock90-sample.svg" (click)="onClickSample('clock90')">
-    <img class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'horizontal-bar'" src="/assets/horizontal-bar-sample.svg" (click)="onClickSample('horizontal-bar')">
-    <img class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'vertical-bar'" src="/assets/vertical-bar-sample.svg" (click)="onClickSample('vertical-bar')">
-    <img class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'trend'" src="/assets/trend-sample.svg" (click)="onClickSample('trend')">
-    <img class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'radio-circle'" src="/assets/radio-circle-sample.svg" (click)="onClickSample('radio-circle')">
-    <img class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'radio-rect'" src="/assets/radio-rect-sample.svg" (click)="onClickSample('radio-rect')">
-    <img class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'toggle'" src="/assets/toggle-sample.svg" (click)="onClickSample('toggle')">
-    <img class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'toggle-line'" src="/assets/toggle-line-sample.svg" (click)="onClickSample('toggle-line')">
+    <img *ngIf="currentGraphic.tagInfo.dataType.toLowerCase() === 'analog'" class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'clock360'" src="/assets/clock360-sample.svg" (click)="onClickSample('clock360')">
+    <img *ngIf="currentGraphic.tagInfo.dataType.toLowerCase() === 'analog'" class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'clock270'" src="/assets/clock270-sample.svg" (click)="onClickSample('clock270')">
+    <img *ngIf="currentGraphic.tagInfo.dataType.toLowerCase() === 'analog'" class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'clock180'" src="/assets/clock180-sample.svg" (click)="onClickSample('clock180')">
+    <img *ngIf="currentGraphic.tagInfo.dataType.toLowerCase() === 'analog'" class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'clock90'" src="/assets/clock90-sample.svg" (click)="onClickSample('clock90')">
+    <img *ngIf="currentGraphic.tagInfo.dataType.toLowerCase() === 'analog'" class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'horizontal-bar'" src="/assets/horizontal-bar-sample.svg" (click)="onClickSample('horizontal-bar')">
+    <img *ngIf="currentGraphic.tagInfo.dataType.toLowerCase() === 'analog'" class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'vertical-bar'" src="/assets/vertical-bar-sample.svg" (click)="onClickSample('vertical-bar')">
+    <img *ngIf="currentGraphic.tagInfo.dataType.toLowerCase() === 'analog'" class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'trend'" src="/assets/trend-sample.svg" (click)="onClickSample('trend')">
+    <img *ngIf="currentGraphic.tagInfo.dataType.toLowerCase() === 'discrete'" class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'radio-circle'" src="/assets/radio-circle-sample.svg" (click)="onClickSample('radio-circle')">
+    <img *ngIf="currentGraphic.tagInfo.dataType.toLowerCase() === 'discrete'" class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'radio-rect'" src="/assets/radio-rect-sample.svg" (click)="onClickSample('radio-rect')">
+    <img *ngIf="currentGraphic.tagInfo.dataType.toLowerCase() === 'discrete'" class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'toggle'" src="/assets/toggle-sample.svg" (click)="onClickSample('toggle')">
+    <img *ngIf="currentGraphic.tagInfo.dataType.toLowerCase() === 'discrete'" class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'toggle-line'" src="/assets/toggle-line-sample.svg" (click)="onClickSample('toggle-line')">
+    <img *ngIf="currentGraphic.tagInfo.dataType.toLowerCase() === 'discrete'" class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'toggle-rect'" src="/assets/toggle-rect-sample.svg" (click)="onClickSample('toggle-rect')">
   </mat-expansion-panel>
 </mat-accordion>
 <div style="height:5px;"></div>
