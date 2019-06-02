@@ -17,6 +17,7 @@
         <app-radio-circle *ngIf="symbol.symbolType === 'radio-circle'" [symbolInfo]="symbol"></app-radio-circle>
         <app-radio-rect *ngIf="symbol.symbolType === 'radio-rect'" [symbolInfo]="symbol"></app-radio-rect>
         <app-label-text *ngIf="symbol.symbolType === 'text'" [symbolInfo]="symbol"></app-label-text>
+        <app-toggle *ngIf="symbol.symbolType === 'toggle'" [symbolInfo]="symbol"></app-toggle>
       </div>
     </div>
   </ng-template>

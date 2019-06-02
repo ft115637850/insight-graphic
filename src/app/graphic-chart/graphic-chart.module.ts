@@ -22,6 +22,7 @@ import { SymbolPropertiesComponent } from './graphic-composer/symbol-properties/
 import { Clock270Component } from './symbols/clock270/clock270.component';
 import { Clock180Component } from './symbols/clock180/clock180.component';
 import { VerticalBarComponent } from './symbols/vertical-bar/vertical-bar.component';
+import { ToggleComponent } from './symbols/toggle/toggle.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { VerticalBarComponent } from './symbols/vertical-bar/vertical-bar.compon
     ClickOutsideDirective,
     Clock270Component,
     Clock180Component,
-    VerticalBarComponent],
+    VerticalBarComponent,
+    ToggleComponent],
   imports: [
     MatCardModule,
     MatSidenavModule,

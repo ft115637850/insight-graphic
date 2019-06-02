@@ -58,6 +58,21 @@ export class SymbolPropertiesComponent implements OnInit {
       viewBox: '0 0 60 60',
       viewBoxWidth: 60,
       viewBoxHeight: 60
+    },
+    toggle: {
+      viewBox: '0 0 100 65',
+      viewBoxWidth: 100,
+      viewBoxHeight: 65
+    },
+    'toggle-line': {
+      viewBox: '0 0 60 60',
+      viewBoxWidth: 65,
+      viewBoxHeight: 65
+    },
+    'toggle-rect': {
+      viewBox: '0 0 80 60',
+      viewBoxWidth: 65,
+      viewBoxHeight: 65
     }
   };
   currentGraphic: SymbolInfo;
