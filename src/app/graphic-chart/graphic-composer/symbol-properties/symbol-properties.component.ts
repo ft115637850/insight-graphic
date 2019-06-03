@@ -65,14 +65,14 @@ export class SymbolPropertiesComponent implements OnInit {
       viewBoxHeight: 65
     },
     'toggle-line': {
-      viewBox: '0 0 60 60',
-      viewBoxWidth: 65,
-      viewBoxHeight: 65
+      viewBox: '0 0 100 60',
+      viewBoxWidth: 100,
+      viewBoxHeight: 60
     },
     'toggle-rect': {
-      viewBox: '0 0 80 60',
-      viewBoxWidth: 65,
-      viewBoxHeight: 65
+      viewBox: '0 0 120 60',
+      viewBoxWidth: 120,
+      viewBoxHeight: 60
     }
   };
   currentGraphic: SymbolInfo;
@@ -82,7 +82,6 @@ export class SymbolPropertiesComponent implements OnInit {
   set focusedSymbols(focusedSymbols: SymbolInfo[]) {
     this.symbols = focusedSymbols;
     this.currentGraphic = this.focusedSymbols[0];
-    // TO DO: Check data type
   }
   get focusedSymbols(): SymbolInfo[] {
     return this.symbols;

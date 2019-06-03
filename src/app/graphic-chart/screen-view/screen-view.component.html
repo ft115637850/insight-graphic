@@ -18,6 +18,8 @@
         <app-radio-rect *ngIf="symbol.symbolType === 'radio-rect'" [symbolInfo]="symbol"></app-radio-rect>
         <app-label-text *ngIf="symbol.symbolType === 'text'" [symbolInfo]="symbol"></app-label-text>
         <app-toggle *ngIf="symbol.symbolType === 'toggle'" [symbolInfo]="symbol"></app-toggle>
+        <app-toggle-line *ngIf="symbol.symbolType === 'toggle-line'" [symbolInfo]="symbol"></app-toggle-line>
+        <app-toggle-rect *ngIf="symbol.symbolType === 'toggle-rect'" [symbolInfo]="symbol"></app-toggle-rect>
       </div>
     </div>
   </ng-template>

@@ -23,6 +23,8 @@ import { Clock270Component } from './symbols/clock270/clock270.component';
 import { Clock180Component } from './symbols/clock180/clock180.component';
 import { VerticalBarComponent } from './symbols/vertical-bar/vertical-bar.component';
 import { ToggleComponent } from './symbols/toggle/toggle.component';
+import { ToggleLineComponent } from './symbols/toggle-line/toggle-line.component';
+import { ToggleRectComponent } from './symbols/toggle-rect/toggle-rect.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { ToggleComponent } from './symbols/toggle/toggle.component';
     Clock270Component,
     Clock180Component,
     VerticalBarComponent,
-    ToggleComponent],
+    ToggleComponent,
+    ToggleLineComponent,
+    ToggleRectComponent],
   imports: [
     MatCardModule,
     MatSidenavModule,
