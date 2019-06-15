@@ -14,7 +14,7 @@ import { RadioCircleComponent } from './symbols/radio-circle/radio-circle.compon
 import { RadioRectComponent } from './symbols/radio-rect/radio-rect.component';
 import { ComposerViewComponent } from './graphic-composer/composer-view/composer-view.component';
 import {MatCardModule, MatSidenavModule, MatButtonModule,
-  MatIconModule, MatSliderModule, MatRadioModule, MatTabsModule, MatExpansionModule} from '@angular/material';
+  MatIconModule, MatSliderModule, MatRadioModule, MatTabsModule, MatExpansionModule, MatSelectModule} from '@angular/material';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { TagListComponent } from './graphic-composer/tag-list/tag-list.component';
 import { LabelTextComponent } from './symbols/label-text/label-text.component';
@@ -52,6 +52,7 @@ import { ToggleRectComponent } from './symbols/toggle-rect/toggle-rect.component
     MatRadioModule,
     MatTabsModule,
     MatExpansionModule,
+    MatSelectModule,
     DragDropModule,
     ReactiveFormsModule,
     CommonModule,

@@ -8,6 +8,8 @@ import { SymbolInfo } from '../../interfaces/symbol-info.data';
   styleUrls: ['./symbol-properties.component.scss']
 })
 export class SymbolPropertiesComponent implements OnInit {
+  colorPalettes = ['33, 33, 33', '255, 20, 147', ' 	30, 144, 255'];
+  graphicColor = '33, 33, 33';
   private symbolViewBoxs = {
     text: {
       viewBox: '0 0 53 21',

@@ -1,4 +1,4 @@
-<mat-accordion >
+<mat-accordion multi="true">
   <mat-expansion-panel expanded="true">
     <mat-expansion-panel-header>
       <mat-panel-title>
@@ -18,6 +18,21 @@
     <img *ngIf="currentGraphic.tagInfo.dataType.toLowerCase() === 'discrete'" class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'toggle'" src="/assets/toggle-sample.svg" (click)="onClickSample('toggle')">
     <img *ngIf="currentGraphic.tagInfo.dataType.toLowerCase() === 'discrete'" class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'toggle-line'" src="/assets/toggle-line-sample.svg" (click)="onClickSample('toggle-line')">
     <img *ngIf="currentGraphic.tagInfo.dataType.toLowerCase() === 'discrete'" class="graphic-preview" [class.selected]="currentGraphic.symbolType === 'toggle-rect'" src="/assets/toggle-rect-sample.svg" (click)="onClickSample('toggle-rect')">
+  </mat-expansion-panel>
+  <mat-expansion-panel expanded="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Options
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-form-field>
+      <mat-label>Graphic Color</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let color of colorPalettes" [value]="graphicColor">
+          {{color}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
   </mat-expansion-panel>
 </mat-accordion>
 <div style="height:5px;"></div>
