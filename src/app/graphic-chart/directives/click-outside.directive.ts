@@ -26,6 +26,10 @@ export class ClickOutsideDirective implements AfterViewInit {
     if (this.exemptionList && this.exemptionList.length > 0) {
       // tslint:disable-next-line:prefer-for-of
       for (let i = 0; i < this.exemptionList.length; i++) {
+        if (this.isClickInArea(this.exemptionList[i], event)) {
+          return;
+        }
+
         if (this.exemptionList[i].contains(targetElement)) {
           return;
         }
@@ -38,4 +42,12 @@ export class ClickOutsideDirective implements AfterViewInit {
     }
   }
 
+  private isClickInArea(element: Element, event: MouseEvent): boolean {
+    const area = element.getBoundingClientRect();
+    if (event.clientX > area.left && event.clientX < area.right &&
+      event.clientY > area.top && event.clientY < area.bottom) {
+      return true;
+    }
+    return false;
+  }
 }
