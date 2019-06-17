@@ -30,7 +30,7 @@
         <mat-tab *ngIf="focusedSymbols.length === 0" label="Canvas Properties">
           <form [formGroup]="canvasProps">
             <div class="property-row">
-              <span>Width</span>
+              <span>Width </span>
               <button mat-icon-button (click)="changeSize('minus', 'width')">
                 <mat-icon svgIcon="minus"></mat-icon>
               </button>
@@ -50,6 +50,12 @@
               <button mat-icon-button (click)="changeSize('add', 'height')">
                 <mat-icon svgIcon="add"></mat-icon>
               </button>
+            </div>
+            <div class="resolution-row">
+              <div class="label">Resolutions</div>
+              <div class="values">
+                <div *ngFor="let res of resolutionsLst">{{res.viewValue}}</div>
+              </div>
             </div>
             <div class="property-row">
               <button mat-raised-button color="primary" (click)="imgFileInput.click()">Change Background</button>
