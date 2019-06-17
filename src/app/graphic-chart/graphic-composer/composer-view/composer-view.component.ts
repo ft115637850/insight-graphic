@@ -357,7 +357,7 @@ export class ComposerViewComponent implements OnInit {
     }
 
     this.resolutionsLst = this.resolutions.filter(
-      res => res.x === this.canvasProps.value.width && res.y === this.canvasProps.value.height);
+      res => res.x/res.y === this.canvasProps.value.width/this.canvasProps.value.height);
     this.resizeBackground();
     this.updateSymbolList();
   }
