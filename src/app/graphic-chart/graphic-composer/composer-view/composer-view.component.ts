@@ -495,7 +495,7 @@ export class ComposerViewComponent implements OnInit {
       positionY: posY,
       svgWidth: 0.11 * this.canvasWidth,
       widthRatio: 0.11,
-      strokeRGB: '33, 33, 33',
+      strokeRGB: '33, 150, 243',
       isFocus: false,
       tagInfo: newTag
     }];

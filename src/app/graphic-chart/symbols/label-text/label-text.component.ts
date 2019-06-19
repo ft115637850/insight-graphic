@@ -14,7 +14,8 @@ export class LabelTextComponent extends SymbolBase implements OnInit, OnDestroy 
   constructor(private tagsValueSvc: TagsValueService) { super(); }
 
   ngOnInit() {
-    this.valueStroke = `rgba(${this.symbolInfo.strokeRGB}, 1)`;
+    // this.valueStroke = `rgba(${this.symbolInfo.strokeRGB}, 1)`;
+    this.valueStroke = `rgba(33, 33, 33, 1)`;
 
     this.currentValue = '###.##';
     this.subscriptionId = this.tagsValueSvc.subscribe(this.symbolInfo.tagName, (tagValue, maxValue, minValue) => {

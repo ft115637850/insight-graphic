@@ -72,7 +72,7 @@ export class SymbolPropertiesComponent implements OnInit {
     color: 'rgb(96, 125, 139)',
     colorValue: '96, 125, 139'
   }];
-  graphicColor = '33, 33, 33';
+
   private symbolViewBoxs = {
     text: {
       viewBox: '0 0 53 21',
@@ -164,11 +164,18 @@ export class SymbolPropertiesComponent implements OnInit {
         ...this.symbolViewBoxs[e]
       };
 
-      if (e === 'text') {
-        newSymbol.strokeRGB = '33, 33, 33';
-      } else {
-        newSymbol.strokeRGB = '15, 118, 199';
-      }
+      this.graphicChanged.emit({oldSymbol: this.currentGraphic, newSymbol});
+    }
+  }
+
+  onSelectGraphicColor(colorValue) {
+    if (colorValue !== this.currentGraphic.strokeRGB && this.currentGraphic.symbolType !== 'text') {
+      this.currentGraphic.strokeRGB = colorValue;
+      const newSymbol: SymbolInfo = {
+        ...this.currentGraphic,
+        strokeRGB: colorValue
+      };
+
       this.graphicChanged.emit({oldSymbol: this.currentGraphic, newSymbol});
     }
   }

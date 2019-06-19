@@ -26,7 +26,10 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
     <div class="palette-panel">
-      <div *ngFor="let palette of colorPalettes" [style.background-color]="palette.color" class="color-palette"></div>
+      <div *ngFor="let palette of colorPalettes" [style.background-color]="palette.color" 
+      [ngClass]="{'selected-color': palette.colorValue===currentGraphic.strokeRGB}"
+        class="color-palette" (click)="onSelectGraphicColor(palette.colorValue)"
+      ></div>
     </div>
   </mat-expansion-panel>
 </mat-accordion>
