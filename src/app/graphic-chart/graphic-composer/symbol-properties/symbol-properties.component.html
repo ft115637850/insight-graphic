@@ -22,17 +22,12 @@
   <mat-expansion-panel expanded="true">
     <mat-expansion-panel-header>
       <mat-panel-title>
-        Options
+        Graphic Color
       </mat-panel-title>
     </mat-expansion-panel-header>
-    <mat-form-field>
-      <mat-label>Graphic Color</mat-label>
-      <mat-select>
-        <mat-option *ngFor="let color of colorPalettes" [value]="graphicColor">
-          {{color}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+    <div class="palette-panel">
+      <div *ngFor="let palette of colorPalettes" [style.background-color]="palette.color" class="color-palette"></div>
+    </div>
   </mat-expansion-panel>
 </mat-accordion>
 <div style="height:5px;"></div>

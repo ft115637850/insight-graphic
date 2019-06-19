@@ -12,4 +12,17 @@
   height: 103px;
   background-color: rgba(0, 187, 255, 0.2);
   border: 1px solid rgb(0, 187, 255);
-}  
+} 
+.palette-panel {
+  display: flex;
+  align-items: center;
+  height: 55px;
+  .color-palette {
+    flex-grow: 1;
+    height: 50px;
+  }
+  .color-palette:hover {
+    border: 3px solid rgb(0, 187, 255);
+  }
+}
+
