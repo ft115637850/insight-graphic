@@ -5,6 +5,7 @@ import { MatIconRegistry } from '@angular/material';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { SymbolInfo } from '../../interfaces/symbol-info.data';
 import { TagInfo } from '../../interfaces/tag-info.data';
+import { CardInfo } from '../../interfaces/card-info.data';
 import { v4 as uuid } from 'uuid';
 
 
@@ -31,6 +32,7 @@ export class ComposerViewComponent implements OnInit {
   isEditMode = true;
   tagList: TagInfo[];
   symbolList: SymbolInfo[] = [];
+  cardList: CardInfo[] = [];
   focusedSymbols: SymbolInfo[] = [];
   resolutionsLst: Resolution[] = [];
   @ViewChild('contentHolder')

@@ -26,6 +26,7 @@ import { ToggleComponent } from './symbols/toggle/toggle.component';
 import { ToggleLineComponent } from './symbols/toggle-line/toggle-line.component';
 import { ToggleRectComponent } from './symbols/toggle-rect/toggle-rect.component';
 import { CardsComponent } from './graphic-composer/cards/cards.component';
+import { CardElementComponent } from './card-element/card-element.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { CardsComponent } from './graphic-composer/cards/cards.component';
     ToggleComponent,
     ToggleLineComponent,
     ToggleRectComponent,
-    CardsComponent],
+    CardsComponent,
+    CardElementComponent],
   imports: [
     MatCardModule,
     MatSidenavModule,
