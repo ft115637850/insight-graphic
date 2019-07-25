@@ -23,4 +23,7 @@
       </div>
     </div>
   </ng-template>
+  <ng-template ngFor let-card [ngForOf]="cardList">
+    <app-card-element [strokeRGB]="card.strokeRGB"></app-card-element>
+  </ng-template>
 </div>

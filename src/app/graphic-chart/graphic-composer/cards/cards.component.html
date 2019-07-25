@@ -1,3 +1,4 @@
-<div class="card-panel">
-  <div *ngFor="let palette of colorPalettes" [style.background-color]="palette.color" class="card" ></div>
+<div class="card-panel" cdkDropList [cdkDropListData]="colorPalettes">
+  <div *ngFor="let palette of colorPalettes" cdkDrag (cdkDragMoved)="onAddingTag($event)"
+    [style.background-color]="palette.color" class="card"></div>
 </div>

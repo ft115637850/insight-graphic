@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import {TagsValueService} from '../services/tags-value.service';
 import {SymbolInfo} from '../interfaces/symbol-info.data';
+import {CardInfo} from '../interfaces/card-info.data';
 import { SymbolPosition } from '../interfaces/symbol-position.data';
 import { SymbolSize } from '../interfaces/symbol-size.data';
 
@@ -13,6 +14,7 @@ export class ScreenViewComponent implements OnInit, OnDestroy {
   @Input() backgroundImage: string;
   @Input() backgroundSize = '100% 100%';
   @Input() symbolList: SymbolInfo[] = [];
+  @Input() cardList: CardInfo[] = [];
   @Input() isEditMode: boolean;
   @Output() symbolMoved = new EventEmitter<SymbolPosition>();
   @Output() symbolResized = new EventEmitter<SymbolSize>();

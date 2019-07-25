@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-card-element',
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./card-element.component.scss']
 })
 export class CardElementComponent implements OnInit {
-
+  @Input() strokeRGB: string;
   constructor() { }
 
   ngOnInit() {

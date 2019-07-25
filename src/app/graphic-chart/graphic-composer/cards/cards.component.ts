@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-cards',
@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cards.component.scss']
 })
 export class CardsComponent implements OnInit {
+  @Output() addingTagMoved = new EventEmitter<any>();
   colorPalettes = [{
     color: 'rgb(0, 0, 0)',
     colorValue: '0, 0, 0'
@@ -73,6 +74,10 @@ export class CardsComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onAddingTag(e) {
+    this.addingTagMoved.emit(e.pointerPosition);
   }
 
 }

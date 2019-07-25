@@ -460,7 +460,7 @@ export class ComposerViewComponent implements OnInit {
     this.addingTagPosition = e;
   }
 
-  onAddTag(e: CdkDragDrop<TagInfo[]>) {
+  onAddTag(e: CdkDragDrop<any>) {
     if (e.previousContainer === e.container || !e.isPointerOverContainer) {
       this.addingTagPosition = null;
       return;
@@ -481,26 +481,44 @@ export class ComposerViewComponent implements OnInit {
       posY = canvasRect.height - 48;
     }
 
-    const newTag = e.previousContainer.data[e.previousIndex];
-    // better performance than this.symbolList.push()
-    this.symbolList = [...this.symbolList, {
-      symbolId: uuid.v4(),
-      symbolType: 'text',
-      tagId: newTag.tagId,
-      tagName: newTag.tagName,
-      viewBox: '0 0 53 21',
-      viewBoxWidth: 53,
-      viewBoxHeight: 21,
-      positionXRatio: posX / this.canvasWidth,
-      positionYRatio: posY / this.canvasHeight,
-      positionX: posX,
-      positionY: posY,
-      svgWidth: 0.11 * this.canvasWidth,
-      widthRatio: 0.11,
-      strokeRGB: '33, 150, 243',
-      isFocus: false,
-      tagInfo: newTag
-    }];
+    const newElement = e.previousContainer.data[e.previousIndex];
+    if (newElement.tagId) {
+      // better performance than this.symbolList.push()
+      this.symbolList = [...this.symbolList, {
+        symbolId: uuid.v4(),
+        symbolType: 'text',
+        tagId: newElement.tagId,
+        tagName: newElement.tagName,
+        viewBox: '0 0 53 21',
+        viewBoxWidth: 53,
+        viewBoxHeight: 21,
+        positionXRatio: posX / this.canvasWidth,
+        positionYRatio: posY / this.canvasHeight,
+        positionX: posX,
+        positionY: posY,
+        svgWidth: 0.11 * this.canvasWidth,
+        widthRatio: 0.11,
+        strokeRGB: '33, 150, 243',
+        isFocus: false,
+        tagInfo: newElement
+      }];
+    } else {
+      this.cardList = [
+        ...this.cardList, {
+          cardId: uuid.v4(),
+          positionXRatio: posX / this.canvasWidth,
+          positionYRatio: posY / this.canvasHeight,
+          positionX: posX,
+          positionY: posY,
+          widthRatio: 0.11,
+          heightRatio: 0.11,
+          cardWidth: 0.11 * this.canvasWidth,
+          cardHeight: 0.11 * this.canvasHeight,
+          strokeRGB: newElement.colorValue          
+        }
+      ]
+      console.log(this.cardList);
+    }
   }
 
   onSymbolFocusChanged(e: SymbolInfo) {
