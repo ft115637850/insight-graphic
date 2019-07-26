@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { CardInfo } from '../interfaces/card-info.data';
 
 @Component({
   selector: 'app-card-element',
@@ -6,10 +7,12 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./card-element.component.scss']
 })
 export class CardElementComponent implements OnInit {
-  @Input() strokeRGB: string;
-  constructor() { }
+  @Input() cardInfo: CardInfo;
+  cardColor: string;
+  constructor() {}
 
   ngOnInit() {
+    this.cardColor = `rgba(${this.cardInfo.strokeRGB}, 1)`;
   }
 
 }

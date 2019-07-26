@@ -443,7 +443,11 @@ export class ComposerViewComponent implements OnInit {
   }
 
   onSymbolMoved(e) {
-    const sym = this.symbolList.find(s => s.symbolId === e.symbolId);
+    let sym: any = this.symbolList.find(s => s.symbolId === e.symbolId);
+    if (!sym) {
+      sym = this.cardList.find(s => s.cardId === e.symbolId);
+    }
+
     sym.positionX = e.positionX;
     sym.positionXRatio = sym.positionX / this.canvasWidth;
     sym.positionY = e.positionY;
@@ -514,7 +518,8 @@ export class ComposerViewComponent implements OnInit {
           heightRatio: 0.11,
           cardWidth: 0.11 * this.canvasWidth,
           cardHeight: 0.11 * this.canvasHeight,
-          strokeRGB: newElement.colorValue          
+          strokeRGB: newElement.colorValue,
+          isFocus: true          
         }
       ]
       console.log(this.cardList);
