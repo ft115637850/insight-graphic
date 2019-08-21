@@ -9,5 +9,4 @@ export interface CardInfo {
   cardWidth: number;
   cardHeight: number;
   strokeRGB: string;
-  isFocus: boolean;
 }

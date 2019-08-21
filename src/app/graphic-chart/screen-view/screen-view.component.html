@@ -25,9 +25,7 @@
     </div>
   </ng-template>
   <ng-template ngFor let-card [ngForOf]="cardList">
-    <div class="drag-wrapper" [class.edit-mode]="isEditMode" [class.edit-focus]="card.isFocus"
-      (click)="onFocus(card)" (appClickOutside)="loseFocus(card)" exemptSelector="symbol-focus-exempt"
-      [style.width.px]="card.cardWidth"
+    <div class="drag-wrapper" [class.edit-mode]="isEditMode" [style.width.px]="card.cardWidth"
       [style.height.px]="card.cardHeight" [style.top.px]="card.positionY"
       [style.left.px]="card.positionX">
       <div style="width: 100%; height: 100%; " appSymbolDragable (symbolMoved)="onSymbolMoved($event, card.cardId)"
