@@ -518,7 +518,8 @@ export class ComposerViewComponent implements OnInit {
           heightRatio: 0.11,
           cardWidth: 0.11 * this.canvasWidth,
           cardHeight: 0.11 * this.canvasHeight,
-          strokeRGB: newElement.colorValue      
+          strokeRGB: newElement.colorValue,
+          alpha: 1
         }
       ]
     }

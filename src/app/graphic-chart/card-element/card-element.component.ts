@@ -12,7 +12,7 @@ export class CardElementComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    this.cardColor = `rgba(${this.cardInfo.strokeRGB}, 1)`;
+    this.cardColor = `rgba(${this.cardInfo.strokeRGB}, ${this.cardInfo.alpha})`;
   }
 
 }
