@@ -44,3 +44,4 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+scripts/generate-client/swagger-codegen-cli-2.3.0.jar

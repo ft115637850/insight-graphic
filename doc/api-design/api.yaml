@@ -1,0 +1,53 @@
+swagger: '2.0'
+info:
+  title: iDatanomics
+  version: 1.0.0
+host: localhost:5000
+schemes:
+  - http
+basePath: /api
+produces:
+  - application/json
+security:
+  - basic: []
+  - oauth: []
+securityDefinitions:
+  basic:
+    type: basic
+    flow: password
+  oauth:
+    type: oauth2
+    flow: password
+paths:
+  /Token:
+    get:
+      tags:
+        - Token
+      operationId: GetToken
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          schema:
+            type: string
+            description: token
+        '401':
+          description: Unauthorized
+          schema:
+            type: string
+        '403':
+          description: Forbidden
+          schema:
+            type: string
+        '500':
+          description: >-
+            (Internal Server Error) An exception or an error happens in portal backend.
+          schema:
+            type: string
+            description: Error
+
