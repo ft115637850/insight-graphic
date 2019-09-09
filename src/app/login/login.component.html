@@ -1,6 +1,7 @@
 <div class="background">
   <form [formGroup]="user" class="login-form">
     <img src="/assets/iDatanomics_login.svg"/>
+    <div *ngIf="loginFailed" class="errorMessage">Invalid user name or password</div>
     <mat-form-field>
       <input matInput formControlName="name" placeholder="User Name" >
     </mat-form-field>
@@ -8,6 +9,6 @@
       <input matInput type="password" formControlName="password" placeholder="Password" >
     </mat-form-field>
     <div class="change-pwd">Change / Forgot Password?</div>
-    <button mat-raised-button color="primary" (click)="login()">Login</button>
+    <button mat-raised-button color="primary" (click)="login()" [disabled]="!user.valid">Login</button>
   </form>
 </div>

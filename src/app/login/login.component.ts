@@ -10,6 +10,7 @@ import { TokenService } from '../../../api-client/api/api';
 })
 export class LoginComponent implements OnInit {
   user: FormGroup;
+  loginFailed = false;
   constructor(private router: Router, private tokenSvc: TokenService, private fb: FormBuilder) { }
 
   ngOnInit() {
@@ -29,9 +30,10 @@ export class LoginComponent implements OnInit {
       this.tokenSvc.configuration.username = this.user.value.name;
       this.tokenSvc.configuration.password = this.user.value.password;
       this.tokenSvc.getToken().subscribe(token => {
+        this.loginFailed = false;
         sessionStorage.setItem('token', token);
         this.router.navigateByUrl('graphic-chart');
-      });
+      }, e => this.loginFailed = true);
     }
   }
 }
