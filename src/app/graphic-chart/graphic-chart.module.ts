@@ -27,6 +27,7 @@ import { ToggleLineComponent } from './symbols/toggle-line/toggle-line.component
 import { ToggleRectComponent } from './symbols/toggle-rect/toggle-rect.component';
 import { CardsComponent } from './graphic-composer/cards/cards.component';
 import { CardElementComponent } from './card-element/card-element.component';
+import { TagService, ResolutionService } from '../../../api-client/api/api';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,10 @@ import { CardElementComponent } from './card-element/card-element.component';
     ReactiveFormsModule,
     CommonModule,
     GraphicChartRoutingModule
+  ],
+  providers: [
+    TagService,
+    ResolutionService
   ]
 })
 export class GraphicChartModule { }

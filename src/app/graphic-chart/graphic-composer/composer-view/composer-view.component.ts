@@ -7,7 +7,7 @@ import { SymbolInfo } from '../../interfaces/symbol-info.data';
 import { TagInfo } from '../../interfaces/tag-info.data';
 import { CardInfo } from '../../interfaces/card-info.data';
 import { v4 as uuid } from 'uuid';
-
+import { TagService, ResolutionService } from '../../../../../api-client/api/api';
 
 interface Resolution {
   x: number;
@@ -30,7 +30,7 @@ export class ComposerViewComponent implements OnInit {
   backGroundImage: string | ArrayBuffer | null = null;
   backgroundSize = '100% 100%';
   isEditMode = true;
-  tagList: TagInfo[];
+  tagList: TagInfo[] = [];
   symbolList: SymbolInfo[] = [];
   cardList: CardInfo[] = [];
   focusedSymbols: SymbolInfo[] = [];
@@ -41,53 +41,27 @@ export class ComposerViewComponent implements OnInit {
   mainCanvas: ElementRef;
   private bgImageWidth: number;
   private bgImageHeight: number;
-  private resolutions: Resolution[] = [
-    { x: 4, y: 3, viewValue: '640x480' },
-    { x: 4, y: 3, viewValue: '800x600' },
-    { x: 4, y: 3, viewValue: '320x240' },
-    { x: 4, y: 3, viewValue: '160x120' },
-    { x: 3, y: 2, viewValue: '240x160' },
-    { x: 15, y: 9, viewValue: '400x240' },
-    { x: 3, y: 2, viewValue: '480x320' },
-    { x: 16, y: 10, viewValue: '768x480' },
-    { x: 16, y: 9, viewValue: '854x480' },
-    { x: 3, y: 2, viewValue: '960x640' },
-    { x: 16, y: 9, viewValue: '1024x576/600' },
-    { x: 4, y: 3, viewValue: '1024x768' },
-    { x: 16, y: 9, viewValue: '1366x768' },
-    { x: 4, y: 3, viewValue: '1152x864' },
-    { x: 8, y: 5, viewValue: '1440x900' },
-    { x: 5, y: 4, viewValue: '1280x1024' },
-    { x: 4, y: 3, viewValue: '1400x1050' },
-    { x: 16, y: 10, viewValue: '1680x1050' },
-    { x: 4, y: 3, viewValue: '1600x1200' },
-    { x: 16, y: 10, viewValue: '1920x1200' },
-    { x: 16, y: 9, viewValue: '2048x1152' },
-    { x: 4, y: 3, viewValue: '2048x1536' },
-    { x: 16, y: 10, viewValue: '2560x1600' },
-    { x: 5, y: 4, viewValue: '2560x2048' },
-    { x: 25, y: 16, viewValue: '3200x2048' },
-    { x: 4, y: 3, viewValue: '3200x2400' },
-    { x: 16, y: 10, viewValue: '3840x2400' },
-    { x: 4, y: 3, viewValue: '4096x3072' },
-    { x: 16, y: 10, viewValue: '5120x3200' },
-    { x: 5, y: 4, viewValue: '5120x4096' },
-    { x: 25, y: 16, viewValue: '6400x4096' },
-    { x: 4, y: 3, viewValue: '6400x4800' },
-    { x: 8, y: 5, viewValue: '7680x4800' },
-    { x: 16, y: 9, viewValue: '1280x720' },
-    { x: 16, y: 9, viewValue: '1920x1080' },
-    { x: 16, y: 9, viewValue: '640x360' },
-    { x: 16, y: 9, viewValue: '960x540' },
-    { x: 16, y: 9, viewValue: '2560x1440' },
-    { x: 21, y: 9, viewValue: '3440x1440' },
-    { x: 16, y: 9, viewValue: '3200x1800' },
-    { x: 16, y: 9, viewValue: '3840x2160' },
-    { x: 16, y: 9, viewValue: '5120x2880' },
-    { x: 16, y: 9, viewValue: '7680x4320' },
-  ];
+  private resolutions: Resolution[] = [];
 
-  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private fb: FormBuilder) {
+  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private fb: FormBuilder,
+    private tagSvc:TagService, private resolutionSvc:ResolutionService) {
+    const token = sessionStorage.getItem('token');
+    this.tagSvc.configuration.accessToken = token;
+    this.resolutionSvc.configuration.accessToken = token;
+    this.tagSvc.getTags().subscribe(tags => this.tagList = tags.map(x => {
+      return {
+        tagId: x.id,
+        tagName: x.name,
+        alias: x.alias,
+        units: x.units,
+        max: x.max,
+        min: x.min,
+        dataType: x.dataType,
+        source: x.source,
+        description: x.description,
+        location: x.location
+      } as TagInfo;
+    }));
     iconRegistry.addSvgIcon(
       'add',
       sanitizer.bypassSecurityTrustResourceUrl('/assets/add.svg'))
@@ -111,69 +85,6 @@ export class ComposerViewComponent implements OnInit {
       height: [6],
       bgSizeOption: ['horizontal']
     });
-
-    this.tagList = [
-      {
-        tagId: '123456',
-        tagName: 'SysTimeSec',
-        alias: '',
-        units: 'Seconds',
-        max: 59,
-        min: 0,
-        dataType: 'Analog',
-        source: 'Wuhan Water Plant',
-        description: 'Datetime seconds',
-        location: '\\Quebec\\Pointe-Claire'
-      },
-      {
-        tagId: '789012',
-        tagName: 'Pressure',
-        alias: '',
-        units: 'Seconds',
-        max: 59,
-        min: 0,
-        dataType: 'Analog',
-        source: 'Wuhan Water Plant',
-        description: 'Datetime seconds',
-        location: '\\Quebec\\Pointe-Claire'
-      },
-      {
-        tagId: '189012',
-        tagName: 'SinTrend',
-        alias: '',
-        units: 'Seconds',
-        max: 59,
-        min: 0,
-        dataType: 'Analog',
-        source: 'Wuhan Water Plant',
-        description: 'Datetime seconds',
-        location: '\\Quebec\\Pointe-Claire'
-      },
-      {
-        tagId: '189013',
-        tagName: 'changingString',
-        alias: '',
-        units: '',
-        max: 0,
-        min: 0,
-        dataType: 'String',
-        source: 'Wuhan Water Plant',
-        description: 'label string',
-        location: '\\Quebec\\Pointe-Claire'
-      },
-      {
-        tagId: '128897',
-        tagName: 'isPumping',
-        alias: '',
-        units: 'ON/OFF',
-        max: 0,
-        min: 0,
-        dataType: 'Discrete',
-        source: 'Wuhan Water Plant',
-        description: 'label string',
-        location: '\\Quebec\\Pointe-Claire'
-      }
-    ];
 
     // this.symbolList = [
     //     {
@@ -339,7 +250,16 @@ export class ComposerViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.updateCanvasSize();
+    this.resolutionSvc.getResolutions().subscribe(res => {
+      this.resolutions = res.map(resolution => {
+        return {
+          x: resolution.x,
+          y: resolution.y,
+          viewValue: resolution.viewValue
+        } as Resolution;
+      });
+      this.updateCanvasSize();
+    });
   }
 
   onResize(e) {

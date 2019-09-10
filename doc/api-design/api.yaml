@@ -26,9 +26,7 @@ paths:
       operationId: GetToken
       consumes: []
       produces:
-        - text/plain
         - application/json
-        - text/json
       parameters: []
       responses:
         '200':
@@ -50,4 +48,101 @@ paths:
           schema:
             type: string
             description: Error
+  /Resolutions:
+    get:
+      tags:
+        - Resolution
+      operationId: GetResolutions
+      consumes: []
+      produces:
+        - application/json
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/ResolutionList'
+        '401':
+          description: Unauthorized
+          schema:
+            type: string
+        '403':
+          description: Forbidden
+          schema:
+            type: string
+        '500':
+          description: >-
+            (Internal Server Error) An exception or an error happens in portal backend.
+          schema:
+            type: string
+            description: Error
+  /Tags:
+    get:
+      tags:
+        - Tag
+      operationId: GetTags
+      consumes: []
+      produces:
+        - application/json
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/TagList'
+        '401':
+          description: Unauthorized
+          schema:
+            type: string
+        '403':
+          description: Forbidden
+          schema:
+            type: string
+        '500':
+          description: >-
+            (Internal Server Error) An exception or an error happens in portal backend.
+          schema:
+            type: string
+            description: Error
+definitions:
+  ResolutionList:
+    type: array
+    items:
+      $ref: '#/definitions/CanvasResolution'
+  CanvasResolution:
+    type: object
+    properties:
+      x:
+        type: number
+      y:
+        type: number
+      viewValue:
+        type: string
+  TagList:
+    type: array
+    items:
+      $ref: '#/definitions/TagInfo'
+  TagInfo:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      alias:
+        type: string
+      units:
+        type: string
+      max:
+        type: number
+      min:
+        type: number
+      dataType:
+        type: string
+      source:
+        type: string
+      description:
+        type: string
+      location:
+        type: string
 

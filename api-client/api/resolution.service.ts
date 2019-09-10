@@ -18,13 +18,14 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs/Observable';
 
+import { ResolutionList } from '../model/resolutionList';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 
 
 @Injectable()
-export class TokenService {
+export class ResolutionService {
 
     protected basePath = 'http://localhost:5000/api';
     public defaultHeaders = new HttpHeaders();
@@ -61,10 +62,10 @@ export class TokenService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getToken(observe?: 'body', reportProgress?: boolean): Observable<string>;
-    public getToken(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<string>>;
-    public getToken(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<string>>;
-    public getToken(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getResolutions(observe?: 'body', reportProgress?: boolean): Observable<ResolutionList>;
+    public getResolutions(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ResolutionList>>;
+    public getResolutions(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ResolutionList>>;
+    public getResolutions(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -94,7 +95,7 @@ export class TokenService {
         let consumes: string[] = [
         ];
 
-        return this.httpClient.get<string>(`${this.basePath}/Token`,
+        return this.httpClient.get<ResolutionList>(`${this.basePath}/Resolutions`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

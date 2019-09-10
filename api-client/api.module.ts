@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Configuration } from './configuration';
 
+import { ResolutionService } from './api/resolution.service';
+import { TagService } from './api/tag.service';
 import { TokenService } from './api/token.service';
 
 @NgModule({
@@ -10,6 +12,8 @@ import { TokenService } from './api/token.service';
   declarations: [],
   exports:      [],
   providers: [
+    ResolutionService,
+    TagService,
     TokenService ]
 })
 export class ApiModule {
