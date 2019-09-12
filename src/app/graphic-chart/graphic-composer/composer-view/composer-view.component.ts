@@ -7,7 +7,7 @@ import { SymbolInfo } from '../../interfaces/symbol-info.data';
 import { TagInfo } from '../../interfaces/tag-info.data';
 import { CardInfo } from '../../interfaces/card-info.data';
 import { v4 as uuid } from 'uuid';
-import { TagService, ResolutionService } from '../../../../../api-client/api/api';
+import { TagService, ResolutionService, BackgroundService } from '../../../../../api-client/api/api';
 
 interface Resolution {
   x: number;
@@ -21,7 +21,6 @@ interface Resolution {
   styleUrls: ['./composer-view.component.scss']
 })
 export class ComposerViewComponent implements OnInit {
-  private addingTagPosition = null;
   canvasProps: FormGroup;
   canvasMaxSize = 20;
   canvasMinSize = 3;
@@ -39,15 +38,21 @@ export class ComposerViewComponent implements OnInit {
   contentHolder: ElementRef;
   @ViewChild('mainCanvas')
   mainCanvas: ElementRef;
+  @ViewChild('imgFileInput')
+  imgFileInput: ElementRef;
+  private graphicId: string;
+  private addingTagPosition = null;
+  private backGroundImageFile: File | null = null;
   private bgImageWidth: number;
   private bgImageHeight: number;
   private resolutions: Resolution[] = [];
 
   constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private fb: FormBuilder,
-    private tagSvc:TagService, private resolutionSvc:ResolutionService) {
+              private tagSvc: TagService, private resolutionSvc: ResolutionService, private bgSvc: BackgroundService) {
     const token = sessionStorage.getItem('token');
     this.tagSvc.configuration.accessToken = token;
     this.resolutionSvc.configuration.accessToken = token;
+    this.graphicId = uuid.v4();
     this.tagSvc.getTags().subscribe(tags => this.tagList = tags.map(x => {
       return {
         tagId: x.id,
@@ -277,7 +282,7 @@ export class ComposerViewComponent implements OnInit {
     }
 
     this.resolutionsLst = this.resolutions.filter(
-      res => res.x/res.y === this.canvasProps.value.width/this.canvasProps.value.height);
+      res => res.x / res.y === this.canvasProps.value.width / this.canvasProps.value.height);
     this.resizeBackground();
     this.updateSymbolList();
   }
@@ -315,12 +320,15 @@ export class ComposerViewComponent implements OnInit {
         this.bgImageHeight = img.height;
         this.backgroundSize = `${this.canvasWidth}px ${this.canvasWidth * this.bgImageHeight
           / this.bgImageWidth}px`;
+        this.backGroundImageFile = e.target.files[0];
       };
     };
   }
 
   removeBackground() {
     this.backGroundImage = null;
+    this.backGroundImageFile = null;
+    this.imgFileInput.nativeElement.value = '';
     this.canvasProps.get('bgSizeOption').setValue('horizontal');
   }
 
@@ -345,7 +353,12 @@ export class ComposerViewComponent implements OnInit {
   }
 
   onSave() {
-    this.isEditMode = false;
+    this.bgSvc.saveBackground(this.graphicId,
+      this.canvasProps.value.width,
+      this.canvasProps.value.height,
+      this.canvasProps.value.bgSizeOption,
+      this.backGroundImageFile
+    ).subscribe(() => this.isEditMode = false);
   }
 
   onCloseEdit() {
@@ -439,7 +452,7 @@ export class ComposerViewComponent implements OnInit {
           strokeRGB: newElement.colorValue,
           alpha: 1
         }
-      ]
+      ];
     }
   }
 

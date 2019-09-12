@@ -104,6 +104,51 @@ paths:
           schema:
             type: string
             description: Error
+  /Background:
+    post:
+      consumes:
+        - multipart/form-data
+      parameters:
+        - name: imgFile
+          in: formData
+          required: false
+          type: file
+        - name: graphicChartId
+          in: formData
+          required: true
+          type: string
+        - name: width
+          in: formData
+          required: true
+          type: number
+        - name: height
+          in: formData
+          required: true
+          type: number
+        - name: bgSizeOption
+          in: formData
+          required: true
+          type: string
+      operationId: SaveBackground
+      tags:
+        - Background
+      responses:
+        '200':
+          description: Success
+        '401':
+          description: Unauthorized
+          schema:
+            type: string
+        '403':
+          description: Forbidden
+          schema:
+            type: string
+        '500':
+          description: >-
+            (Internal Server Error) An exception or an error happens in portal backend.
+          schema:
+            type: string
+            description: Error
 definitions:
   ResolutionList:
     type: array
