@@ -18,6 +18,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs/Observable';
 
+import { BackgroundInfo } from '../model/backgroundInfo';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -54,6 +55,115 @@ export class BackgroundService {
         return false;
     }
 
+
+    /**
+     * 
+     * 
+     * @param graphicChartId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getImg(graphicChartId: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public getImg(graphicChartId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public getImg(graphicChartId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public getImg(graphicChartId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (graphicChartId === null || graphicChartId === undefined) {
+            throw new Error('Required parameter graphicChartId was null or undefined when calling getImg.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (basic) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+
+        // authentication (oauth) required
+        if (this.configuration.accessToken) {
+            let accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'image/png',
+            'image/gif',
+            'image/jpeg'
+        ];
+        let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set("Accept", httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        let consumes: string[] = [
+        ];
+
+        return this.httpClient.get(`${this.basePath}/Background/Img/${encodeURIComponent(String(graphicChartId))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                responseType: 'arraybuffer',
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param graphicChartId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getInfo(graphicChartId: string, observe?: 'body', reportProgress?: boolean): Observable<BackgroundInfo>;
+    public getInfo(graphicChartId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BackgroundInfo>>;
+    public getInfo(graphicChartId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BackgroundInfo>>;
+    public getInfo(graphicChartId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (graphicChartId === null || graphicChartId === undefined) {
+            throw new Error('Required parameter graphicChartId was null or undefined when calling getInfo.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (basic) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+
+        // authentication (oauth) required
+        if (this.configuration.accessToken) {
+            let accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set("Accept", httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        let consumes: string[] = [
+        ];
+
+        return this.httpClient.get<BackgroundInfo>(`${this.basePath}/Background/Info/${encodeURIComponent(String(graphicChartId))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
 
     /**
      * 
@@ -100,7 +210,6 @@ export class BackgroundService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            'application/json'
         ];
         let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {

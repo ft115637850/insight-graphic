@@ -6,8 +6,6 @@ host: localhost:5000
 schemes:
   - http
 basePath: /api
-produces:
-  - application/json
 security:
   - basic: []
   - oauth: []
@@ -149,6 +147,75 @@ paths:
           schema:
             type: string
             description: Error
+  /Background/Img/{graphicChartId}:
+    get:
+      tags:
+        - Background
+      operationId: GetImg
+      consumes: []
+      produces:
+        - image/png
+        - image/gif
+        - image/jpeg
+      parameters:
+        - name: graphicChartId
+          in: path
+          type: string
+          required: true
+      responses:
+        '200':
+          description: Success
+          content:       # Response body
+            image/*:     # Media type
+              schema: 
+                type: string
+                format: binary
+        '401':
+          description: Unauthorized
+          schema:
+            type: string
+        '403':
+          description: Forbidden
+          schema:
+            type: string
+        '500':
+          description: >-
+            (Internal Server Error) An exception or an error happens in portal backend.
+          schema:
+            type: string
+            description: Error
+  /Background/Info/{graphicChartId}:
+    get:
+      tags:
+        - Background
+      operationId: GetInfo
+      consumes: []
+      produces:
+        - application/json
+      parameters:
+        - name: graphicChartId
+          in: path
+          type: string
+          required: true
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/BackgroundInfo'
+        '401':
+          description: Unauthorized
+          schema:
+            type: string
+        '403':
+          description: Forbidden
+          schema:
+            type: string
+        '500':
+          description: >-
+            (Internal Server Error) An exception or an error happens in portal backend.
+          schema:
+            type: string
+            description: Error
 definitions:
   ResolutionList:
     type: array
@@ -189,5 +256,16 @@ definitions:
       description:
         type: string
       location:
+        type: string
+  BackgroundInfo:
+    type: object
+    properties:
+      width:
+        type: number
+      height:
+        type: number
+      bgSizeOption:
+        type: string
+      imgContentType:
         type: string
 

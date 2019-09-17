@@ -22,8 +22,8 @@ interface Resolution {
 })
 export class ComposerViewComponent implements OnInit {
   canvasProps: FormGroup;
-  canvasMaxSize = 20;
-  canvasMinSize = 3;
+  canvasMaxSize = 25;
+  canvasMinSize = 2;
   canvasWidth: number;
   canvasHeight: number;
   backGroundImage: string | ArrayBuffer | null = null;
@@ -49,10 +49,27 @@ export class ComposerViewComponent implements OnInit {
 
   constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private fb: FormBuilder,
               private tagSvc: TagService, private resolutionSvc: ResolutionService, private bgSvc: BackgroundService) {
+    this.canvasProps = this.fb.group({
+      width: [6],
+      height: [6],
+      bgSizeOption: ['horizontal']
+    });
     const token = sessionStorage.getItem('token');
     this.tagSvc.configuration.accessToken = token;
     this.resolutionSvc.configuration.accessToken = token;
-    this.graphicId = uuid.v4();
+    this.bgSvc.configuration.accessToken = token;
+    this.graphicId = '969e1cf9-9cef-4008-8074-f637f47f7ad3';
+    this.bgSvc.getInfo(this.graphicId).subscribe(info => {
+      this.canvasProps.get('width').setValue(info.width);
+      this.canvasProps.get('height').setValue(info.height);
+      this.canvasProps.get('bgSizeOption').setValue(info.bgSizeOption);
+      this.updateCanvasSize();
+      this.bgSvc.getImg(this.graphicId).subscribe(e => {
+        const img = this.arrayBufferToBase64(e);
+        this.backGroundImage = `data:${info.imgContentType};base64,${img}`;
+      }, err => console.log(err));
+    });
+
     this.tagSvc.getTags().subscribe(tags => this.tagList = tags.map(x => {
       return {
         tagId: x.id,
@@ -85,11 +102,7 @@ export class ComposerViewComponent implements OnInit {
       .addSvgIcon(
         'fullscreen',
         sanitizer.bypassSecurityTrustResourceUrl('/assets/fullscreen.svg'));
-    this.canvasProps = this.fb.group({
-      width: [6],
-      height: [6],
-      bgSizeOption: ['horizontal']
-    });
+
 
     // this.symbolList = [
     //     {
@@ -483,5 +496,15 @@ export class ComposerViewComponent implements OnInit {
       symbol.positionY = symbol.positionYRatio * this.canvasHeight;
       symbol.svgWidth = symbol.widthRatio * this.canvasWidth;
     });
+  }
+
+  private arrayBufferToBase64(buffer: ArrayBuffer ) {
+    let binary = '';
+    const bytes = new Uint8Array(buffer);
+    const len = bytes.byteLength;
+    for (let i = 0; i < len; i++) {
+        binary += String.fromCharCode( bytes[ i ] );
+    }
+    return window.btoa( binary );
   }
 }
