@@ -65,6 +65,7 @@ export class ComposerViewComponent implements OnInit {
       this.canvasProps.get('bgSizeOption').setValue(info.bgSizeOption);
       this.updateCanvasSize();
       this.bgSvc.getImg(this.graphicId).subscribe(e => {
+        this.backGroundImageFile = new File([e], 'img.jpg', {type: info.imgContentType});
         const img = this.arrayBufferToBase64(e);
         this.backGroundImage = `data:${info.imgContentType};base64,${img}`;
       }, err => console.log(err));
