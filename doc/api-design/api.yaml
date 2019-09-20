@@ -6,6 +6,8 @@ host: localhost:5000
 schemes:
   - http
 basePath: /api
+produces:
+  - application/json
 security:
   - basic: []
   - oauth: []
@@ -22,10 +24,6 @@ paths:
       tags:
         - Token
       operationId: GetToken
-      consumes: []
-      produces:
-        - application/json
-      parameters: []
       responses:
         '200':
           description: Success
@@ -51,10 +49,6 @@ paths:
       tags:
         - Resolution
       operationId: GetResolutions
-      consumes: []
-      produces:
-        - application/json
-      parameters: []
       responses:
         '200':
           description: Success
@@ -79,10 +73,6 @@ paths:
       tags:
         - Tag
       operationId: GetTags
-      consumes: []
-      produces:
-        - application/json
-      parameters: []
       responses:
         '200':
           description: Success
@@ -152,7 +142,6 @@ paths:
       tags:
         - Background
       operationId: GetImg
-      consumes: []
       produces:
         - image/png
         - image/gif
@@ -189,9 +178,6 @@ paths:
       tags:
         - Background
       operationId: GetInfo
-      consumes: []
-      produces:
-        - application/json
       parameters:
         - name: graphicChartId
           in: path
@@ -216,6 +202,18 @@ paths:
           schema:
             type: string
             description: Error
+  /Symbols:
+    post:
+      tags:
+        - Symbol
+      operationId: SaveSymbols
+      parameters:
+        - name: graphicChartData
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/GraphicChartData'
+      responses:
 definitions:
   ResolutionList:
     type: array
@@ -268,4 +266,40 @@ definitions:
         type: string
       imgContentType:
         type: string
+  GraphicChartData:
+    type: object
+    properties:
+      graphicChartId:
+        type: string
+      symbolList:
+        type: array
+        items:
+          $ref: '#/definitions/SymbolModel'
+  SymbolModel:
+    type: object
+    properties:
+      symbolId:
+        type: string
+      symbolType:
+        type: string
+      tagId:
+        type: string
+      tagName:
+        type: string
+      viewBox:
+        type: string
+      viewBoxWidth:
+        type: number
+      viewBoxHeight:
+        type: number
+      positionXRatio:
+        type: number
+      positionYRatio:
+        type: number
+      widthRatio:
+        type: number
+      strokeRGB:
+        type: string
+
+
 

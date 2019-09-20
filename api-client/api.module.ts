@@ -5,6 +5,7 @@ import { Configuration } from './configuration';
 
 import { BackgroundService } from './api/background.service';
 import { ResolutionService } from './api/resolution.service';
+import { SymbolService } from './api/symbol.service';
 import { TagService } from './api/tag.service';
 import { TokenService } from './api/token.service';
 
@@ -15,6 +16,7 @@ import { TokenService } from './api/token.service';
   providers: [
     BackgroundService,
     ResolutionService,
+    SymbolService,
     TagService,
     TokenService ]
 })

@@ -7,7 +7,8 @@ import { SymbolInfo } from '../../interfaces/symbol-info.data';
 import { TagInfo } from '../../interfaces/tag-info.data';
 import { CardInfo } from '../../interfaces/card-info.data';
 import { v4 as uuid } from 'uuid';
-import { TagService, ResolutionService, BackgroundService } from '../../../../../api-client/api/api';
+import { TagService, ResolutionService, BackgroundService, SymbolService } from '../../../../../api-client/api/api';
+import { GraphicChartData, SymbolModel } from '../../../../../api-client/model/models';
 
 interface Resolution {
   x: number;
@@ -48,16 +49,14 @@ export class ComposerViewComponent implements OnInit {
   private resolutions: Resolution[] = [];
 
   constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private fb: FormBuilder,
-              private tagSvc: TagService, private resolutionSvc: ResolutionService, private bgSvc: BackgroundService) {
+              private tagSvc: TagService, private resolutionSvc: ResolutionService,
+              private bgSvc: BackgroundService, private symSvc: SymbolService) {
     this.canvasProps = this.fb.group({
       width: [6],
       height: [6],
       bgSizeOption: ['horizontal']
     });
-    const token = sessionStorage.getItem('token');
-    this.tagSvc.configuration.accessToken = token;
-    this.resolutionSvc.configuration.accessToken = token;
-    this.bgSvc.configuration.accessToken = token;
+
     this.graphicId = '969e1cf9-9cef-4008-8074-f637f47f7ad3';
     this.bgSvc.getInfo(this.graphicId).subscribe(info => {
       this.canvasProps.get('width').setValue(info.width);
@@ -372,7 +371,29 @@ export class ComposerViewComponent implements OnInit {
       this.canvasProps.value.height,
       this.canvasProps.value.bgSizeOption,
       this.backGroundImageFile
-    ).subscribe(() => this.isEditMode = false);
+    ).subscribe(() => {
+
+      const modelLst: SymbolModel[] = this.symbolList.map(x => {
+        return {
+          symbolId: x.symbolId,
+          symbolType: x.symbolType,
+          tagId: x.tagId,
+          tagName: x.tagName,
+          viewBox: x.viewBox,
+          viewBoxWidth: x.viewBoxWidth,
+          viewBoxHeight: x.viewBoxHeight,
+          positionXRatio: x.positionXRatio,
+          positionYRatio: x.positionYRatio,
+          widthRatio: x.widthRatio,
+          strokeRGB: x.strokeRGB
+        } as SymbolModel;
+      });
+      const chartData: GraphicChartData = {
+        graphicChartId: this.graphicId,
+        symbolList: modelLst
+      };
+      this.symSvc.saveSymbols(chartData).subscribe(() => this.isEditMode = false);
+    });
   }
 
   onCloseEdit() {

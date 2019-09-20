@@ -27,7 +27,13 @@ import { ToggleLineComponent } from './symbols/toggle-line/toggle-line.component
 import { ToggleRectComponent } from './symbols/toggle-rect/toggle-rect.component';
 import { CardsComponent } from './graphic-composer/cards/cards.component';
 import { CardElementComponent } from './card-element/card-element.component';
-import { TagService, ResolutionService, BackgroundService } from '../../../api-client/api/api';
+import { TagService, ResolutionService, BackgroundService, SymbolService } from '../../../api-client/api/api';
+import { Configuration } from '../../../api-client/configuration';
+
+const configurationFactory = () => {
+  const token = sessionStorage.getItem('token');
+  return new Configuration({accessToken: token});
+};
 
 @NgModule({
   declarations: [
@@ -64,9 +70,11 @@ import { TagService, ResolutionService, BackgroundService } from '../../../api-c
     GraphicChartRoutingModule
   ],
   providers: [
+    { provide: Configuration, useFactory: configurationFactory },
     TagService,
     ResolutionService,
-    BackgroundService
+    BackgroundService,
+    SymbolService
   ]
 })
 export class GraphicChartModule { }
