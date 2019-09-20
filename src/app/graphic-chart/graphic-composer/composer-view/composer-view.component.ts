@@ -29,7 +29,7 @@ export class ComposerViewComponent implements OnInit {
   canvasHeight: number;
   backGroundImage: string | ArrayBuffer | null = null;
   backgroundSize = '100% 100%';
-  isEditMode = true;
+  isEditMode = false;
   tagList: TagInfo[] = [];
   symbolList: SymbolInfo[] = [];
   cardList: CardInfo[] = [];
@@ -70,20 +70,6 @@ export class ComposerViewComponent implements OnInit {
       }, err => console.log(err));
     });
 
-    this.tagSvc.getTags().subscribe(tags => this.tagList = tags.map(x => {
-      return {
-        tagId: x.id,
-        tagName: x.name,
-        alias: x.alias,
-        units: x.units,
-        max: x.max,
-        min: x.min,
-        dataType: x.dataType,
-        source: x.source,
-        description: x.description,
-        location: x.location
-      } as TagInfo;
-    }));
     iconRegistry.addSvgIcon(
       'add',
       sanitizer.bypassSecurityTrustResourceUrl('/assets/add.svg'))
@@ -102,169 +88,6 @@ export class ComposerViewComponent implements OnInit {
       .addSvgIcon(
         'fullscreen',
         sanitizer.bypassSecurityTrustResourceUrl('/assets/fullscreen.svg'));
-
-
-    // this.symbolList = [
-    //     {
-    //       symbolId: uuid.v4(),
-    //       symbolType: 'clock270',
-    //       tagId: '',
-    //       tagName: 'NewtonInsight.SysTimeSec',
-    //       viewBox: '0 0 190 165',
-    //       viewBoxWidth: 190,
-    //       viewBoxHeight: 165,
-    //       positionXRatio: 0.08,
-    //       positionYRatio: 0.1,
-    //       positionX: 0,
-    //       positionY: 0,
-    //       svgWidth: 0,
-    //       widthRatio: 0.11,
-    //       strokeRGB: '255, 235, 59',
-    //       isFocus: false,
-    //       tagInfo: this.tagList[0]
-    //     },
-    //     // {
-    //     //   symbolId: uuid.v4(),
-    //     //   symbolType: 'clock360',
-    //     //   tagId: '',
-    //     //   tagName: 'NewtonInsight.SysTimeSec',
-    //     //   positionXRatio: 0.08,
-    //     //   positionYRatio: 0.3,
-    //     //   positionX: 0,
-    //     //   positionY: 0,
-    //     //   svgWidth: 0,
-    //     //   widthRatio: 0.11,
-    //     //   strokeRGB: '255, 235, 59',
-    //     //   isFocus: false,
-    //     //   tagInfo: this.tagList[0]
-    //     // },
-    //     {
-    //       symbolId: uuid.v4(),
-    //       symbolType: 'clock90',
-    //       tagId: '',
-    //       tagName: 'SysTimeSec',
-    //       viewBox: '0 0 120 120',
-    //       viewBoxWidth: 120,
-    //       viewBoxHeight: 120,
-    //       positionXRatio: 0.4,
-    //       positionYRatio: 0.85,
-    //       positionX: 0,
-    //       positionY: 0,
-    //       svgWidth: 0,
-    //       widthRatio: 0.06,
-    //       strokeRGB: '255, 235, 59',
-    //       isFocus: false,
-    //       tagInfo: this.tagList[0]
-    //     },
-    //     {
-    //       symbolId: uuid.v4(),
-    //       symbolType: 'trend',
-    //       tagId: '',
-    //       tagName: 'SinTrend',
-    //       viewBox: '0 0 150 100',
-    //       viewBoxWidth: 150,
-    //       viewBoxHeight: 100,
-    //       positionXRatio: 0.85,
-    //       positionYRatio: 0.1,
-    //       positionX: 0,
-    //       positionY: 0,
-    //       svgWidth: 0,
-    //       widthRatio: 0.12,
-    //       strokeRGB: '255, 235, 59',
-    //       isFocus: false,
-    //       tagInfo: this.tagList[2]
-    //     },
-    //     {
-    //       symbolId: uuid.v4(),
-    //       symbolType: 'trend',
-    //       tagId: '',
-    //       tagName: 'Pump',
-    //       viewBox: '0 0 150 100',
-    //       viewBoxWidth: 150,
-    //       viewBoxHeight: 100,
-    //       positionXRatio: 0.85,
-    //       positionYRatio: 0.3,
-    //       positionX: 0,
-    //       positionY: 0,
-    //       svgWidth: 0,
-    //       widthRatio: 0.12,
-    //       strokeRGB: '255, 235, 59',
-    //       isFocus: false,
-    //       tagInfo: this.tagList[0]
-    //     },
-    //     {
-    //       symbolId: uuid.v4(),
-    //       symbolType: 'trend',
-    //       tagId: '',
-    //       tagName: 'Pressure',
-    //       viewBox: '0 0 150 100',
-    //       viewBoxWidth: 150,
-    //       viewBoxHeight: 100,
-    //       positionXRatio: 0.85,
-    //       positionYRatio: 0.5,
-    //       positionX: 0,
-    //       positionY: 0,
-    //       svgWidth: 0,
-    //       widthRatio: 0.12,
-    //       strokeRGB: '255, 235, 59',
-    //       isFocus: false,
-    //       tagInfo: this.tagList[0]
-    //     },
-    //     {
-    //       symbolId: uuid.v4(),
-    //       symbolType: 'horizontal-bar',
-    //       tagId: '',
-    //       tagName: 'Pressure',
-    //       viewBox: '0 0 151 85',
-    //       viewBoxWidth: 151,
-    //       viewBoxHeight: 85,
-    //       positionXRatio: 0.4,
-    //       positionYRatio: 0.1,
-    //       positionX: 0,
-    //       positionY: 0,
-    //       svgWidth: 0,
-    //       widthRatio: 0.12,
-    //       strokeRGB: '255, 235, 59',
-    //       isFocus: false,
-    //       tagInfo: this.tagList[0]
-    //     },
-    //     {
-    //       symbolId: uuid.v4(),
-    //       symbolType: 'radio-circle',
-    //       tagId: '',
-    //       tagName: 'isPumping',
-    //       viewBox: '0 0 60 60',
-    //       viewBoxWidth: 60,
-    //       viewBoxHeight: 60,
-    //       positionXRatio: 0.65,
-    //       positionYRatio: 0.65,
-    //       positionX: 0,
-    //       positionY: 0,
-    //       svgWidth: 0,
-    //       widthRatio: 0.05,
-    //       strokeRGB: '76, 175, 80',
-    //       isFocus: false,
-    //       tagInfo: this.tagList[0]
-    //     },
-    //     {
-    //       symbolId: uuid.v4(),
-    //       symbolType: 'radio-rect',
-    //       tagId: '',
-    //       tagName: 'noPumping',
-    //       viewBox: '0 0 60 60',
-    //       viewBoxWidth: 60,
-    //       viewBoxHeight: 60,
-    //       positionXRatio: 0.3,
-    //       positionYRatio: 0.1,
-    //       positionX: 0,
-    //       positionY: 0,
-    //       svgWidth: 0,
-    //       widthRatio: 0.04,
-    //       strokeRGB: '76, 175, 80',
-    //       isFocus: false,
-    //       tagInfo: this.tagList[0]
-    //     }
-    //   ];
   }
 
   ngOnInit() {
@@ -277,6 +100,44 @@ export class ComposerViewComponent implements OnInit {
         } as Resolution;
       });
       this.updateCanvasSize();
+      this.tagSvc.getTags().subscribe(tags => {
+        this.tagList = tags.map(x => {
+          return {
+            tagId: x.id,
+            tagName: x.name,
+            alias: x.alias,
+            units: x.units,
+            max: x.max,
+            min: x.min,
+            dataType: x.dataType,
+            source: x.source,
+            description: x.description,
+            location: x.location
+          } as TagInfo;
+        });
+        this.symSvc.getSymbols(this.graphicId).subscribe(lst => {
+          this.symbolList = lst.map(sym => {
+            return {
+              symbolId: sym.symbolId,
+              symbolType: sym.symbolType,
+              tagId: sym.tagId,
+              tagName: sym.tagName,
+              viewBox: sym.viewBox,
+              viewBoxWidth: sym.viewBoxWidth,
+              viewBoxHeight: sym.viewBoxHeight,
+              positionXRatio: sym.positionXRatio,
+              positionYRatio: sym.positionYRatio,
+              positionX: sym.positionXRatio * this.canvasWidth,
+              positionY: sym.positionYRatio * this.canvasHeight,
+              svgWidth: sym.widthRatio * this.canvasWidth,
+              widthRatio: sym.widthRatio,
+              strokeRGB: sym.strokeRGB,
+              isFocus: false,
+              tagInfo: this.tagList.find(t => t.tagId === sym.tagId)
+            } as SymbolInfo;
+          });
+        });
+      });
     });
   }
 
@@ -372,7 +233,6 @@ export class ComposerViewComponent implements OnInit {
       this.canvasProps.value.bgSizeOption,
       this.backGroundImageFile
     ).subscribe(() => {
-
       const modelLst: SymbolModel[] = this.symbolList.map(x => {
         return {
           symbolId: x.symbolId,

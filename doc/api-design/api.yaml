@@ -214,6 +214,53 @@ paths:
           schema:
             $ref: '#/definitions/GraphicChartData'
       responses:
+        '200':
+          description: Success
+        '401':
+          description: Unauthorized
+          schema:
+            type: string
+        '403':
+          description: Forbidden
+          schema:
+            type: string
+        '500':
+          description: >-
+            (Internal Server Error) An exception or an error happens in portal backend.
+          schema:
+            type: string
+            description: Error
+  /Symbols/{graphicChartId}:
+    get:
+      tags:
+        - Symbol
+      operationId: GetSymbols
+      parameters:
+        - name: graphicChartId
+          in: path
+          type: string
+          required: true
+      responses:
+        '200':
+          description: Success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SymbolModel'
+        '401':
+          description: Unauthorized
+          schema:
+            type: string
+        '403':
+          description: Forbidden
+          schema:
+            type: string
+        '500':
+          description: >-
+            (Internal Server Error) An exception or an error happens in portal backend.
+          schema:
+            type: string
+            description: Error
 definitions:
   ResolutionList:
     type: array
