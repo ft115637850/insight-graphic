@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { concat, forkJoin } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { SymbolInfo } from '../../interfaces/symbol-info.data';
 import { TagInfo } from '../../interfaces/tag-info.data';
 import { CardInfo } from '../../interfaces/card-info.data';
@@ -58,18 +60,6 @@ export class ComposerViewComponent implements OnInit {
     });
 
     this.graphicId = '969e1cf9-9cef-4008-8074-f637f47f7ad3';
-    this.bgSvc.getInfo(this.graphicId).subscribe(info => {
-      this.canvasProps.get('width').setValue(info.width);
-      this.canvasProps.get('height').setValue(info.height);
-      this.canvasProps.get('bgSizeOption').setValue(info.bgSizeOption);
-      this.updateCanvasSize();
-      this.bgSvc.getImg(this.graphicId).subscribe(e => {
-        this.backGroundImageFile = new File([e], 'img.jpg', {type: info.imgContentType});
-        const img = this.arrayBufferToBase64(e);
-        this.backGroundImage = `data:${info.imgContentType};base64,${img}`;
-      }, err => console.log(err));
-    });
-
     iconRegistry.addSvgIcon(
       'add',
       sanitizer.bypassSecurityTrustResourceUrl('/assets/add.svg'))
@@ -91,54 +81,7 @@ export class ComposerViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.resolutionSvc.getResolutions().subscribe(res => {
-      this.resolutions = res.map(resolution => {
-        return {
-          x: resolution.x,
-          y: resolution.y,
-          viewValue: resolution.viewValue
-        } as Resolution;
-      });
-      this.updateCanvasSize();
-      this.tagSvc.getTags().subscribe(tags => {
-        this.tagList = tags.map(x => {
-          return {
-            tagId: x.id,
-            tagName: x.name,
-            alias: x.alias,
-            units: x.units,
-            max: x.max,
-            min: x.min,
-            dataType: x.dataType,
-            source: x.source,
-            description: x.description,
-            location: x.location
-          } as TagInfo;
-        });
-        this.symSvc.getSymbols(this.graphicId).subscribe(lst => {
-          this.symbolList = lst.map(sym => {
-            return {
-              symbolId: sym.symbolId,
-              symbolType: sym.symbolType,
-              tagId: sym.tagId,
-              tagName: sym.tagName,
-              viewBox: sym.viewBox,
-              viewBoxWidth: sym.viewBoxWidth,
-              viewBoxHeight: sym.viewBoxHeight,
-              positionXRatio: sym.positionXRatio,
-              positionYRatio: sym.positionYRatio,
-              positionX: sym.positionXRatio * this.canvasWidth,
-              positionY: sym.positionYRatio * this.canvasHeight,
-              svgWidth: sym.widthRatio * this.canvasWidth,
-              widthRatio: sym.widthRatio,
-              strokeRGB: sym.strokeRGB,
-              isFocus: false,
-              tagInfo: this.tagList.find(t => t.tagId === sym.tagId)
-            } as SymbolInfo;
-          });
-        });
-      });
-    });
+    this.loadGraphicChartData();
   }
 
   onResize(e) {
@@ -388,5 +331,69 @@ export class ComposerViewComponent implements OnInit {
         binary += String.fromCharCode( bytes[ i ] );
     }
     return window.btoa( binary );
+  }
+
+  private loadGraphicChartData() {
+    let imgContentType = '';
+    concat(
+      forkJoin([
+        this.bgSvc.getInfo(this.graphicId).pipe(tap(info => {
+          this.canvasProps.get('width').setValue(info.width);
+          this.canvasProps.get('height').setValue(info.height);
+          this.canvasProps.get('bgSizeOption').setValue(info.bgSizeOption);
+          imgContentType = info.imgContentType;
+        })),
+        this.resolutionSvc.getResolutions().pipe(tap(
+          res => this.resolutions = res.map(resolution => {
+            return {
+              x: resolution.x,
+              y: resolution.y,
+              viewValue: resolution.viewValue
+            } as Resolution;
+          })
+        )),
+        this.tagSvc.getTags().pipe(tap(tags => this.tagList = tags.map(x => {
+          return {
+            tagId: x.id,
+            tagName: x.name,
+            alias: x.alias,
+            units: x.units,
+            max: x.max,
+            min: x.min,
+            dataType: x.dataType,
+            source: x.source,
+            description: x.description,
+            location: x.location
+          } as TagInfo;
+        })))
+      ]).pipe(tap(() => this.updateCanvasSize())),
+      forkJoin([
+        this.bgSvc.getImg(this.graphicId).pipe(tap(e => {
+          this.backGroundImageFile = new File([e], 'img.jpg', {type: imgContentType});
+          const img = this.arrayBufferToBase64(e);
+          this.backGroundImage = `data:${imgContentType};base64,${img}`;
+        })),
+        this.symSvc.getSymbols(this.graphicId).pipe(tap(lst => this.symbolList = lst.map(sym => {
+          return {
+            symbolId: sym.symbolId,
+            symbolType: sym.symbolType,
+            tagId: sym.tagId,
+            tagName: sym.tagName,
+            viewBox: sym.viewBox,
+            viewBoxWidth: sym.viewBoxWidth,
+            viewBoxHeight: sym.viewBoxHeight,
+            positionXRatio: sym.positionXRatio,
+            positionYRatio: sym.positionYRatio,
+            positionX: sym.positionXRatio * this.canvasWidth,
+            positionY: sym.positionYRatio * this.canvasHeight,
+            svgWidth: sym.widthRatio * this.canvasWidth,
+            widthRatio: sym.widthRatio,
+            strokeRGB: sym.strokeRGB,
+            isFocus: false,
+            tagInfo: this.tagList.find(t => t.tagId === sym.tagId)
+          } as SymbolInfo;
+        })))
+      ])
+    ).subscribe();
   }
 }
