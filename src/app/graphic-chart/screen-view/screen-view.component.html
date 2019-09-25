@@ -5,7 +5,9 @@
       (click)="onFocus(symbol)" (appClickOutside)="loseFocus(symbol)" exemptSelector="symbol-focus-exempt"
       [style.width.px]="symbol.svgWidth"
       [style.height.px]="symbol.svgWidth * symbol.viewBoxHeight / symbol.viewBoxWidth" [style.top.px]="symbol.positionY"
-      [style.left.px]="symbol.positionX" appSymbolResizable (symbolResized)="onSymbolResized($event, symbol.symbolId)">
+      [style.left.px]="symbol.positionX" appSymbolResizable (symbolResized)="onSymbolResized($event, symbol.symbolId)"
+      style="z-index: 1000"
+    >
       <div style="width: auto; height: auto; " appSymbolDragable (symbolMoved)="onSymbolMoved($event, symbol.symbolId)"
         dragBoundarySelector=".back-ground" [disableDrag]="!isEditMode">
         <app-clock180 *ngIf="symbol.symbolType === 'clock180'" [symbolInfo]="symbol"></app-clock180>

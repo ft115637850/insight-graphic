@@ -5,7 +5,7 @@
       <mat-icon svgIcon="save" (click)="onSave()"></mat-icon>
     </button>
     <button mat-icon-button *ngIf="isEditMode">
-      <mat-icon svgIcon="cancel"></mat-icon>
+      <mat-icon svgIcon="cancel" (click)="onCancel()"></mat-icon>
     </button>
     <button mat-icon-button *ngIf="!isEditMode" (click)="onEdit()">
       <mat-icon svgIcon="edit"></mat-icon>

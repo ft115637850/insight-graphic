@@ -33,7 +33,7 @@ export class TrendComponent extends SymbolBase implements OnInit {
       this.ValuePts[this.ValuePts.length - 1].y = this.getLastY();
     });
     this.currentValue = 0;
-    this.unit = 'Pa';
+    this.unit = this.symbolInfo.tagInfo.units;
 
     this.intervalSubscriber = interval(1000).subscribe(() => {
       if (!this.max) {// no value arrived yet

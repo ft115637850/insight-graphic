@@ -169,6 +169,11 @@ export class ComposerViewComponent implements OnInit {
     }
   }
 
+  onCancel() {
+    this.isEditMode = false;
+    this.loadGraphicChartData();
+  }
+
   onSave() {
     this.bgSvc.saveBackground(this.graphicId,
       this.canvasProps.value.width,

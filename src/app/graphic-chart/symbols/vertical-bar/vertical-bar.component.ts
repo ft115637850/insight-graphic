@@ -22,7 +22,7 @@ export class VerticalBarComponent extends SymbolBase implements OnInit {
     this.max = 100;
     this.currentValue = 0;
     this.valueY = 0;
-    this.unit = 'Second';
+    this.unit = this.symbolInfo.tagInfo.units;
     this.subscriptionId = this.tagsValueSvc.subscribe(this.symbolInfo.tagName, (tagValue, maxValue, minValue) => {
       this.currentValue = tagValue;
       this.max = maxValue;
