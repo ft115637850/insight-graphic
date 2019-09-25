@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {TagsValueService} from '../../services/tags-value.service';
 import {SymbolBase} from '../symbol-base';
 
@@ -7,7 +7,7 @@ import {SymbolBase} from '../symbol-base';
   templateUrl: './clock180.component.html',
   styleUrls: ['./clock180.component.scss']
 })
-export class Clock180Component extends SymbolBase implements OnInit, OnDestroy {
+export class Clock180Component extends SymbolBase implements OnInit {
 
   // design value
   private readonly tagNameHeight = 16;
@@ -16,13 +16,12 @@ export class Clock180Component extends SymbolBase implements OnInit, OnDestroy {
   private readonly centerX = 83;
   private readonly centerY = 83 + this.tagNameHeight + 4;
   private readonly r = 75;
-  private subscriptionId: string;
   currentX: number;
   currentY: number;
   valueLargeArcFlag: number;
   valuePath = '';
   currentValue: number;
-  constructor(private tagsValueSvc: TagsValueService) { super(); }
+  constructor(protected tagsValueSvc: TagsValueService) { super(tagsValueSvc); }
 
   ngOnInit() {
     this.pathStroke = `rgba(${this.symbolInfo.strokeRGB}, 0.2)`;
@@ -39,10 +38,6 @@ export class Clock180Component extends SymbolBase implements OnInit, OnDestroy {
       this.min = minValue;
       this.updateValueArcData.bind(this)();
     });
-  }
-
-  ngOnDestroy() {
-    this.tagsValueSvc.unSubscribe(this.subscriptionId, this.symbolInfo.tagName);
   }
 
   private updateValueArcData() {

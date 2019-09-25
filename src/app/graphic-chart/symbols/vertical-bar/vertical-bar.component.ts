@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {TagsValueService} from '../../services/tags-value.service';
 import {SymbolBase} from '../symbol-base';
 
@@ -7,14 +7,13 @@ import {SymbolBase} from '../symbol-base';
   templateUrl: './vertical-bar.component.html',
   styleUrls: ['./vertical-bar.component.scss']
 })
-export class VerticalBarComponent extends SymbolBase implements OnInit, OnDestroy {
+export class VerticalBarComponent extends SymbolBase implements OnInit {
 
-  private subscriptionId: string;
   private yAxisMax = 150;
   private yAxisMin = 23;
   currentValue: number;
   valueY: number;
-  constructor(private tagsValueSvc: TagsValueService) { super(); }
+  constructor(protected tagsValueSvc: TagsValueService) { super(tagsValueSvc); }
 
   ngOnInit() {
     this.pathStroke = `rgba(${this.symbolInfo.strokeRGB}, 0.2)`;
@@ -30,10 +29,6 @@ export class VerticalBarComponent extends SymbolBase implements OnInit, OnDestro
       this.min = minValue;
       this.valueY = this.getLastY();
     });
-  }
-
-  ngOnDestroy() {
-    this.tagsValueSvc.unSubscribe(this.subscriptionId, this.symbolInfo.tagName);
   }
 
   private getLastY(): number {

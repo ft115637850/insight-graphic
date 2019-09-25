@@ -315,6 +315,11 @@ export class ComposerViewComponent implements OnInit {
     ];
   }
 
+  onGraphicRemoved(e: SymbolInfo) {
+    this.focusedSymbols = this.focusedSymbols.filter(x => x.symbolId !== e.symbolId);
+    this.symbolList = this.symbolList.filter(x => x.symbolId !== e.symbolId);
+  }
+
   private updateSymbolList() {
     this.symbolList.forEach(symbol => {
       symbol.positionX = symbol.positionXRatio * this.canvasWidth;

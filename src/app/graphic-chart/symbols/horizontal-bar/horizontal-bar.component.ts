@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {TagsValueService} from '../../services/tags-value.service';
 import {SymbolBase} from '../symbol-base';
 
@@ -7,13 +7,12 @@ import {SymbolBase} from '../symbol-base';
   templateUrl: './horizontal-bar.component.html',
   styleUrls: ['./horizontal-bar.component.scss']
 })
-export class HorizontalBarComponent extends SymbolBase implements OnInit, OnDestroy {
-  private subscriptionId: string;
+export class HorizontalBarComponent extends SymbolBase implements OnInit {
   private xAxisMax = 150;
   private xAxisMin = 0;
   currentValue: number;
   valueX: number;
-  constructor(private tagsValueSvc: TagsValueService) { super(); }
+  constructor(protected tagsValueSvc: TagsValueService) { super(tagsValueSvc); }
 
   ngOnInit() {
     this.pathStroke = `rgba(${this.symbolInfo.strokeRGB}, 0.2)`;
@@ -29,10 +28,6 @@ export class HorizontalBarComponent extends SymbolBase implements OnInit, OnDest
       this.min = minValue;
       this.valueX = this.getLastX();
     });
-  }
-
-  ngOnDestroy() {
-    this.tagsValueSvc.unSubscribe(this.subscriptionId, this.symbolInfo.tagName);
   }
 
   private getLastX(): number {

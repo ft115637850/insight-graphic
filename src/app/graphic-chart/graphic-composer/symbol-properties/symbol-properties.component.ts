@@ -142,6 +142,7 @@ export class SymbolPropertiesComponent implements OnInit {
   };
   currentGraphic: SymbolInfo;
   @Output() graphicChanged = new EventEmitter<any>();
+  @Output() graphicRemoved = new EventEmitter<SymbolInfo>();
   private symbols: SymbolInfo[];
   @Input()
   set focusedSymbols(focusedSymbols: SymbolInfo[]) {
@@ -170,7 +171,6 @@ export class SymbolPropertiesComponent implements OnInit {
 
   onSelectGraphicColor(colorValue) {
     if (colorValue !== this.currentGraphic.strokeRGB && this.currentGraphic.symbolType !== 'text') {
-      this.currentGraphic.strokeRGB = colorValue;
       const newSymbol: SymbolInfo = {
         ...this.currentGraphic,
         strokeRGB: colorValue
@@ -178,5 +178,9 @@ export class SymbolPropertiesComponent implements OnInit {
 
       this.graphicChanged.emit({oldSymbol: this.currentGraphic, newSymbol});
     }
+  }
+
+  onRemoveSymbol() {
+    this.graphicRemoved.emit(this.currentGraphic);
   }
 }

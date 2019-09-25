@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { interval } from 'rxjs';
 import {TagsValueService} from '../../services/tags-value.service';
 import {SymbolBase} from '../symbol-base';
@@ -8,10 +8,9 @@ import {SymbolBase} from '../symbol-base';
   templateUrl: './trend.component.html',
   styleUrls: ['./trend.component.scss']
 })
-export class TrendComponent extends SymbolBase implements OnInit, OnDestroy {
+export class TrendComponent extends SymbolBase implements OnInit {
 
   private intervalSubscriber;
-  private subscriptionId: string;
   private xAxisMax = 150;
   private xAxisMin = 0;
   private yAxisMax = 100;
@@ -22,7 +21,7 @@ export class TrendComponent extends SymbolBase implements OnInit, OnDestroy {
   valueAreaPath: string;
   currentValue: number;
 
-  constructor(private tagsValueSvc: TagsValueService) { super(); }
+  constructor(protected tagsValueSvc: TagsValueService) { super(tagsValueSvc); }
 
   ngOnInit() {
     this.pathStroke = `rgba(${this.symbolInfo.strokeRGB}, 0.2)`;
@@ -47,8 +46,9 @@ export class TrendComponent extends SymbolBase implements OnInit, OnDestroy {
     });
   }
 
+  // tslint:disable-next-line: use-life-cycle-interface
   ngOnDestroy() {
-    this.tagsValueSvc.unSubscribe(this.subscriptionId, this.symbolInfo.tagName);
+    super.ngOnDestroy();
     this.intervalSubscriber.unsubscribe();
   }
 
