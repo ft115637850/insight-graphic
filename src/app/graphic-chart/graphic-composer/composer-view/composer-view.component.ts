@@ -32,6 +32,7 @@ export class ComposerViewComponent implements OnInit {
   backGroundImage: string | ArrayBuffer | null = null;
   backgroundSize = '100% 100%';
   isEditMode = false;
+  isFullScreen = false;
   tagList: TagInfo[] = [];
   symbolList: SymbolInfo[] = [];
   cardList: CardInfo[] = [];
@@ -85,7 +86,13 @@ export class ComposerViewComponent implements OnInit {
   }
 
   onResize(e) {
-    this.updateCanvasSize();
+    if (screen.width === window.innerWidth && screen.height === window.innerHeight) {
+      this.isFullScreen = true;
+    } else {
+      this.isFullScreen = false;
+    }
+
+    setTimeout(() => this.updateCanvasSize(), 200);
   }
 
   updateCanvasSize() {
@@ -129,16 +136,9 @@ export class ComposerViewComponent implements OnInit {
     const fr = new FileReader();
     fr.readAsDataURL(e.target.files[0]);
     fr.onload = () => {
-      const img = new Image();
-      img.src = fr.result as string;
-      img.onload = () => {  // Check whether it is an image
-        this.backGroundImage = fr.result;
-        this.bgImageWidth = img.width;
-        this.bgImageHeight = img.height;
-        this.backgroundSize = `${this.canvasWidth}px ${this.canvasWidth * this.bgImageHeight
-          / this.bgImageWidth}px`;
-        this.backGroundImageFile = e.target.files[0];
-      };
+      this.backGroundImage = fr.result;
+      this.updateBackGroundImageSize(fr.result);
+      this.backGroundImageFile = e.target.files[0];
     };
   }
 
@@ -338,6 +338,17 @@ export class ComposerViewComponent implements OnInit {
     return window.btoa( binary );
   }
 
+  private updateBackGroundImageSize(bgImg: string | ArrayBuffer) {
+    const img = new Image();
+    img.src = bgImg as string;
+    img.onload = () => {  // Check whether it is an image
+      this.bgImageWidth = img.width;
+      this.bgImageHeight = img.height;
+      this.backgroundSize = `${this.canvasWidth}px ${this.canvasWidth * this.bgImageHeight
+        / this.bgImageWidth}px`;
+    };
+  }
+
   private loadGraphicChartData() {
     let imgContentType = '';
     concat(
@@ -377,6 +388,7 @@ export class ComposerViewComponent implements OnInit {
           this.backGroundImageFile = new File([e], 'img.jpg', {type: imgContentType});
           const img = this.arrayBufferToBase64(e);
           this.backGroundImage = `data:${imgContentType};base64,${img}`;
+          this.updateBackGroundImageSize(this.backGroundImage);
         })),
         this.symSvc.getSymbols(this.graphicId).pipe(tap(lst => this.symbolList = lst.map(sym => {
           return {

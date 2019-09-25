@@ -1,5 +1,5 @@
 <div class="composer-view">
-  <mat-card>
+  <mat-card *ngIf="!isFullScreen">
     <span class="title">Supervisor Plant Overview</span>
     <button mat-icon-button *ngIf="isEditMode">
       <mat-icon svgIcon="save" (click)="onSave()"></mat-icon>
@@ -9,9 +9,6 @@
     </button>
     <button mat-icon-button *ngIf="!isEditMode" (click)="onEdit()">
       <mat-icon svgIcon="edit"></mat-icon>
-    </button>
-    <button mat-icon-button *ngIf="!isEditMode" >
-      <mat-icon svgIcon="fullscreen" ></mat-icon>
     </button>
   </mat-card>
   <mat-sidenav-container cdkDropListGroup>
