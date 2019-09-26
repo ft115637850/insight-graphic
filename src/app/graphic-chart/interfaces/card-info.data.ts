@@ -10,4 +10,6 @@ export interface CardInfo {
   cardHeight: number;
   strokeRGB: string;
   alpha: number;
+  zOrder: number;
+  isFocus: boolean;
 }

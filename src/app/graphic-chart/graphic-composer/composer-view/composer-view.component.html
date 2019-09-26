@@ -16,15 +16,16 @@
       <div class="content-holder" #contentHolder (window:resize)="onResize($event)">
         <div class="canvas" #mainCanvas [style.width.px]="canvasWidth" [style.height.px]="canvasHeight" cdkDropList (cdkDropListDropped)="onAddTag($event)">
           <app-screen-view [backgroundImage]="backGroundImage" [backgroundSize]="backgroundSize" [isEditMode]="isEditMode"
-            [symbolList]="symbolList" [cardList]="cardList" (symbolMoved)="onSymbolMoved($event)" (symbolResized)="onSymbolResized($event)"
-            (symbolFocusChanged)="onSymbolFocusChanged($event)">
+            [symbolList]="symbolList" [cardList]="cardList" (symbolMoved)="onSymbolMoved($event)"
+            (symbolResized)="onSymbolResized($event)" (cardResized)="onCardResized($event)"
+            (symbolFocusChanged)="onSymbolFocusChanged($event)" (cardFocusChanged)="onCardFocusChanged($event)">
           </app-screen-view>
         </div>
       </div>
     </mat-sidenav-content>
     <mat-sidenav class="symbol-focus-exempt" position="end" mode="side" [opened]="isEditMode" (closed)="onCloseEdit()" (opened)="onOpened()">
       <mat-tab-group dynamicHeight>
-        <mat-tab *ngIf="focusedSymbols.length === 0" label="Canvas Properties">
+        <mat-tab *ngIf="focusedSymbols.length === 0 && !focusedCard" label="Canvas Properties">
           <form [formGroup]="canvasProps">
             <div class="property-row">
               <span>Width </span>
@@ -69,10 +70,13 @@
             </div>
           </form>
         </mat-tab>
-        <mat-tab *ngIf="focusedSymbols.length === 0" label="Show Data"> <app-tag-list [tagList]="tagList" (addingTagMoved)="onAddingTagMoved($event)"></app-tag-list> </mat-tab>
-        <mat-tab *ngIf="focusedSymbols.length === 0" label="Cards"> <app-cards  (addingTagMoved)="onAddingTagMoved($event)"></app-cards> </mat-tab>
+        <mat-tab *ngIf="focusedSymbols.length === 0 && !focusedCard" label="Show Data"> <app-tag-list [tagList]="tagList" (addingTagMoved)="onAddingTagMoved($event)"></app-tag-list> </mat-tab>
+        <mat-tab *ngIf="focusedSymbols.length === 0 && !focusedCard" label="Cards"> <app-cards  (addingTagMoved)="onAddingTagMoved($event)"></app-cards> </mat-tab>
         <mat-tab *ngIf="focusedSymbols.length !== 0" label="Symbol Properties"> 
           <app-symbol-properties [focusedSymbols]="focusedSymbols" (graphicChanged)="onGraphicChanged($event)" (graphicRemoved)="onGraphicRemoved($event)"></app-symbol-properties> 
+        </mat-tab>
+        <mat-tab *ngIf="focusedCard" label="Card Properties"> 
+          <app-card-properties [focusedCard]="focusedCard" (cardChanged)="onCardChanged($event)" (cardRemoved)="onCardRemoved($event)"></app-card-properties> 
         </mat-tab>
       </mat-tab-group>
     </mat-sidenav>

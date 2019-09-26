@@ -1,8 +1,8 @@
 <div class="back-ground" [style.background-image]="backgroundImage?'url('+backgroundImage+')':'none'"
   [style.background-size]="backgroundSize">
   <ng-template ngFor let-symbol [ngForOf]="symbolList">
-    <div class="drag-wrapper" [class.edit-mode]="isEditMode" [class.edit-focus]="symbol.isFocus"
-      (click)="onFocus(symbol)" (appClickOutside)="loseFocus(symbol)" exemptSelector="symbol-focus-exempt"
+    <div class="drag-wrapper" [class.edit-mode]="isEditMode" [class.edit-sym-focus]="symbol.isFocus"
+      (click)="onSymbolFocus(symbol)" (appClickOutside)="loseSymbolFocus(symbol)" exemptSelector="symbol-focus-exempt"
       [style.width.px]="symbol.svgWidth"
       [style.height.px]="symbol.svgWidth * symbol.viewBoxHeight / symbol.viewBoxWidth" [style.top.px]="symbol.positionY"
       [style.left.px]="symbol.positionX" appSymbolResizable (symbolResized)="onSymbolResized($event, symbol.symbolId)"
@@ -27,9 +27,12 @@
     </div>
   </ng-template>
   <ng-template ngFor let-card [ngForOf]="cardList">
-    <div class="drag-wrapper" [class.edit-mode]="isEditMode" [style.width.px]="card.cardWidth"
+    <div class="drag-wrapper" [class.edit-mode]="isEditMode" [class.edit-card-focus]="card.isFocus" [style.width.px]="card.cardWidth"
+      (click)="onCardFocus(card)" (appClickOutside)="loseCardFocus(card)" exemptSelector="symbol-focus-exempt"
       [style.height.px]="card.cardHeight" [style.top.px]="card.positionY"
-      [style.left.px]="card.positionX">
+      [style.left.px]="card.positionX" appCardResizable (cardResized)="onCardResized($event, card.cardId)"
+      [style.z-index]="card.zOrder"
+    >
       <div style="width: 100%; height: 100%; " appSymbolDragable (symbolMoved)="onSymbolMoved($event, card.cardId)"
         dragBoundarySelector=".back-ground" [disableDrag]="!isEditMode">
         <app-card-element [cardInfo]="card"></app-card-element>

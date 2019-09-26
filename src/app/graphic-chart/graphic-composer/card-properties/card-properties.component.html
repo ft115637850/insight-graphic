@@ -1,0 +1,7 @@
+<mat-form-field>
+  <input matInput [(ngModel)]="focusedCard.zOrder" (ngModelChange)="onOrderChange($event)" type="number" placeholder="Z Order">
+</mat-form-field>
+<mat-form-field>
+  <input matInput [(ngModel)]="focusedCard.alpha" (ngModelChange)="onAlphaChange($event)" type="number" placeholder="Opacity">
+</mat-form-field>
+<button mat-raised-button color="accent" (click)="onRemoveCard()">Remove</button>

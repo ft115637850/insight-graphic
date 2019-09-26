@@ -8,6 +8,7 @@ import { tap } from 'rxjs/operators';
 import { SymbolInfo } from '../../interfaces/symbol-info.data';
 import { TagInfo } from '../../interfaces/tag-info.data';
 import { CardInfo } from '../../interfaces/card-info.data';
+import { CardSize } from '../../interfaces/card-size.data';
 import { v4 as uuid } from 'uuid';
 import { TagService, ResolutionService, BackgroundService, SymbolService } from '../../../../../api-client/api/api';
 import { GraphicChartData, SymbolModel } from '../../../../../api-client/model/models';
@@ -37,6 +38,7 @@ export class ComposerViewComponent implements OnInit {
   symbolList: SymbolInfo[] = [];
   cardList: CardInfo[] = [];
   focusedSymbols: SymbolInfo[] = [];
+  focusedCard: CardInfo;
   resolutionsLst: Resolution[] = [];
   @ViewChild('contentHolder')
   contentHolder: ElementRef;
@@ -234,6 +236,14 @@ export class ComposerViewComponent implements OnInit {
     sym.widthRatio = sym.svgWidth / this.canvasWidth;
   }
 
+  onCardResized(e: CardSize) {
+    const card = this.cardList.find(c => c.cardId === e.cardId);
+    card.cardWidth = e.width;
+    card.cardHeight = e.height;
+    card.widthRatio = card.cardWidth / this.canvasWidth;
+    card.heightRatio = card.cardHeight / this.canvasHeight;
+  }
+
   onAddingTagMoved(e) {
     this.addingTagPosition = e;
   }
@@ -291,9 +301,11 @@ export class ComposerViewComponent implements OnInit {
           widthRatio: 0.11,
           heightRatio: 0.11,
           cardWidth: 0.11 * this.canvasWidth,
-          cardHeight: 0.11 * this.canvasHeight,
+          cardHeight: 0.11 * this.canvasWidth,
           strokeRGB: newElement.colorValue,
-          alpha: 1
+          alpha: 1,
+          zOrder: 1,
+          isFocus: false
         }
       ];
     }
@@ -302,8 +314,18 @@ export class ComposerViewComponent implements OnInit {
   onSymbolFocusChanged(e: SymbolInfo) {
     if (e.isFocus) {
       this.focusedSymbols.push(e);
+      this.focusedCard = null;
     } else {
       this.focusedSymbols = this.focusedSymbols.filter(x => x.symbolId !== e.symbolId);
+    }
+  }
+
+  onCardFocusChanged(e: CardInfo) {
+    if (e.isFocus) {
+      this.focusedCard = e;
+      this.focusedSymbols = [];
+    } else if (e.cardId === this.focusedCard.cardId) {
+      this.focusedCard = null;
     }
   }
 
@@ -323,6 +345,22 @@ export class ComposerViewComponent implements OnInit {
   onGraphicRemoved(e: SymbolInfo) {
     this.focusedSymbols = this.focusedSymbols.filter(x => x.symbolId !== e.symbolId);
     this.symbolList = this.symbolList.filter(x => x.symbolId !== e.symbolId);
+  }
+
+  onCardChanged(e) {
+    const newList = this.cardList.filter(x => x.cardId !== e.oldCard.cardId);
+    this.cardList = [
+      ...newList,
+      e.newCard
+    ];
+    this.focusedCard = e.newCard;
+  }
+
+  onCardRemoved(e: CardInfo) {
+    if (this.focusedCard.cardId === e.cardId) {
+      this.focusedCard = null;
+    }
+    this.cardList = this.cardList.filter(x => x.cardId !== e.cardId);
   }
 
   private updateSymbolList() {

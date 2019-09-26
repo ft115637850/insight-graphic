@@ -4,4 +4,27 @@
   position: relative;
   height: 100%;
   width: 100%;
+  svg text {
+    pointer-events:none;
+    user-select: none;
+  }
+  .drag-wrapper {
+    width: auto;
+    height:auto;
+    padding: 0px;
+    position: absolute;
+  }
+  .edit-mode {
+    cursor: move;
+    border: 1px dashed gray;
+    resize: both;
+    overflow: hidden;
+  }
+  .edit-sym-focus {
+    background-color: rgba(0, 187, 255, 0.2);
+    border: 1px solid rgb(0, 187, 255);
+  }
+  .edit-card-focus {
+    border: 2px solid rgba(0, 187, 255, 0.7);
+  }
 }
