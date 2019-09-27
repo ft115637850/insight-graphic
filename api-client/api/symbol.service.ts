@@ -19,7 +19,6 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs/Observable';
 
 import { GraphicChartData } from '../model/graphicChartData';
-import { SymbolModel } from '../model/symbolModel';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -64,9 +63,9 @@ export class SymbolService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getSymbols(graphicChartId: string, observe?: 'body', reportProgress?: boolean): Observable<Array<SymbolModel>>;
-    public getSymbols(graphicChartId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<SymbolModel>>>;
-    public getSymbols(graphicChartId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<SymbolModel>>>;
+    public getSymbols(graphicChartId: string, observe?: 'body', reportProgress?: boolean): Observable<GraphicChartData>;
+    public getSymbols(graphicChartId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<GraphicChartData>>;
+    public getSymbols(graphicChartId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<GraphicChartData>>;
     public getSymbols(graphicChartId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (graphicChartId === null || graphicChartId === undefined) {
             throw new Error('Required parameter graphicChartId was null or undefined when calling getSymbols.');
@@ -100,7 +99,7 @@ export class SymbolService {
         let consumes: string[] = [
         ];
 
-        return this.httpClient.get<Array<SymbolModel>>(`${this.basePath}/Symbols/${encodeURIComponent(String(graphicChartId))}`,
+        return this.httpClient.get<GraphicChartData>(`${this.basePath}/Symbols/${encodeURIComponent(String(graphicChartId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

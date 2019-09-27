@@ -11,7 +11,7 @@ import { CardInfo } from '../../interfaces/card-info.data';
 import { CardSize } from '../../interfaces/card-size.data';
 import { v4 as uuid } from 'uuid';
 import { TagService, ResolutionService, BackgroundService, SymbolService } from '../../../../../api-client/api/api';
-import { GraphicChartData, SymbolModel } from '../../../../../api-client/model/models';
+import { GraphicChartData, SymbolModel, CardModel } from '../../../../../api-client/model/models';
 
 interface Resolution {
   x: number;
@@ -33,7 +33,7 @@ export class ComposerViewComponent implements OnInit {
   backGroundImage: string | ArrayBuffer | null = null;
   backgroundSize = '100% 100%';
   isEditMode = false;
-  isFullScreen = false;
+  hideHeader = false;
   tagList: TagInfo[] = [];
   symbolList: SymbolInfo[] = [];
   cardList: CardInfo[] = [];
@@ -88,10 +88,10 @@ export class ComposerViewComponent implements OnInit {
   }
 
   onResize(e) {
-    if (screen.width === window.innerWidth && screen.height === window.innerHeight) {
-      this.isFullScreen = true;
+    if (!this.isEditMode && screen.width === window.innerWidth && screen.height === window.innerHeight) {
+      this.hideHeader = true;
     } else {
-      this.isFullScreen = false;
+      this.hideHeader = false;
     }
 
     setTimeout(() => this.updateCanvasSize(), 200);
@@ -198,9 +198,22 @@ export class ComposerViewComponent implements OnInit {
           strokeRGB: x.strokeRGB
         } as SymbolModel;
       });
+      const cardLst: CardModel[] =  this.cardList.map(x => {
+        return {
+          cardId: x.cardId,
+          positionXRatio: x.positionXRatio,
+          positionYRatio: x.positionYRatio,
+          widthRatio: x.widthRatio,
+          heightRatio: x.heightRatio,
+          strokeRGB: x.strokeRGB,
+          alpha: x.alpha,
+          zOrder: x.zOrder
+        } as CardModel;
+      });
       const chartData: GraphicChartData = {
         graphicChartId: this.graphicId,
-        symbolList: modelLst
+        symbolList: modelLst,
+        cardList: cardLst
       };
       this.symSvc.saveSymbols(chartData).subscribe(() => this.isEditMode = false);
     });
@@ -272,7 +285,7 @@ export class ComposerViewComponent implements OnInit {
     const newElement = e.previousContainer.data[e.previousIndex];
     if (newElement.tagId) {
       // better performance than this.symbolList.push()
-      this.symbolList = [...this.symbolList, {
+      const newSym = {
         symbolId: uuid.v4(),
         symbolType: 'text',
         tagId: newElement.tagId,
@@ -287,27 +300,34 @@ export class ComposerViewComponent implements OnInit {
         svgWidth: 0.11 * this.canvasWidth,
         widthRatio: 0.11,
         strokeRGB: '33, 150, 243',
-        isFocus: false,
+        isFocus: true,
         tagInfo: newElement
-      }];
+      };
+      this.symbolList = [...this.symbolList, newSym];
+
+      this.focusedSymbols.push(newSym);
+      this.focusedCard = null;
     } else {
+      const newCard = {
+        cardId: uuid.v4(),
+        positionXRatio: posX / this.canvasWidth,
+        positionYRatio: posY / this.canvasHeight,
+        positionX: posX,
+        positionY: posY,
+        widthRatio: 0.11,
+        heightRatio: 0.11,
+        cardWidth: 0.11 * this.canvasWidth,
+        cardHeight: 0.11 * this.canvasWidth,
+        strokeRGB: newElement.colorValue,
+        alpha: '1',
+        zOrder: 1,
+        isFocus: true
+      };
       this.cardList = [
-        ...this.cardList, {
-          cardId: uuid.v4(),
-          positionXRatio: posX / this.canvasWidth,
-          positionYRatio: posY / this.canvasHeight,
-          positionX: posX,
-          positionY: posY,
-          widthRatio: 0.11,
-          heightRatio: 0.11,
-          cardWidth: 0.11 * this.canvasWidth,
-          cardHeight: 0.11 * this.canvasWidth,
-          strokeRGB: newElement.colorValue,
-          alpha: 1,
-          zOrder: 1,
-          isFocus: false
-        }
+        ...this.cardList, newCard
       ];
+      this.focusedSymbols = [];
+      this.focusedCard = newCard;
     }
   }
 
@@ -433,26 +453,46 @@ export class ComposerViewComponent implements OnInit {
           this.backGroundImage = `data:${imgContentType};base64,${img}`;
           this.updateBackGroundImageSize(this.backGroundImage);
         })),
-        this.symSvc.getSymbols(this.graphicId).pipe(tap(lst => this.symbolList = lst.map(sym => {
-          return {
-            symbolId: sym.symbolId,
-            symbolType: sym.symbolType,
-            tagId: sym.tagId,
-            tagName: sym.tagName,
-            viewBox: sym.viewBox,
-            viewBoxWidth: sym.viewBoxWidth,
-            viewBoxHeight: sym.viewBoxHeight,
-            positionXRatio: sym.positionXRatio,
-            positionYRatio: sym.positionYRatio,
-            positionX: sym.positionXRatio * this.canvasWidth,
-            positionY: sym.positionYRatio * this.canvasHeight,
-            svgWidth: sym.widthRatio * this.canvasWidth,
-            widthRatio: sym.widthRatio,
-            strokeRGB: sym.strokeRGB,
-            isFocus: false,
-            tagInfo: this.tagList.find(t => t.tagId === sym.tagId)
-          } as SymbolInfo;
-        })))
+        this.symSvc.getSymbols(this.graphicId).pipe(tap(data => {
+            this.symbolList = data.symbolList.map(sym => {
+              return {
+                symbolId: sym.symbolId,
+                symbolType: sym.symbolType,
+                tagId: sym.tagId,
+                tagName: sym.tagName,
+                viewBox: sym.viewBox,
+                viewBoxWidth: sym.viewBoxWidth,
+                viewBoxHeight: sym.viewBoxHeight,
+                positionXRatio: sym.positionXRatio,
+                positionYRatio: sym.positionYRatio,
+                positionX: sym.positionXRatio * this.canvasWidth,
+                positionY: sym.positionYRatio * this.canvasHeight,
+                svgWidth: sym.widthRatio * this.canvasWidth,
+                widthRatio: sym.widthRatio,
+                strokeRGB: sym.strokeRGB,
+                isFocus: false,
+                tagInfo: this.tagList.find(t => t.tagId === sym.tagId)
+              } as SymbolInfo;
+            });
+            this.cardList =  data.cardList.map(c => {
+              return {
+                cardId: c.cardId,
+                positionXRatio: c.positionXRatio,
+                positionYRatio: c.positionYRatio,
+                positionX: c.positionXRatio * this.canvasWidth,
+                positionY: c.positionYRatio * this.canvasHeight,
+                widthRatio: c.widthRatio,
+                heightRatio: c.heightRatio,
+                cardWidth: c.widthRatio * this.canvasWidth,
+                cardHeight: c.heightRatio * this.canvasHeight,
+                strokeRGB: c.strokeRGB,
+                alpha: c.alpha,
+                zOrder: c.zOrder,
+                isFocus: false
+              } as CardInfo;
+            });
+          }
+        ))
       ])
     ).subscribe();
   }

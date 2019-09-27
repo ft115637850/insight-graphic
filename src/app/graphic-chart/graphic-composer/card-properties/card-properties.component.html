@@ -4,4 +4,19 @@
 <mat-form-field>
   <input matInput [(ngModel)]="focusedCard.alpha" (ngModelChange)="onAlphaChange($event)" type="number" placeholder="Opacity">
 </mat-form-field>
+<mat-form-field>
+  <mat-label>Opacity</mat-label>
+  <mat-select [(ngModel)]="focusedCard.alpha" (selectionChange)="onAlphaChange(focusedCard.alpha)">
+    <mat-option value="1">100%</mat-option>
+    <mat-option value="0.9">90%</mat-option>
+    <mat-option value="0.8">80%</mat-option>
+    <mat-option value="0.7">70%</mat-option>
+    <mat-option value="0.6">60%</mat-option>
+    <mat-option value="0.5">50%</mat-option>
+    <mat-option value="0.4">40%</mat-option>
+    <mat-option value="0.3">30%</mat-option>
+    <mat-option value="0.2">20%</mat-option>
+    <mat-option value="0.1">10%</mat-option>
+  </mat-select>
+</mat-form-field>
 <button mat-raised-button color="accent" (click)="onRemoveCard()">Remove</button>

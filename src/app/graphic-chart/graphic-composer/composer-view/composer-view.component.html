@@ -1,5 +1,5 @@
 <div class="composer-view">
-  <mat-card *ngIf="!isFullScreen">
+  <mat-card *ngIf="!hideHeader">
     <span class="title">Supervisor Plant Overview</span>
     <button mat-icon-button *ngIf="isEditMode">
       <mat-icon svgIcon="save" (click)="onSave()"></mat-icon>

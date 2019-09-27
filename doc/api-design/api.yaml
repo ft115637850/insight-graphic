@@ -244,9 +244,7 @@ paths:
         '200':
           description: Success
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/SymbolModel'
+            $ref: '#/definitions/GraphicChartData'
         '401':
           description: Unauthorized
           schema:
@@ -322,6 +320,10 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/SymbolModel'
+      cardList:
+        type: array
+        items:
+          $ref: '#/definitions/CardModel'
   SymbolModel:
     type: object
     properties:
@@ -347,6 +349,25 @@ definitions:
         type: number
       strokeRGB:
         type: string
+  CardModel:
+    type: object
+    properties:
+      cardId:
+        type: string
+      positionXRatio:
+        type: number
+      positionYRatio:
+        type: number
+      widthRatio:
+        type: number
+      heightRatio:
+        type: number
+      strokeRGB:
+        type: string
+      alpha:
+        type: string
+      zOrder:
+        type: number
 
 
 

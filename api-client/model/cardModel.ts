@@ -9,12 +9,15 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { CardModel } from './cardModel';
-import { SymbolModel } from './symbolModel';
 
 
-export interface GraphicChartData {
-    graphicChartId?: string;
-    symbolList?: Array<SymbolModel>;
-    cardList?: Array<CardModel>;
+export interface CardModel {
+    cardId?: string;
+    positionXRatio?: number;
+    positionYRatio?: number;
+    widthRatio?: number;
+    heightRatio?: number;
+    strokeRGB?: string;
+    alpha?: string;
+    zOrder?: number;
 }
