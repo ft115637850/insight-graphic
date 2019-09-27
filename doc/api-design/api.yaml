@@ -234,7 +234,7 @@ paths:
     get:
       tags:
         - Symbol
-      operationId: GetSymbols
+      operationId: GetGraphicChartData
       parameters:
         - name: graphicChartId
           in: path

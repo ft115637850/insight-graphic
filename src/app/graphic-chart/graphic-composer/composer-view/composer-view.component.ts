@@ -62,7 +62,7 @@ export class ComposerViewComponent implements OnInit {
       bgSizeOption: ['horizontal']
     });
 
-    this.graphicId = '969e1cf9-9cef-4008-8074-f637f47f7ad3';
+    this.graphicId = 'a3de386a-82b1-4cbb-b489-6d6a113b29a4';
     iconRegistry.addSvgIcon(
       'add',
       sanitizer.bypassSecurityTrustResourceUrl('/assets/add.svg'))
@@ -84,7 +84,11 @@ export class ComposerViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadGraphicChartData();
+    if (this.graphicId) {
+      this.loadGraphicChartData();
+    } else {
+      this.newGraphicChart();
+    }
   }
 
   onResize(e) {
@@ -110,7 +114,7 @@ export class ComposerViewComponent implements OnInit {
     this.resolutionsLst = this.resolutions.filter(
       res => res.x / res.y === this.canvasProps.value.width / this.canvasProps.value.height);
     this.resizeBackground();
-    this.updateSymbolList();
+    this.adjustSymbolsCardsSize();
   }
 
   changeSize(action: string, widthOrHeight: string) {
@@ -383,11 +387,17 @@ export class ComposerViewComponent implements OnInit {
     this.cardList = this.cardList.filter(x => x.cardId !== e.cardId);
   }
 
-  private updateSymbolList() {
+  private adjustSymbolsCardsSize() {
     this.symbolList.forEach(symbol => {
       symbol.positionX = symbol.positionXRatio * this.canvasWidth;
       symbol.positionY = symbol.positionYRatio * this.canvasHeight;
       symbol.svgWidth = symbol.widthRatio * this.canvasWidth;
+    });
+    this.cardList.forEach(card => {
+      card.positionX = card.positionXRatio * this.canvasWidth;
+      card.positionY = card.positionYRatio * this.canvasHeight;
+      card.cardWidth = card.widthRatio * this.canvasWidth;
+      card.cardHeight = card.heightRatio * this.canvasHeight;
     });
   }
 
@@ -410,6 +420,36 @@ export class ComposerViewComponent implements OnInit {
       this.backgroundSize = `${this.canvasWidth}px ${this.canvasWidth * this.bgImageHeight
         / this.bgImageWidth}px`;
     };
+  }
+
+  private newGraphicChart() {
+    this.isEditMode = true;
+    this.graphicId = uuid.v4();
+    forkJoin([
+      this.resolutionSvc.getResolutions().pipe(tap(
+        res => this.resolutions = res.map(resolution => {
+          return {
+            x: resolution.x,
+            y: resolution.y,
+            viewValue: resolution.viewValue
+          } as Resolution;
+        })
+      )),
+      this.tagSvc.getTags().pipe(tap(tags => this.tagList = tags.map(x => {
+        return {
+          tagId: x.id,
+          tagName: x.name,
+          alias: x.alias,
+          units: x.units,
+          max: x.max,
+          min: x.min,
+          dataType: x.dataType,
+          source: x.source,
+          description: x.description,
+          location: x.location
+        } as TagInfo;
+      })))
+    ]).pipe(tap(() => this.updateCanvasSize())).subscribe();
   }
 
   private loadGraphicChartData() {
@@ -453,7 +493,7 @@ export class ComposerViewComponent implements OnInit {
           this.backGroundImage = `data:${imgContentType};base64,${img}`;
           this.updateBackGroundImageSize(this.backGroundImage);
         })),
-        this.symSvc.getSymbols(this.graphicId).pipe(tap(data => {
+        this.symSvc.getGraphicChartData(this.graphicId).pipe(tap(data => {
             this.symbolList = data.symbolList.map(sym => {
               return {
                 symbolId: sym.symbolId,

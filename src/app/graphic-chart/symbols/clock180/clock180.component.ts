@@ -50,7 +50,7 @@ export class Clock180Component extends SymbolBase implements OnInit {
   }
 
   private getSweepAngleFromValue(min, max, angle, currentValue) {
-    return currentValue / (max - min) * angle;
+    return (currentValue - min)  / (max - min) * angle;
   }
 
   private getXYFromAngle(centerX0, centerY0, r0, angle) {
