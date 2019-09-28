@@ -92,7 +92,7 @@ export class ComposerViewComponent implements OnInit {
   }
 
   onResize(e) {
-    if (!this.isEditMode && screen.width === window.innerWidth && screen.height === window.innerHeight) {
+    if (!this.isEditMode && screen.width === window.innerWidth && screen.height <= window.innerHeight + 1) {
       this.hideHeader = true;
     } else {
       this.hideHeader = false;

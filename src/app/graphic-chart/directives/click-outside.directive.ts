@@ -17,7 +17,7 @@ export class ClickOutsideDirective implements AfterViewInit {
     }
   }
 
-  @HostListener('document:click', ['$event', '$event.target'])
+  @HostListener('document:mousedown', ['$event', '$event.target'])
   public onClick(event: MouseEvent, targetElement: HTMLElement): void {
     if (!targetElement) {
       return;
