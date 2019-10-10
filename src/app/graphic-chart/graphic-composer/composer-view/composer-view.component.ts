@@ -1,6 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
 import { MatIconRegistry } from '@angular/material';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { concat, forkJoin } from 'rxjs';
@@ -55,15 +56,15 @@ export class ComposerViewComponent implements OnInit {
 
   constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private fb: FormBuilder,
               private tagSvc: TagService, private resolutionSvc: ResolutionService,
-              private bgSvc: BackgroundService, private graphicChart: GraphicChartService) {
+              private bgSvc: BackgroundService, private graphicChart: GraphicChartService,
+              private routerIonfo: ActivatedRoute) {
     this.canvasProps = this.fb.group({
       width: [6],
       height: [6],
       bgSizeOption: ['horizontal']
     });
 
-    // this.graphicId = 'a3de386a-82b1-4cbb-b489-6d6a113b29a4';
-    this.graphicId = '6a1cd602-90f9-43a3-a707-951d57b90ede';
+    this.graphicId = this.routerIonfo.snapshot.paramMap.get('id');
     iconRegistry.addSvgIcon(
       'add',
       sanitizer.bypassSecurityTrustResourceUrl('/assets/add.svg'))

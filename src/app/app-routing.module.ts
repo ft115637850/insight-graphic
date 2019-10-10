@@ -5,6 +5,7 @@ import {LandingComponent} from './landing/landing.component';
 
 const routes: Routes = [
   { path: 'graphic-chart', loadChildren: './graphic-chart/graphic-chart.module#GraphicChartModule' },
+  { path: 'graphic-chart-list', loadChildren: './index/index.module#IndexModule' },
   { path: 'login', component: LoginComponent },
   { path: '', component: LandingComponent },
 ];

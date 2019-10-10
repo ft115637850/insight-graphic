@@ -1,0 +1,54 @@
+<div class="back-ground">
+  <div class="header">
+    <button mat-icon-button>
+      <mat-icon svgIcon="side-nav"></mat-icon>
+    </button>
+    <h1>Insight</h1>
+    <button mat-icon-button>
+      <mat-icon svgIcon="admin"></mat-icon>
+    </button>
+    <button mat-icon-button>
+      <mat-icon svgIcon="my-profile"></mat-icon>
+    </button>
+  </div>
+  <div class="content">
+    <div class="tab-header">
+      <span>Graphic Charts</span>
+      <button mat-mini-fab color="accent">
+        <mat-icon svgIcon="add"></mat-icon>
+      </button>
+    </div>
+    <table mat-table [dataSource]="graphicChartlist">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let chart"> {{chart.id}} </td>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <th style="width: 70%" mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let chart"> {{chart.name}} </td>
+      </ng-container>
+      <ng-container matColumnDef="createdBy">
+        <th style="width: 30%" mat-header-cell *matHeaderCellDef> Created by </th>
+        <td mat-cell *matCellDef="let chart"> {{chart.createdBy}} </td>
+      </ng-container>
+      <ng-container matColumnDef="lastEditedAt">
+        <th style="min-width: 200px" mat-header-cell *matHeaderCellDef> Last Edited Time </th>
+        <td mat-cell *matCellDef="let chart"> {{chart.lastEditedAt|date:"yyyy-MM-dd HH:mm:ss"}} </td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let chart">
+          <button mat-icon-button [matMenuTriggerFor]="appMenu">
+            <mat-icon svgIcon="context-menu"></mat-icon>
+          </button>
+          <mat-menu #appMenu="matMenu" yPosition="below" xPosition="before">
+            <button mat-menu-item>Update Edge Modules</button>
+            <button mat-menu-item>Configuration</button>
+          </mat-menu>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+      <tr mat-row class="element-row" *matRowDef="let chart; columns: columnsToDisplay;" (click)="selectGraphicChart(chart.id)"></tr>
+    </table>
+  </div>
+</div>
