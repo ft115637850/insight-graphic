@@ -202,11 +202,11 @@ paths:
           schema:
             type: string
             description: Error
-  /Symbols:
+  /GraphicChart:
     post:
       tags:
-        - Symbol
-      operationId: SaveSymbols
+        - GraphicChart
+      operationId: SaveGraphicChartData
       parameters:
         - name: graphicChartData
           in: body
@@ -230,10 +230,33 @@ paths:
           schema:
             type: string
             description: Error
-  /Symbols/{graphicChartId}:
     get:
       tags:
-        - Symbol
+        - GraphicChart
+      operationId: GetGraphicChartList
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/GraphicChartList'
+        '401':
+          description: Unauthorized
+          schema:
+            type: string
+        '403':
+          description: Forbidden
+          schema:
+            type: string
+        '500':
+          description: >-
+            (Internal Server Error) An exception or an error happens in portal backend.
+          schema:
+            type: string
+            description: Error
+  /GraphicChart/{graphicChartId}:
+    get:
+      tags:
+        - GraphicChart
       operationId: GetGraphicChartData
       parameters:
         - name: graphicChartId
@@ -311,6 +334,21 @@ definitions:
         type: string
       imgContentType:
         type: string
+  GraphicChartList:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        createdBy:
+          type: string
+        lastEditedAt:
+          type: string
+          format: date-time
+          x-chance-type: date
   GraphicChartData:
     type: object
     properties:

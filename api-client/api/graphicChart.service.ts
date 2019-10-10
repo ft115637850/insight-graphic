@@ -19,13 +19,14 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs/Observable';
 
 import { GraphicChartData } from '../model/graphicChartData';
+import { GraphicChartList } from '../model/graphicChartList';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 
 
 @Injectable()
-export class SymbolService {
+export class GraphicChartService {
 
     protected basePath = 'http://localhost:5000/api';
     public defaultHeaders = new HttpHeaders();
@@ -99,7 +100,56 @@ export class SymbolService {
         let consumes: string[] = [
         ];
 
-        return this.httpClient.get<GraphicChartData>(`${this.basePath}/Symbols/${encodeURIComponent(String(graphicChartId))}`,
+        return this.httpClient.get<GraphicChartData>(`${this.basePath}/GraphicChart/${encodeURIComponent(String(graphicChartId))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getGraphicChartList(observe?: 'body', reportProgress?: boolean): Observable<GraphicChartList>;
+    public getGraphicChartList(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<GraphicChartList>>;
+    public getGraphicChartList(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<GraphicChartList>>;
+    public getGraphicChartList(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let headers = this.defaultHeaders;
+
+        // authentication (basic) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+
+        // authentication (oauth) required
+        if (this.configuration.accessToken) {
+            let accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set("Accept", httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        let consumes: string[] = [
+        ];
+
+        return this.httpClient.get<GraphicChartList>(`${this.basePath}/GraphicChart`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -116,12 +166,12 @@ export class SymbolService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public saveSymbols(graphicChartData: GraphicChartData, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public saveSymbols(graphicChartData: GraphicChartData, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public saveSymbols(graphicChartData: GraphicChartData, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public saveSymbols(graphicChartData: GraphicChartData, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public saveGraphicChartData(graphicChartData: GraphicChartData, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public saveGraphicChartData(graphicChartData: GraphicChartData, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public saveGraphicChartData(graphicChartData: GraphicChartData, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public saveGraphicChartData(graphicChartData: GraphicChartData, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (graphicChartData === null || graphicChartData === undefined) {
-            throw new Error('Required parameter graphicChartData was null or undefined when calling saveSymbols.');
+            throw new Error('Required parameter graphicChartData was null or undefined when calling saveGraphicChartData.');
         }
 
         let headers = this.defaultHeaders;
@@ -156,7 +206,7 @@ export class SymbolService {
             headers = headers.set("Content-Type", httpContentTypeSelected);
         }
 
-        return this.httpClient.post<any>(`${this.basePath}/Symbols`,
+        return this.httpClient.post<any>(`${this.basePath}/GraphicChart`,
             graphicChartData,
             {
                 withCredentials: this.configuration.withCredentials,

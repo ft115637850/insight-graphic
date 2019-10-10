@@ -4,8 +4,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { Configuration } from './configuration';
 
 import { BackgroundService } from './api/background.service';
+import { GraphicChartService } from './api/graphicChart.service';
 import { ResolutionService } from './api/resolution.service';
-import { SymbolService } from './api/symbol.service';
 import { TagService } from './api/tag.service';
 import { TokenService } from './api/token.service';
 
@@ -15,8 +15,8 @@ import { TokenService } from './api/token.service';
   exports:      [],
   providers: [
     BackgroundService,
+    GraphicChartService,
     ResolutionService,
-    SymbolService,
     TagService,
     TokenService ]
 })

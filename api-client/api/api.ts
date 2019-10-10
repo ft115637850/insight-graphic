@@ -1,11 +1,11 @@
 export * from './background.service';
 import { BackgroundService } from './background.service';
+export * from './graphicChart.service';
+import { GraphicChartService } from './graphicChart.service';
 export * from './resolution.service';
 import { ResolutionService } from './resolution.service';
-export * from './symbol.service';
-import { SymbolService } from './symbol.service';
 export * from './tag.service';
 import { TagService } from './tag.service';
 export * from './token.service';
 import { TokenService } from './token.service';
-export const APIS = [BackgroundService, ResolutionService, SymbolService, TagService, TokenService];
+export const APIS = [BackgroundService, GraphicChartService, ResolutionService, TagService, TokenService];

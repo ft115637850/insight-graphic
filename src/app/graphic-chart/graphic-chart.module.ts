@@ -28,7 +28,7 @@ import { ToggleLineComponent } from './symbols/toggle-line/toggle-line.component
 import { ToggleRectComponent } from './symbols/toggle-rect/toggle-rect.component';
 import { CardsComponent } from './graphic-composer/cards/cards.component';
 import { CardElementComponent } from './card-element/card-element.component';
-import { TagService, ResolutionService, BackgroundService, SymbolService } from '../../../api-client/api/api';
+import { TagService, ResolutionService, BackgroundService, GraphicChartService } from '../../../api-client/api/api';
 import { Configuration } from '../../../api-client/configuration';
 import { CardPropertiesComponent } from './graphic-composer/card-properties/card-properties.component';
 
@@ -80,7 +80,7 @@ const configurationFactory = () => {
     TagService,
     ResolutionService,
     BackgroundService,
-    SymbolService
+    GraphicChartService
   ]
 })
 export class GraphicChartModule { }

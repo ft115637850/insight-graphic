@@ -10,7 +10,7 @@ import { TagInfo } from '../../interfaces/tag-info.data';
 import { CardInfo } from '../../interfaces/card-info.data';
 import { CardSize } from '../../interfaces/card-size.data';
 import { v4 as uuid } from 'uuid';
-import { TagService, ResolutionService, BackgroundService, SymbolService } from '../../../../../api-client/api/api';
+import { TagService, ResolutionService, BackgroundService, GraphicChartService } from '../../../../../api-client/api/api';
 import { GraphicChartData, SymbolModel, CardModel } from '../../../../../api-client/model/models';
 
 interface Resolution {
@@ -55,14 +55,15 @@ export class ComposerViewComponent implements OnInit {
 
   constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private fb: FormBuilder,
               private tagSvc: TagService, private resolutionSvc: ResolutionService,
-              private bgSvc: BackgroundService, private symSvc: SymbolService) {
+              private bgSvc: BackgroundService, private graphicChart: GraphicChartService) {
     this.canvasProps = this.fb.group({
       width: [6],
       height: [6],
       bgSizeOption: ['horizontal']
     });
 
-    this.graphicId = 'a3de386a-82b1-4cbb-b489-6d6a113b29a4';
+    // this.graphicId = 'a3de386a-82b1-4cbb-b489-6d6a113b29a4';
+    this.graphicId = '6a1cd602-90f9-43a3-a707-951d57b90ede';
     iconRegistry.addSvgIcon(
       'add',
       sanitizer.bypassSecurityTrustResourceUrl('/assets/add.svg'))
@@ -219,7 +220,7 @@ export class ComposerViewComponent implements OnInit {
         symbolList: modelLst,
         cardList: cardLst
       };
-      this.symSvc.saveSymbols(chartData).subscribe(() => this.isEditMode = false);
+      this.graphicChart.saveGraphicChartData(chartData).subscribe(() => this.isEditMode = false);
     });
   }
 
@@ -493,7 +494,7 @@ export class ComposerViewComponent implements OnInit {
           this.backGroundImage = `data:${imgContentType};base64,${img}`;
           this.updateBackGroundImageSize(this.backGroundImage);
         })),
-        this.symSvc.getGraphicChartData(this.graphicId).pipe(tap(data => {
+        this.graphicChart.getGraphicChartData(this.graphicId).pipe(tap(data => {
             this.symbolList = data.symbolList.map(sym => {
               return {
                 symbolId: sym.symbolId,
