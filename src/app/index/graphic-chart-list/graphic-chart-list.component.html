@@ -15,7 +15,7 @@
     <div class="tab-header">
       <span>Graphic Charts</span>
       <button mat-mini-fab color="accent">
-        <mat-icon svgIcon="add"></mat-icon>
+        <mat-icon svgIcon="add" (click)="onAddGraphicChart()"></mat-icon>
       </button>
     </div>
     <table mat-table [dataSource]="graphicChartlist">

@@ -15,6 +15,8 @@ import { SymbolModel } from './symbolModel';
 
 export interface GraphicChartData {
     graphicChartId?: string;
+    name?: string;
+    createdBy?: string;
     symbolList?: Array<SymbolModel>;
     cardList?: Array<CardModel>;
 }

@@ -354,6 +354,10 @@ definitions:
     properties:
       graphicChartId:
         type: string
+      name:
+        type: string
+      createdBy:
+        type: string
       symbolList:
         type: array
         items:

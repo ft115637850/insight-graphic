@@ -2,7 +2,7 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { MatIconRegistry } from '@angular/material';
+import { MatIconRegistry, MatDialog } from '@angular/material';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { concat, forkJoin } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -13,6 +13,7 @@ import { CardSize } from '../../interfaces/card-size.data';
 import { v4 as uuid } from 'uuid';
 import { TagService, ResolutionService, BackgroundService, GraphicChartService } from '../../../../../api-client/api/api';
 import { GraphicChartData, SymbolModel, CardModel } from '../../../../../api-client/model/models';
+import { GraphicChartDlgComponent } from '../graphic-chart-dlg/graphic-chart-dlg.component';
 
 interface Resolution {
   x: number;
@@ -35,6 +36,7 @@ export class ComposerViewComponent implements OnInit {
   backgroundSize = '100% 100%';
   isEditMode = false;
   hideHeader = false;
+  chartName = '';
   tagList: TagInfo[] = [];
   symbolList: SymbolInfo[] = [];
   cardList: CardInfo[] = [];
@@ -57,7 +59,7 @@ export class ComposerViewComponent implements OnInit {
   constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private fb: FormBuilder,
               private tagSvc: TagService, private resolutionSvc: ResolutionService,
               private bgSvc: BackgroundService, private graphicChart: GraphicChartService,
-              private routerIonfo: ActivatedRoute) {
+              private routerIonfo: ActivatedRoute, private dialog: MatDialog) {
     this.canvasProps = this.fb.group({
       width: [6],
       height: [6],
@@ -183,45 +185,57 @@ export class ComposerViewComponent implements OnInit {
   }
 
   onSave() {
-    this.bgSvc.saveBackground(this.graphicId,
-      this.canvasProps.value.width,
-      this.canvasProps.value.height,
-      this.canvasProps.value.bgSizeOption,
-      this.backGroundImageFile
-    ).subscribe(() => {
-      const modelLst: SymbolModel[] = this.symbolList.map(x => {
-        return {
-          symbolId: x.symbolId,
-          symbolType: x.symbolType,
-          tagId: x.tagId,
-          tagName: x.tagName,
-          viewBox: x.viewBox,
-          viewBoxWidth: x.viewBoxWidth,
-          viewBoxHeight: x.viewBoxHeight,
-          positionXRatio: x.positionXRatio,
-          positionYRatio: x.positionYRatio,
-          widthRatio: x.widthRatio,
-          strokeRGB: x.strokeRGB
-        } as SymbolModel;
+    const dialogRef = this.dialog.open(GraphicChartDlgComponent, {
+      width: '450px',
+      data: {name: this.chartName}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (!result) {
+        return;
+      }
+      this.chartName = result;
+      this.bgSvc.saveBackground(this.graphicId,
+        this.canvasProps.value.width,
+        this.canvasProps.value.height,
+        this.canvasProps.value.bgSizeOption,
+        this.backGroundImageFile
+      ).subscribe(() => {
+        const modelLst: SymbolModel[] = this.symbolList.map(x => {
+          return {
+            symbolId: x.symbolId,
+            symbolType: x.symbolType,
+            tagId: x.tagId,
+            tagName: x.tagName,
+            viewBox: x.viewBox,
+            viewBoxWidth: x.viewBoxWidth,
+            viewBoxHeight: x.viewBoxHeight,
+            positionXRatio: x.positionXRatio,
+            positionYRatio: x.positionYRatio,
+            widthRatio: x.widthRatio,
+            strokeRGB: x.strokeRGB
+          } as SymbolModel;
+        });
+        const cardLst: CardModel[] =  this.cardList.map(x => {
+          return {
+            cardId: x.cardId,
+            positionXRatio: x.positionXRatio,
+            positionYRatio: x.positionYRatio,
+            widthRatio: x.widthRatio,
+            heightRatio: x.heightRatio,
+            strokeRGB: x.strokeRGB,
+            alpha: x.alpha,
+            zOrder: x.zOrder
+          } as CardModel;
+        });
+        const chartData: GraphicChartData = {
+          graphicChartId: this.graphicId,
+          name: this.chartName,
+          createdBy: 'test',
+          symbolList: modelLst,
+          cardList: cardLst
+        };
+        this.graphicChart.saveGraphicChartData(chartData).subscribe(() => this.isEditMode = false);
       });
-      const cardLst: CardModel[] =  this.cardList.map(x => {
-        return {
-          cardId: x.cardId,
-          positionXRatio: x.positionXRatio,
-          positionYRatio: x.positionYRatio,
-          widthRatio: x.widthRatio,
-          heightRatio: x.heightRatio,
-          strokeRGB: x.strokeRGB,
-          alpha: x.alpha,
-          zOrder: x.zOrder
-        } as CardModel;
-      });
-      const chartData: GraphicChartData = {
-        graphicChartId: this.graphicId,
-        symbolList: modelLst,
-        cardList: cardLst
-      };
-      this.graphicChart.saveGraphicChartData(chartData).subscribe(() => this.isEditMode = false);
     });
   }
 
@@ -496,6 +510,7 @@ export class ComposerViewComponent implements OnInit {
           this.updateBackGroundImageSize(this.backGroundImage);
         })),
         this.graphicChart.getGraphicChartData(this.graphicId).pipe(tap(data => {
+            this.chartName = data.name;
             this.symbolList = data.symbolList.map(sym => {
               return {
                 symbolId: sym.symbolId,

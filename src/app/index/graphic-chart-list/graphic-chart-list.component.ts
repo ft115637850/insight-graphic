@@ -42,8 +42,10 @@ export class GraphicChartListComponent implements OnInit {
   }
 
   selectGraphicChart(id) {
-    console.log(id);
     this.router.navigate(['graphic-chart', { id }]);
   }
 
+  onAddGraphicChart() {
+    this.router.navigateByUrl('graphic-chart');
+  }
 }
