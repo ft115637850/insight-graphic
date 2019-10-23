@@ -14,7 +14,7 @@ import { HorizontalBarComponent } from './symbols/horizontal-bar/horizontal-bar.
 import { RadioCircleComponent } from './symbols/radio-circle/radio-circle.component';
 import { RadioRectComponent } from './symbols/radio-rect/radio-rect.component';
 import { ComposerViewComponent } from './graphic-composer/composer-view/composer-view.component';
-import {MatDialogModule, MatCardModule, MatSidenavModule, MatButtonModule, MatInputModule,
+import {MatCardModule, MatSidenavModule, MatButtonModule, MatInputModule,
   MatIconModule, MatSliderModule, MatRadioModule, MatTabsModule, MatExpansionModule, MatSelectModule} from '@angular/material';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { TagListComponent } from './graphic-composer/tag-list/tag-list.component';
@@ -31,7 +31,6 @@ import { CardElementComponent } from './card-element/card-element.component';
 import { TagService, ResolutionService, BackgroundService, GraphicChartService } from '../../../api-client/api/api';
 import { Configuration } from '../../../api-client/configuration';
 import { CardPropertiesComponent } from './graphic-composer/card-properties/card-properties.component';
-import { GraphicChartDlgComponent } from './graphic-composer/graphic-chart-dlg/graphic-chart-dlg.component';
 
 const configurationFactory = () => {
   const token = sessionStorage.getItem('token');
@@ -57,14 +56,9 @@ const configurationFactory = () => {
     ToggleRectComponent,
     CardsComponent,
     CardElementComponent,
-    CardPropertiesComponent,
-    GraphicChartDlgComponent
-  ],
-  entryComponents: [
-    GraphicChartDlgComponent
+    CardPropertiesComponent
   ],
   imports: [
-    MatDialogModule,
     MatCardModule,
     MatSidenavModule,
     MatButtonModule,

@@ -1,6 +1,9 @@
 <div class="composer-view">
   <mat-card *ngIf="!hideHeader">
-    <span class="title">Supervisor Plant Overview</span>
+    <div class="title">
+      <span *ngIf="!isEditMode">{{this.chartName}}</span>
+      <input *ngIf="isEditMode" placeholder="* Graphic Chart Name" [(ngModel)]="this.chartName" required>
+    </div>
     <button mat-icon-button *ngIf="isEditMode">
       <mat-icon svgIcon="save" (click)="onSave()"></mat-icon>
     </button>
