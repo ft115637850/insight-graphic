@@ -32,6 +32,7 @@ export class LoginComponent implements OnInit {
       this.tokenSvc.getToken().subscribe(token => {
         this.loginFailed = false;
         sessionStorage.setItem('token', token);
+        sessionStorage.setItem('usrName', this.user.value.name);
         this.router.navigateByUrl('graphic-chart-list');
       }, e => this.loginFailed = true);
     }

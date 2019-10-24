@@ -222,7 +222,7 @@ export class ComposerViewComponent implements OnInit {
     const chartData: GraphicChartData = {
       graphicChartId: this.graphicId,
       name: this.chartName,
-      createdBy: 'test',
+      createdBy: sessionStorage.getItem('usrName'),
       symbolList: modelLst,
       cardList: cardLst
     };
