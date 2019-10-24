@@ -25,30 +25,31 @@
       </ng-container>
       <ng-container matColumnDef="name">
         <th style="width: 70%" mat-header-cell *matHeaderCellDef> Name </th>
-        <td mat-cell *matCellDef="let chart"> {{chart.name}} </td>
+        <td mat-cell *matCellDef="let chart" (click)="selectGraphicChart(chart.id)"> {{chart.name}} </td>
       </ng-container>
       <ng-container matColumnDef="createdBy">
         <th style="width: 30%" mat-header-cell *matHeaderCellDef> Created by </th>
-        <td mat-cell *matCellDef="let chart"> {{chart.createdBy}} </td>
+        <td mat-cell *matCellDef="let chart" (click)="selectGraphicChart(chart.id)"> {{chart.createdBy}} </td>
       </ng-container>
       <ng-container matColumnDef="lastEditedAt">
         <th style="min-width: 200px" mat-header-cell *matHeaderCellDef> Last Edited Time </th>
-        <td mat-cell *matCellDef="let chart"> {{chart.lastEditedAt|date:"yyyy-MM-dd HH:mm:ss"}} </td>
+        <td mat-cell *matCellDef="let chart" (click)="selectGraphicChart(chart.id)"> {{chart.lastEditedAt|date:"yyyy-MM-dd HH:mm:ss"}} </td>
       </ng-container>
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef></th>
+        <th style="min-width: 50px" mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let chart">
           <button mat-icon-button [matMenuTriggerFor]="appMenu">
             <mat-icon svgIcon="context-menu"></mat-icon>
           </button>
           <mat-menu #appMenu="matMenu" yPosition="below" xPosition="before">
-            <button mat-menu-item>Update Edge Modules</button>
-            <button mat-menu-item>Configuration</button>
+            <button mat-icon-button>
+              <mat-icon svgIcon="trash" (click)="deleteChart(chart.id)"></mat-icon>
+            </button>
           </mat-menu>
         </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-      <tr mat-row class="element-row" *matRowDef="let chart; columns: columnsToDisplay;" (click)="selectGraphicChart(chart.id)"></tr>
+      <tr mat-row class="element-row" *matRowDef="let chart; columns: columnsToDisplay;" ></tr>
     </table>
   </div>
 </div>

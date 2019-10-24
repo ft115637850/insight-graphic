@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { MatIconRegistry } from '@angular/material';
-import { GraphicChartService } from '../../../../api-client/api/api';
+import { GraphicChartService, BackgroundService } from '../../../../api-client/api/api';
 
 @Component({
   selector: 'app-graphic-chart-list',
@@ -10,13 +10,14 @@ import { GraphicChartService } from '../../../../api-client/api/api';
   styleUrls: ['./graphic-chart-list.component.scss']
 })
 export class GraphicChartListComponent implements OnInit {
-  columnsToDisplay = ['name', 'createdBy', 'lastEditedAt'];
+  columnsToDisplay = ['name', 'createdBy', 'lastEditedAt', 'actions'];
   graphicChartlist = [];
 
   constructor(private router: Router,
               private iconRegistry: MatIconRegistry,
               private sanitizer: DomSanitizer,
-              private graphicCharSvc: GraphicChartService) {
+              private graphicCharSvc: GraphicChartService,
+              private bgSvc: BackgroundService) {
     this.iconRegistry.addSvgIcon(
       'side-nav',
       this.sanitizer.bypassSecurityTrustResourceUrl('/assets/side-nav.svg'))
@@ -33,12 +34,15 @@ export class GraphicChartListComponent implements OnInit {
         'context-menu',
         this.sanitizer.bypassSecurityTrustResourceUrl('/assets/context-menu.svg'))
       .addSvgIcon(
+        'trash',
+        this.sanitizer.bypassSecurityTrustResourceUrl('/assets/trash-can-outline.svg'))
+      .addSvgIcon(
         'done',
         this.sanitizer.bypassSecurityTrustResourceUrl('/assets/done.svg'));
    }
 
   ngOnInit() {
-    this.graphicCharSvc.getGraphicChartList().subscribe(e => this.graphicChartlist = e);
+    this.refreshGraphicChartList();
   }
 
   selectGraphicChart(id) {
@@ -47,5 +51,15 @@ export class GraphicChartListComponent implements OnInit {
 
   onAddGraphicChart() {
     this.router.navigateByUrl('graphic-chart');
+  }
+
+  deleteChart(chartId) {
+    this.graphicCharSvc.rmGraphicChartData(chartId).subscribe(() =>
+      this.bgSvc.rmBackground(chartId).subscribe(() => this.refreshGraphicChartList())
+    );
+  }
+
+  private refreshGraphicChartList() {
+    this.graphicCharSvc.getGraphicChartList().subscribe(e => this.graphicChartlist = e);
   }
 }

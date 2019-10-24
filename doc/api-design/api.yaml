@@ -137,6 +137,33 @@ paths:
           schema:
             type: string
             description: Error
+  /Background/{graphicChartId}:
+    delete:
+      tags:
+        - Background
+      operationId: RmBackground
+      parameters:
+        - name: graphicChartId
+          in: path
+          type: string
+          required: true
+      responses:
+        '200':
+          description: Success
+        '401':
+          description: Unauthorized
+          schema:
+            type: string
+        '403':
+          description: Forbidden
+          schema:
+            type: string
+        '500':
+          description: >-
+            (Internal Server Error) An exception or an error happens in portal backend.
+          schema:
+            type: string
+            description: Error
   /Background/Img/{graphicChartId}:
     get:
       tags:
@@ -271,6 +298,32 @@ paths:
           description: Success
           schema:
             $ref: '#/definitions/GraphicChartData'
+        '401':
+          description: Unauthorized
+          schema:
+            type: string
+        '403':
+          description: Forbidden
+          schema:
+            type: string
+        '500':
+          description: >-
+            (Internal Server Error) An exception or an error happens in portal backend.
+          schema:
+            type: string
+            description: Error
+    delete:
+      tags:
+        - GraphicChart
+      operationId: RmGraphicChartData
+      parameters:
+        - name: graphicChartId
+          in: path
+          type: string
+          required: true
+      responses:
+        '200':
+          description: Success
         '401':
           description: Unauthorized
           schema:

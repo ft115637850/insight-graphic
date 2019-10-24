@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { IndexRoutingModule } from './index-routing.module';
 import {MatButtonModule, MatIconModule, MatTableModule, MatMenuModule,
   MatInputModule, MatProgressBarModule, MatProgressSpinnerModule} from '@angular/material';
-import { GraphicChartService } from '../../../api-client/api/api';
+import { GraphicChartService, BackgroundService } from '../../../api-client/api/api';
 import { Configuration } from '../../../api-client/configuration';
 import { GraphicChartListComponent } from './graphic-chart-list/graphic-chart-list.component';
 
@@ -27,7 +27,8 @@ const configurationFactory = () => {
   ],
   providers: [
     { provide: Configuration, useFactory: configurationFactory },
-    GraphicChartService
+    GraphicChartService,
+    BackgroundService
   ]
 })
 export class IndexModule { }

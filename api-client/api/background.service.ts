@@ -169,6 +169,59 @@ export class BackgroundService {
      * 
      * 
      * @param graphicChartId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public rmBackground(graphicChartId: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public rmBackground(graphicChartId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public rmBackground(graphicChartId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public rmBackground(graphicChartId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (graphicChartId === null || graphicChartId === undefined) {
+            throw new Error('Required parameter graphicChartId was null or undefined when calling rmBackground.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (basic) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+
+        // authentication (oauth) required
+        if (this.configuration.accessToken) {
+            let accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set("Accept", httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        let consumes: string[] = [
+        ];
+
+        return this.httpClient.delete<any>(`${this.basePath}/Background/${encodeURIComponent(String(graphicChartId))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param graphicChartId 
      * @param width 
      * @param height 
      * @param bgSizeOption 
