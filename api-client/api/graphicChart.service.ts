@@ -166,9 +166,9 @@ export class GraphicChartService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public saveGraphicChartData(graphicChartData: GraphicChartData, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public saveGraphicChartData(graphicChartData: GraphicChartData, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public saveGraphicChartData(graphicChartData: GraphicChartData, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public saveGraphicChartData(graphicChartData: GraphicChartData, observe?: 'body', reportProgress?: boolean): Observable<string>;
+    public saveGraphicChartData(graphicChartData: GraphicChartData, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<string>>;
+    public saveGraphicChartData(graphicChartData: GraphicChartData, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<string>>;
     public saveGraphicChartData(graphicChartData: GraphicChartData, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (graphicChartData === null || graphicChartData === undefined) {
             throw new Error('Required parameter graphicChartData was null or undefined when calling saveGraphicChartData.');
@@ -206,7 +206,7 @@ export class GraphicChartService {
             headers = headers.set("Content-Type", httpContentTypeSelected);
         }
 
-        return this.httpClient.post<any>(`${this.basePath}/GraphicChart`,
+        return this.httpClient.post<string>(`${this.basePath}/GraphicChart`,
             graphicChartData,
             {
                 withCredentials: this.configuration.withCredentials,

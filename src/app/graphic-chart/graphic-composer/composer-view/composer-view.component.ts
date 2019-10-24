@@ -1,11 +1,11 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatIconRegistry } from '@angular/material';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { concat, forkJoin } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { concat, forkJoin, of } from 'rxjs';
+import { tap, catchError } from 'rxjs/operators';
 import { SymbolInfo } from '../../interfaces/symbol-info.data';
 import { TagInfo } from '../../interfaces/tag-info.data';
 import { CardInfo } from '../../interfaces/card-info.data';
@@ -58,7 +58,7 @@ export class ComposerViewComponent implements OnInit {
   constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private fb: FormBuilder,
               private tagSvc: TagService, private resolutionSvc: ResolutionService,
               private bgSvc: BackgroundService, private graphicChart: GraphicChartService,
-              private routerIonfo: ActivatedRoute) {
+              private routerIonfo: ActivatedRoute, private router: Router) {
     this.canvasProps = this.fb.group({
       width: [6],
       height: [6],
@@ -180,7 +180,11 @@ export class ComposerViewComponent implements OnInit {
 
   onCancel() {
     this.isEditMode = false;
-    this.loadGraphicChartData();
+    if (this.graphicId) {
+      this.loadGraphicChartData();
+    } else {
+      this.router.navigateByUrl('graphic-chart-list');
+    }
   }
 
   onSave() {
@@ -188,48 +192,50 @@ export class ComposerViewComponent implements OnInit {
       return;
     }
 
-    this.bgSvc.saveBackground(this.graphicId,
-      this.canvasProps.value.width,
-      this.canvasProps.value.height,
-      this.canvasProps.value.bgSizeOption,
-      this.backGroundImageFile
-    ).subscribe(() => {
-      const modelLst: SymbolModel[] = this.symbolList.map(x => {
-        return {
-          symbolId: x.symbolId,
-          symbolType: x.symbolType,
-          tagId: x.tagId,
-          tagName: x.tagName,
-          viewBox: x.viewBox,
-          viewBoxWidth: x.viewBoxWidth,
-          viewBoxHeight: x.viewBoxHeight,
-          positionXRatio: x.positionXRatio,
-          positionYRatio: x.positionYRatio,
-          widthRatio: x.widthRatio,
-          strokeRGB: x.strokeRGB
-        } as SymbolModel;
-      });
-      const cardLst: CardModel[] =  this.cardList.map(x => {
-        return {
-          cardId: x.cardId,
-          positionXRatio: x.positionXRatio,
-          positionYRatio: x.positionYRatio,
-          widthRatio: x.widthRatio,
-          heightRatio: x.heightRatio,
-          strokeRGB: x.strokeRGB,
-          alpha: x.alpha,
-          zOrder: x.zOrder
-        } as CardModel;
-      });
-      const chartData: GraphicChartData = {
-        graphicChartId: this.graphicId,
-        name: this.chartName,
-        createdBy: 'test',
-        symbolList: modelLst,
-        cardList: cardLst
-      };
-      this.graphicChart.saveGraphicChartData(chartData).subscribe(() => this.isEditMode = false);
+    const modelLst: SymbolModel[] = this.symbolList.map(x => {
+      return {
+        symbolId: x.symbolId,
+        symbolType: x.symbolType,
+        tagId: x.tagId,
+        tagName: x.tagName,
+        viewBox: x.viewBox,
+        viewBoxWidth: x.viewBoxWidth,
+        viewBoxHeight: x.viewBoxHeight,
+        positionXRatio: x.positionXRatio,
+        positionYRatio: x.positionYRatio,
+        widthRatio: x.widthRatio,
+        strokeRGB: x.strokeRGB
+      } as SymbolModel;
     });
+    const cardLst: CardModel[] =  this.cardList.map(x => {
+      return {
+        cardId: x.cardId,
+        positionXRatio: x.positionXRatio,
+        positionYRatio: x.positionYRatio,
+        widthRatio: x.widthRatio,
+        heightRatio: x.heightRatio,
+        strokeRGB: x.strokeRGB,
+        alpha: x.alpha,
+        zOrder: x.zOrder
+      } as CardModel;
+    });
+    const chartData: GraphicChartData = {
+      graphicChartId: this.graphicId,
+      name: this.chartName,
+      createdBy: 'test',
+      symbolList: modelLst,
+      cardList: cardLst
+    };
+    this.graphicChart.saveGraphicChartData(chartData).subscribe(chartid =>
+      this.bgSvc.saveBackground(chartid,
+        this.canvasProps.value.width,
+        this.canvasProps.value.height,
+        this.canvasProps.value.bgSizeOption,
+        this.backGroundImageFile).subscribe(() => {
+          this.isEditMode = false;
+          history.replaceState({id: chartid}, null, `graphic-chart;id=${chartid}`);
+        })
+    );
   }
 
   onCloseEdit() {
@@ -433,7 +439,7 @@ export class ComposerViewComponent implements OnInit {
 
   private newGraphicChart() {
     this.isEditMode = true;
-    this.graphicId = uuid.v4();
+    this.graphicId = '';
     forkJoin([
       this.resolutionSvc.getResolutions().pipe(tap(
         res => this.resolutions = res.map(resolution => {
@@ -496,12 +502,14 @@ export class ComposerViewComponent implements OnInit {
         })))
       ]).pipe(tap(() => this.updateCanvasSize())),
       forkJoin([
-        this.bgSvc.getImg(this.graphicId).pipe(tap(e => {
-          this.backGroundImageFile = new File([e], 'img.jpg', {type: imgContentType});
-          const img = this.arrayBufferToBase64(e);
-          this.backGroundImage = `data:${imgContentType};base64,${img}`;
-          this.updateBackGroundImageSize(this.backGroundImage);
-        })),
+        this.bgSvc.getImg(this.graphicId).pipe(
+          tap(e => {
+            this.backGroundImageFile = new File([e], 'img.jpg', {type: imgContentType});
+            const img = this.arrayBufferToBase64(e);
+            this.backGroundImage = `data:${imgContentType};base64,${img}`;
+            this.updateBackGroundImageSize(this.backGroundImage);
+          }),
+          catchError(err => of(null))),
         this.graphicChart.getGraphicChartData(this.graphicId).pipe(tap(data => {
             this.chartName = data.name;
             this.symbolList = data.symbolList.map(sym => {

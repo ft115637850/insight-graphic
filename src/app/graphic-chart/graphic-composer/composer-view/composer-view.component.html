@@ -2,7 +2,7 @@
   <mat-card *ngIf="!hideHeader">
     <div class="title">
       <span *ngIf="!isEditMode">{{this.chartName}}</span>
-      <input *ngIf="isEditMode" placeholder="* Graphic Chart Name" [(ngModel)]="this.chartName" required>
+      <input *ngIf="isEditMode" placeholder="Graphic Chart Name *" [(ngModel)]="this.chartName" required>
     </div>
     <button mat-icon-button *ngIf="isEditMode">
       <mat-icon svgIcon="save" (click)="onSave()"></mat-icon>
